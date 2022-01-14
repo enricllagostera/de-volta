@@ -1,0 +1,358 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
+[ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=2]
+[ext_resource path="res://LaunchesLbl.gd" type="Script" id=3]
+[ext_resource path="res://Battery.gd" type="Script" id=4]
+[ext_resource path="res://DeathExplosion.gd" type="Script" id=5]
+[ext_resource path="res://Goal.gd" type="Script" id=6]
+[ext_resource path="res://GUIBars.gd" type="Script" id=7]
+[ext_resource path="res://Player.gd" type="Script" id=8]
+[ext_resource path="res://Map.gd" type="Script" id=9]
+[ext_resource path="res://Polygon2DWithCollisions.gd" type="Script" id=10]
+[ext_resource path="res://images/star_small.png" type="Texture" id=11]
+[ext_resource path="res://images/icon_plusSmall.png" type="Texture" id=12]
+[ext_resource path="res://images/station_C.png" type="Texture" id=13]
+[ext_resource path="res://fonts/BaseFont.tres" type="DynamicFont" id=14]
+[ext_resource path="res://GravitationalAsteroid.gd" type="Script" id=15]
+[ext_resource path="res://images/meteor_detailedLarge.png" type="Texture" id=16]
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.933333, 0.192157, 0.435294, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.192157, 0.556863, 0.933333, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 32
+outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -0.228672, 0.0, 0, 0 ]
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 34.0147
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 18.1108
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 90.05
+
+[sub_resource type="CircleShape2D" id=10]
+radius = 121.017
+
+[node name="TestMap" type="Node2D"]
+script = ExtResource( 9 )
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="GUI"]
+margin_left = 74.0
+margin_top = 8.0
+margin_right = 274.0
+margin_bottom = 37.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 14 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 4 )
+value = 100.0
+rounded = true
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/HealthBar"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -66.0
+margin_top = -10.5
+margin_right = -6.0
+margin_bottom = 10.5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "Health"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyBar" type="ProgressBar" parent="GUI"]
+margin_left = 368.0
+margin_top = 8.0
+margin_right = 580.0
+margin_bottom = 37.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 14 )
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+value = 100.0
+rounded = true
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/EnergyBar"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -63.0
+margin_top = -10.5
+margin_right = -3.0
+margin_bottom = 10.5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "Energy"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LaunchesLbl" type="Label" parent="GUI"]
+margin_left = 7.0
+margin_top = 55.0
+margin_right = 292.0
+margin_bottom = 113.0
+custom_fonts/font = SubResource( 6 )
+text = "Launches: 0"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameplayCamera2D" type="Camera2D" parent="."]
+position = Vector2( 1135, -59 )
+anchor_mode = 0
+current = true
+zoom = Vector2( 1.5, 1.5 )
+limit_left = -700
+limit_top = -500
+limit_right = 3000
+limit_bottom = 1700
+limit_smoothed = true
+smoothing_enabled = true
+editor_draw_limits = true
+
+[node name="MapCamera2D" type="Camera2D" parent="."]
+offset = Vector2( 2000, -500 )
+anchor_mode = 0
+zoom = Vector2( 5, 5 )
+limit_left = -53
+limit_top = -37
+limit_right = 1196
+limit_bottom = 1101
+editor_draw_limits = true
+
+[node name="Player" type="Node2D" parent="."]
+script = ExtResource( 8 )
+
+[node name="Starship" parent="Player" groups=["starship"] instance=ExtResource( 2 )]
+position = Vector2( 1785, 299 )
+base_power = 600.0
+base_damp = 0.001
+base_gravity = 0
+velocity_damage_rate = 0.05
+energy_per_launch_power_rate = 25.0
+energy_for_navigation_per_s = 1.0
+
+[node name="DeathExplosion" type="CPUParticles2D" parent="Player"]
+position = Vector2( 389, 397 )
+emitting = false
+amount = 100
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.57
+local_coords = false
+texture = ExtResource( 11 )
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 300.0
+initial_velocity_random = 0.5
+angular_velocity = 20.0
+angular_velocity_random = 0.69
+linear_accel = -50.0
+damping_random = 0.14
+angle_random = 1.0
+scale_amount_random = 0.41
+scale_amount_curve = SubResource( 1 )
+script = ExtResource( 5 )
+
+[node name="Scenario" type="Node2D" parent="."]
+
+[node name="Terrain" type="Polygon2D" parent="Scenario"]
+color = Color( 0.933333, 0.592157, 0.192157, 1 )
+antialiased = true
+polygon = PoolVector2Array( -982, -69, -976, -888, -220, -412, 15, -110, 99, 337, 146, 771, 64, 1171, -241, 1685, -970, 2115 )
+script = ExtResource( 10 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Scenario/Terrain"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Scenario/Terrain/StaticBody2D"]
+
+[node name="Terrain2" type="Polygon2D" parent="Scenario"]
+position = Vector2( 2279, 162 )
+color = Color( 0.933333, 0.592157, 0.192157, 1 )
+antialiased = true
+polygon = PoolVector2Array( -49, -434, 218, -642, 1065, -761, 1305, -134, 1821, 700, 1168, 1904, 608, 2021, 196, 1860, -129, 1600, -359, 1323, -519, 1088, -608, 608, -801, 519, -926, 345, -522.308, 265.058, -375, -76 )
+script = ExtResource( 10 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Scenario/Terrain2"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Scenario/Terrain2/StaticBody2D"]
+build_mode = 1
+
+[node name="Goal" type="Area2D" parent="Scenario"]
+position = Vector2( 1593, 854 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Visual" type="Sprite" parent="Scenario/Goal"]
+texture = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Goal"]
+shape = SubResource( 7 )
+
+[node name="Battery1" type="Area2D" parent="Scenario"]
+position = Vector2( 297, 124 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery1"]
+texture = ExtResource( 12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery1"]
+shape = SubResource( 8 )
+
+[node name="Battery2" type="Area2D" parent="Scenario"]
+position = Vector2( 1015, 254 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery2"]
+texture = ExtResource( 12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery2"]
+shape = SubResource( 8 )
+
+[node name="Battery3" type="Area2D" parent="Scenario"]
+position = Vector2( 561, 632 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery3"]
+texture = ExtResource( 12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery3"]
+shape = SubResource( 8 )
+
+[node name="Battery4" type="Area2D" parent="Scenario"]
+position = Vector2( 1329, 607 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery4"]
+texture = ExtResource( 12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery4"]
+shape = SubResource( 8 )
+
+[node name="GravitationalAsteroid" type="StaticBody2D" parent="Scenario" groups=["gravity_attractor"]]
+position = Vector2( 930, 157 )
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_group_": true
+}
+mass = 3000.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/GravitationalAsteroid"]
+shape = SubResource( 9 )
+
+[node name="Visual" type="Sprite" parent="Scenario/GravitationalAsteroid"]
+rotation = 2.22685
+scale = Vector2( 2.04, 2.04 )
+texture = ExtResource( 16 )
+
+[node name="GravitationalAsteroid2" type="StaticBody2D" parent="Scenario" groups=["gravity_attractor"]]
+position = Vector2( 758, 1141 )
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_group_": true
+}
+mass = 5000.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/GravitationalAsteroid2"]
+shape = SubResource( 10 )
+
+[node name="Visual" type="Sprite" parent="Scenario/GravitationalAsteroid2"]
+scale = Vector2( 2.84, 2.84 )
+texture = ExtResource( 16 )
+
+[node name="PlanetAttractorLeft" type="StaticBody2D" parent="Scenario" groups=["gravity_attractor"]]
+position = Vector2( -557, 595 )
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_group_": true
+}
+mass = 10000.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/PlanetAttractorLeft"]
+visible = false
+shape = SubResource( 9 )
+
+[node name="Visual" type="Sprite" parent="Scenario/PlanetAttractorLeft"]
+visible = false
+texture = ExtResource( 16 )
+
+[node name="PlanetAttractorRight" type="StaticBody2D" parent="Scenario" groups=["gravity_attractor"]]
+position = Vector2( 2473, 552 )
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_group_": true
+}
+mass = 10000.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/PlanetAttractorRight"]
+visible = false
+shape = SubResource( 9 )
+
+[node name="Visual" type="Sprite" parent="Scenario/PlanetAttractorRight"]
+visible = false
+texture = ExtResource( 16 )
+
+[connection signal="died" from="Player/Starship" to="Player/DeathExplosion" method="_on_Starship_died"]
+[connection signal="energy_changed" from="Player/Starship" to="GUI/EnergyBar" method="_on_Starship_energy_changed"]
+[connection signal="health_changed" from="Player/Starship" to="GUI/HealthBar" method="_on_Starship_health_changed"]
+[connection signal="launched" from="Player/Starship" to="GUI/LaunchesLbl" method="_on_Starship_launched"]
+[connection signal="navigation_engaged" from="Player/Starship" to="." method="_on_Starship_navigation_engaged"]
+[connection signal="body_entered" from="Scenario/Goal" to="Player/Starship" method="_on_Goal_body_entered"]
+[connection signal="body_entered" from="Scenario/Battery1" to="Scenario/Battery1" method="_on_Battery_body_entered"]
+[connection signal="body_entered" from="Scenario/Battery2" to="Scenario/Battery2" method="_on_Battery_body_entered"]
+[connection signal="body_entered" from="Scenario/Battery3" to="Scenario/Battery3" method="_on_Battery_body_entered"]
+[connection signal="body_entered" from="Scenario/Battery4" to="Scenario/Battery4" method="_on_Battery_body_entered"]

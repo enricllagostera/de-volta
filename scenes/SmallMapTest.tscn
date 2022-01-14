@@ -1,0 +1,272 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Polygon2DWithCollisions.gd" type="Script" id=2]
+[ext_resource path="res://GUIBars.gd" type="Script" id=3]
+[ext_resource path="res://images/star_small.png" type="Texture" id=4]
+[ext_resource path="res://DeathExplosion.gd" type="Script" id=5]
+[ext_resource path="res://Player.gd" type="Script" id=6]
+[ext_resource path="res://Map.gd" type="Script" id=7]
+[ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=8]
+[ext_resource path="res://fonts/BaseFont.tres" type="DynamicFont" id=9]
+[ext_resource path="res://LaunchesLbl.gd" type="Script" id=10]
+[ext_resource path="res://images/station_C.png" type="Texture" id=11]
+[ext_resource path="res://Goal.gd" type="Script" id=12]
+[ext_resource path="res://images/icon_plusSmall.png" type="Texture" id=13]
+[ext_resource path="res://Battery.gd" type="Script" id=14]
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.933333, 0.192157, 0.435294, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.192157, 0.556863, 0.933333, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 32
+outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
+font_data = ExtResource( 8 )
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -0.228672, 0.0, 0, 0 ]
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 34.0147
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 18.1108
+
+[node name="TestMap" type="Node2D"]
+script = ExtResource( 7 )
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="GUI"]
+margin_left = 74.0
+margin_top = 8.0
+margin_right = 274.0
+margin_bottom = 37.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 9 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 4 )
+value = 100.0
+rounded = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/HealthBar"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -66.0
+margin_top = -10.5
+margin_right = -6.0
+margin_bottom = 10.5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "Health"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyBar" type="ProgressBar" parent="GUI"]
+margin_left = 368.0
+margin_top = 8.0
+margin_right = 580.0
+margin_bottom = 37.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 9 )
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+value = 100.0
+rounded = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/EnergyBar"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -63.0
+margin_top = -10.5
+margin_right = -3.0
+margin_bottom = 10.5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "Energy"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LaunchesLbl" type="Label" parent="GUI"]
+margin_left = 7.0
+margin_top = 55.0
+margin_right = 292.0
+margin_bottom = 113.0
+custom_fonts/font = SubResource( 6 )
+text = "Launches: 0"
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameplayCamera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+limit_left = -53
+limit_top = -37
+limit_right = 1196
+limit_bottom = 1101
+limit_smoothed = true
+smoothing_enabled = true
+editor_draw_limits = true
+
+[node name="MapCamera2D" type="Camera2D" parent="."]
+offset = Vector2( 400, 0 )
+anchor_mode = 0
+zoom = Vector2( 2.684, 2.684 )
+limit_left = -53
+limit_top = -37
+limit_right = 1196
+limit_bottom = 1101
+editor_draw_limits = true
+
+[node name="Player" type="Node2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="Starship" parent="Player" groups=["starship"] instance=ExtResource( 1 )]
+position = Vector2( 363, 412 )
+base_power = 600.0
+base_gravity = 2
+velocity_damage_rate = 0.05
+energy_per_launch_power_rate = 25.0
+energy_for_navigation_per_s = 1.0
+
+[node name="DeathExplosion" type="CPUParticles2D" parent="Player"]
+position = Vector2( 389, 397 )
+emitting = false
+amount = 100
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.57
+local_coords = false
+texture = ExtResource( 4 )
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 300.0
+initial_velocity_random = 0.5
+angular_velocity = 20.0
+angular_velocity_random = 0.69
+linear_accel = -50.0
+damping_random = 0.14
+angle_random = 1.0
+scale_amount_random = 0.41
+scale_amount_curve = SubResource( 1 )
+script = ExtResource( 5 )
+
+[node name="Scenario" type="Node2D" parent="."]
+
+[node name="Terrain" type="Polygon2D" parent="Scenario"]
+color = Color( 0.933333, 0.592157, 0.192157, 1 )
+antialiased = true
+polygon = PoolVector2Array( -587, -61, 107, -62, 307, -38, 315, 70, 119, 218, 99, 337, 223, 435, 507, 435, 564, 359, 544, 241, 651, 245, 672, 104, 740, 104, 822, 170, 882, 172, 863, 239, 771, 318, 645, 485, 483, 604, 507, 676, 619, 689, 348, 709, 259, 849, 312, 991, 472, 1031, 986, 1038, 1160, 960, 1028, 860, 722, 874, 852, 728, 931, 786, 969.345, 369.434, 1078, 234, 989, 41, 1019, -170, 1658, -99, 1655, 1212, -618, 1202 )
+script = ExtResource( 2 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Scenario/Terrain"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Scenario/Terrain/StaticBody2D"]
+
+[node name="Goal" type="Area2D" parent="Scenario"]
+position = Vector2( 1038, 948 )
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Visual" type="Sprite" parent="Scenario/Goal"]
+texture = ExtResource( 11 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Goal"]
+shape = SubResource( 7 )
+
+[node name="Battery1" type="Area2D" parent="Scenario"]
+position = Vector2( 297, 124 )
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery1"]
+texture = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery1"]
+shape = SubResource( 8 )
+
+[node name="Battery2" type="Area2D" parent="Scenario"]
+position = Vector2( 1015, 254 )
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery2"]
+texture = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery2"]
+shape = SubResource( 8 )
+
+[node name="Battery3" type="Area2D" parent="Scenario"]
+position = Vector2( 561, 632 )
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery3"]
+texture = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery3"]
+shape = SubResource( 8 )
+
+[node name="Battery4" type="Area2D" parent="Scenario"]
+position = Vector2( 548, 867 )
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery4"]
+texture = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery4"]
+shape = SubResource( 8 )
+
+[connection signal="died" from="Player/Starship" to="Player/DeathExplosion" method="_on_Starship_died"]
+[connection signal="energy_changed" from="Player/Starship" to="GUI/EnergyBar" method="_on_Starship_energy_changed"]
+[connection signal="health_changed" from="Player/Starship" to="GUI/HealthBar" method="_on_Starship_health_changed"]
+[connection signal="launched" from="Player/Starship" to="GUI/LaunchesLbl" method="_on_Starship_launched"]
+[connection signal="navigation_engaged" from="Player/Starship" to="." method="_on_Starship_navigation_engaged"]
+[connection signal="body_entered" from="Scenario/Goal" to="Player/Starship" method="_on_Goal_body_entered"]
+[connection signal="body_entered" from="Scenario/Battery1" to="Scenario/Battery1" method="_on_Battery_body_entered"]
+[connection signal="body_entered" from="Scenario/Battery2" to="Scenario/Battery2" method="_on_Battery_body_entered"]
+[connection signal="body_entered" from="Scenario/Battery3" to="Scenario/Battery3" method="_on_Battery_body_entered"]
+[connection signal="body_entered" from="Scenario/Battery4" to="Scenario/Battery4" method="_on_Battery_body_entered"]
