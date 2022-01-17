@@ -13,6 +13,8 @@ func _ready():
 
 func _on_Starship_goal_reached(_launch_count, _energy):
 	$Map/Player/Starship.velocity = Vector2.ZERO
+	$Map/Player/Starship.set_physics_process(false);
+	$Map/Player/Starship.set_process(false);
 	var tween = $Map/Player/Starship/Tween as Tween
 	tween.interpolate_property($Map/Player/Starship/Visual,"scale", 
 			Vector2(1.2, 1.2), Vector2.ZERO, 

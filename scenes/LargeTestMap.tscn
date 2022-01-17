@@ -1,16 +1,14 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=2]
 [ext_resource path="res://LaunchesLbl.gd" type="Script" id=3]
 [ext_resource path="res://Battery.gd" type="Script" id=4]
-[ext_resource path="res://DeathExplosion.gd" type="Script" id=5]
+[ext_resource path="res://Player.gd" type="Script" id=5]
 [ext_resource path="res://Goal.gd" type="Script" id=6]
 [ext_resource path="res://GUIBars.gd" type="Script" id=7]
-[ext_resource path="res://Player.gd" type="Script" id=8]
 [ext_resource path="res://Map.gd" type="Script" id=9]
 [ext_resource path="res://Polygon2DWithCollisions.gd" type="Script" id=10]
-[ext_resource path="res://images/star_small.png" type="Texture" id=11]
 [ext_resource path="res://images/icon_plusSmall.png" type="Texture" id=12]
 [ext_resource path="res://images/station_C.png" type="Texture" id=13]
 [ext_resource path="res://fonts/BaseFont.tres" type="DynamicFont" id=14]
@@ -40,9 +38,6 @@ border_color = Color( 0, 0, 0, 1 )
 size = 32
 outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
 font_data = ExtResource( 1 )
-
-[sub_resource type="Curve" id=1]
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -0.228672, 0.0, 0, 0 ]
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 34.0147
@@ -136,10 +131,8 @@ __meta__ = {
 }
 
 [node name="GameplayCamera2D" type="Camera2D" parent="."]
-position = Vector2( 1135, -59 )
-anchor_mode = 0
+position = Vector2( 1789, 300 )
 current = true
-zoom = Vector2( 1.5, 1.5 )
 limit_left = -700
 limit_top = -500
 limit_right = 3000
@@ -149,57 +142,173 @@ smoothing_enabled = true
 editor_draw_limits = true
 
 [node name="MapCamera2D" type="Camera2D" parent="."]
-offset = Vector2( 2000, -500 )
-anchor_mode = 0
+offset = Vector2( 3200, -475 )
 zoom = Vector2( 5, 5 )
-limit_left = -53
-limit_top = -37
-limit_right = 1196
-limit_bottom = 1101
+limit_left = 0
+limit_top = 0
+limit_right = 0
+limit_bottom = 0
 editor_draw_limits = true
 
 [node name="Player" type="Node2D" parent="."]
-script = ExtResource( 8 )
+script = ExtResource( 5 )
 
 [node name="Starship" parent="Player" groups=["starship"] instance=ExtResource( 2 )]
-position = Vector2( 1785, 299 )
+position = Vector2( 1803, 311 )
 base_power = 600.0
 base_damp = 0.001
 base_gravity = 0
 velocity_damage_rate = 0.05
-energy_per_launch_power_rate = 25.0
+energy_per_launch_power_rate = 0.1
 energy_for_navigation_per_s = 1.0
 
-[node name="DeathExplosion" type="CPUParticles2D" parent="Player"]
-position = Vector2( 389, 397 )
-emitting = false
-amount = 100
-lifetime = 3.0
-one_shot = true
-explosiveness = 1.0
-lifetime_randomness = 0.57
-local_coords = false
-texture = ExtResource( 11 )
-direction = Vector2( 0, 0 )
-spread = 180.0
-gravity = Vector2( 0, 0 )
-initial_velocity = 300.0
-initial_velocity_random = 0.5
-angular_velocity = 20.0
-angular_velocity_random = 0.69
-linear_accel = -50.0
-damping_random = 0.14
-angle_random = 1.0
-scale_amount_random = 0.41
-scale_amount_curve = SubResource( 1 )
-script = ExtResource( 5 )
+[node name="Controllers" type="CanvasLayer" parent="Player"]
+
+[node name="Empty" type="Control" parent="Player/Controllers"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Player/Controllers/Empty"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -190.5
+margin_top = -36.0
+margin_right = 190.5
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 14 )
+text = "No controller selected."
+align = 1
+valign = 1
+
+[node name="Launching" type="Control" parent="Player/Controllers"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Player/Controllers/Launching"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = -206.0
+margin_right = 399.0
+margin_bottom = -185.0
+custom_fonts/font = ExtResource( 14 )
+text = "LAUNCHING"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AngleLbl" type="Label" parent="Player/Controllers/Launching"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 17.0
+margin_top = -161.0
+margin_right = 127.0
+margin_bottom = -121.0
+custom_fonts/font = ExtResource( 14 )
+text = "Angle: ?"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AngleHSlider" type="HSlider" parent="Player/Controllers/Launching"]
+margin_left = 119.0
+margin_top = 302.0
+margin_right = 374.0
+margin_bottom = 318.0
+min_value = -80.0
+max_value = 80.0
+tick_count = 10
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PowerLbl" type="Label" parent="Player/Controllers/Launching"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 17.0
+margin_top = -119.0
+margin_right = 97.0
+margin_bottom = -79.0
+custom_fonts/font = ExtResource( 14 )
+text = "Power: ?"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PowerHSlider" type="HSlider" parent="Player/Controllers/Launching"]
+margin_left = 119.0
+margin_top = 340.0
+margin_right = 374.0
+margin_bottom = 356.0
+
+[node name="EngageButton" type="Button" parent="Player/Controllers/Launching"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 266.0
+margin_top = -64.0
+margin_right = 370.0
+margin_bottom = -17.0
+text = "Engage"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NavigationToggle" type="CheckBox" parent="Player/Controllers/Launching"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 18.0
+margin_top = -64.0
+margin_right = 172.0
+margin_bottom = -17.0
+text = "Navigation mode"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LauncherButton" type="Button" parent="Player/Controllers"]
+margin_left = 625.0
+margin_top = 53.0
+margin_right = 736.0
+margin_bottom = 86.0
+text = "Launching insert"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EmptyButton" type="Button" parent="Player/Controllers"]
+margin_left = 625.0
+margin_top = 10.0
+margin_right = 742.0
+margin_bottom = 43.0
+text = "No insert"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Scenario" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="Terrain" type="Polygon2D" parent="Scenario"]
 color = Color( 0.933333, 0.592157, 0.192157, 1 )
 antialiased = true
-polygon = PoolVector2Array( -982, -69, -976, -888, -220, -412, 15, -110, 99, 337, 146, 771, 64, 1171, -241, 1685, -970, 2115 )
+polygon = PoolVector2Array( -982, -69, -976, -888, -220, -412, 15, -110, 99, 245, 146, 771, 15, 966, 238, 1264, -241, 1685, -970, 2115 )
 script = ExtResource( 10 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Scenario/Terrain"]
@@ -210,7 +319,7 @@ script = ExtResource( 10 )
 position = Vector2( 2279, 162 )
 color = Color( 0.933333, 0.592157, 0.192157, 1 )
 antialiased = true
-polygon = PoolVector2Array( -49, -434, 218, -642, 1065, -761, 1305, -134, 1821, 700, 1168, 1904, 608, 2021, 196, 1860, -129, 1600, -359, 1323, -519, 1088, -608, 608, -801, 519, -926, 345, -522.308, 265.058, -375, -76 )
+polygon = PoolVector2Array( -49, -434, 218, -642, 1065, -761, 1305, -134, 1821, 700, 1168, 1904, 608, 2021, 196, 1860, -129, 1600, -359, 1323, -519, 1088, -608, 608, -801, 519, -950, 234, -757, 328, -512, 313, -375, -76 )
 script = ExtResource( 10 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Scenario/Terrain2"]
@@ -300,7 +409,7 @@ scale = Vector2( 2.04, 2.04 )
 texture = ExtResource( 16 )
 
 [node name="GravitationalAsteroid2" type="StaticBody2D" parent="Scenario" groups=["gravity_attractor"]]
-position = Vector2( 758, 1141 )
+position = Vector2( 909, 1186 )
 script = ExtResource( 15 )
 __meta__ = {
 "_edit_group_": true
@@ -331,7 +440,7 @@ visible = false
 texture = ExtResource( 16 )
 
 [node name="PlanetAttractorRight" type="StaticBody2D" parent="Scenario" groups=["gravity_attractor"]]
-position = Vector2( 2473, 552 )
+position = Vector2( 2852, 693 )
 script = ExtResource( 15 )
 __meta__ = {
 "_edit_group_": true
@@ -346,11 +455,17 @@ shape = SubResource( 9 )
 visible = false
 texture = ExtResource( 16 )
 
-[connection signal="died" from="Player/Starship" to="Player/DeathExplosion" method="_on_Starship_died"]
 [connection signal="energy_changed" from="Player/Starship" to="GUI/EnergyBar" method="_on_Starship_energy_changed"]
 [connection signal="health_changed" from="Player/Starship" to="GUI/HealthBar" method="_on_Starship_health_changed"]
 [connection signal="launched" from="Player/Starship" to="GUI/LaunchesLbl" method="_on_Starship_launched"]
 [connection signal="navigation_engaged" from="Player/Starship" to="." method="_on_Starship_navigation_engaged"]
+[connection signal="navigation_engaged" from="Player/Starship" to="Player" method="_on_Starship_navigation_engaged"]
+[connection signal="value_changed" from="Player/Controllers/Launching/AngleHSlider" to="Player" method="_on_AngleHSlider_value_changed"]
+[connection signal="value_changed" from="Player/Controllers/Launching/PowerHSlider" to="Player" method="_on_PowerHSlider_value_changed"]
+[connection signal="pressed" from="Player/Controllers/Launching/EngageButton" to="Player" method="_on_EngageButton_pressed"]
+[connection signal="toggled" from="Player/Controllers/Launching/NavigationToggle" to="Player" method="_on_NavigationToggle_toggled"]
+[connection signal="pressed" from="Player/Controllers/LauncherButton" to="Player" method="_on_LauncherButton_pressed"]
+[connection signal="pressed" from="Player/Controllers/EmptyButton" to="Player" method="_on_EmptyButton_pressed"]
 [connection signal="body_entered" from="Scenario/Goal" to="Player/Starship" method="_on_Goal_body_entered"]
 [connection signal="body_entered" from="Scenario/Battery1" to="Scenario/Battery1" method="_on_Battery_body_entered"]
 [connection signal="body_entered" from="Scenario/Battery2" to="Scenario/Battery2" method="_on_Battery_body_entered"]
