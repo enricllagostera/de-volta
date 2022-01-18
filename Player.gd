@@ -9,7 +9,7 @@ const POWER_MAX = 100;
 
 var launch_angle = 0.0
 var launch_power = 0.0;
-
+var js_beholder;
 
 func _ready():
 	$Controllers/Empty.visible = true;
@@ -17,6 +17,8 @@ func _ready():
 	$Starship.controller = $Starship.Controller.EMPTY;
 	_change_launch_angle(0);
 	_change_launch_power(0);
+	js_beholder = JavaScript.get_interface("Beholder");
+
 
 
 func _input(_event):
@@ -31,6 +33,7 @@ func _input(_event):
 		
 
 func _process(delta):
+	js_beholder.update();
 	if $Starship.controller == $Starship.Controller.LAUNCHING and $Starship.is_grounded:
 		$Controllers/Launching.visible = true;
 		$Starship/LaunchAim.visible = true;		

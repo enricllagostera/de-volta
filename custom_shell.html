@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Custom Template (with Beholder integration)</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <div id="beholder-root"></div>
+        <script src="$GODOT_URL"></script>
+        <script>
+            var engine = new Engine($GODOT_CONFIG);
+            engine.startGame();
+        </script>
+        <script src="https://unpkg.com/beholder-detection@1.3.0/dist/beholder-detection.js" crossorigin></script>
+        <script>
+            const beholderConfig = {
+                camera_params: {
+                    videoSize: 1, // The video size values map to the following [320 x 240, 640 x 480, 1280 x 720, 1920 x 1080]
+                    rearCamera: false, // Boolean value for defaulting to the rear facing camera. Only works on mobile
+                    torch: false, // Boolean value for if torch/flashlight is on. Only works for rear facing mobile cameras. Can only be set from init
+                }
+            }
+            window.Beholder = window['beholder-detection'].default;     
+            window.Beholder.init("#beholder-root", beholderConfig);
+        </script>
+    </body>
+</html>
