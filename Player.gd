@@ -10,6 +10,8 @@ const POWER_MAX = 100;
 var launch_angle = 0.0
 var launch_power = 0.0;
 var js_beholder;
+var js_spaceHopper;
+var cb_onLaunchingInsertDetected;
 
 func _ready():
 	$Controllers/Empty.visible = true;
@@ -18,8 +20,10 @@ func _ready():
 	_change_launch_angle(0);
 	_change_launch_power(0);
 	js_beholder = JavaScript.get_interface("Beholder");
-
-
+	js_spaceHopper = JavaScript.get_interface("spaceHopper");
+	cb_onLaunchingInsertDetected = JavaScript.create_callback(self, "_activate_launching_controller")
+	js_spaceHopper.onLaunchingInsert = cb_onLaunchingInsertDetected
+	
 
 func _input(_event):
 	if Input.is_action_just_pressed("empty_controller"):
@@ -30,10 +34,10 @@ func _input(_event):
 		$Controllers/Empty.visible = false;
 		$Controllers/Launching.visible = true;
 		$Starship.controller = $Starship.Controller.LAUNCHING;
-		
+
 
 func _process(delta):
-	js_beholder.update();
+	js_spaceHopper.gameUpdate(cb_onLaunchingInsertDetected);
 	if $Starship.controller == $Starship.Controller.LAUNCHING and $Starship.is_grounded:
 		$Controllers/Launching.visible = true;
 		$Starship/LaunchAim.visible = true;		
@@ -115,6 +119,12 @@ func _on_EmptyButton_pressed():
 
 
 func _on_LauncherButton_pressed():
+	$Controllers/Empty.visible = false;
+	$Controllers/Launching.visible = true;
+	$Starship.controller = $Starship.Controller.LAUNCHING;
+
+
+func _activate_launching_controller(_args):
 	$Controllers/Empty.visible = false;
 	$Controllers/Launching.visible = true;
 	$Starship.controller = $Starship.Controller.LAUNCHING;

@@ -23,6 +23,23 @@
             }
             window.Beholder = window['beholder-detection'].default;     
             window.Beholder.init("#beholder-root", beholderConfig);
+
+            window.spaceHopper = {}
+
+            // Called by Godot
+            spaceHopper.gameUpdate = function () {
+                // List of callbacks setup on the Godot app
+                spaceHopper.onLaunchingInsert = function(){};
+
+                Beholder.update();
+                if(Beholder.getMarker(0).present){
+                    console.log("launching marker");
+                    spaceHopper.onLaunchingInsert();
+                }
+                else {
+                    console.log("no marker");
+                }
+            }
         </script>
     </body>
 </html>
