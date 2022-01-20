@@ -24,21 +24,26 @@
             window.Beholder = window['beholder-detection'].default;     
             window.Beholder.init("#beholder-root", beholderConfig);
 
-            window.spaceHopper = {}
+            spaceHopper = {}
 
-            // Called by Godot
+            // Sets up callback refs from the Godot app; Each of these is a function.
+            spaceHopper.initCallbacks = function(...args) {
+                args.forEach(element => console.log(element.name, element.toString()));
+                
+                //spaceHopper.launchingInsertDetected = cb_launching_insert_detected;
+                //spaceHopper.noInsertDetected = cb_no_insert_detected;
+            }
+
+            // Called by Godot every frame
             spaceHopper.gameUpdate = function () {
-                // List of callbacks setup on the Godot app
-                spaceHopper.onLaunchingInsert = function(){};
-
                 Beholder.update();
-                if(Beholder.getMarker(0).present){
-                    console.log("launching marker");
-                    spaceHopper.onLaunchingInsert();
-                }
-                else {
-                    console.log("no marker");
-                }
+                // if(Beholder.getMarker(0).present){
+                //     spaceHopper.launchingInsertDetected();
+                // }
+                // else {
+                //     console.log("no marker");
+                //     spaceHopper.noInsertDetected();
+                // }
             }
         </script>
     </body>

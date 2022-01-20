@@ -16,7 +16,6 @@ _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -0.228672, 0.0, 0, 0
 
 [node name="Starship" type="KinematicBody2D"]
 script = ExtResource( 1 )
-base_power = 200.0
 base_damp = 0.01
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

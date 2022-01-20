@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Player.gd" type="Script" id=5]
 [ext_resource path="res://Goal.gd" type="Script" id=6]
 [ext_resource path="res://GUIBars.gd" type="Script" id=7]
+[ext_resource path="res://BeholderInput.gd" type="Script" id=8]
 [ext_resource path="res://Map.gd" type="Script" id=9]
 [ext_resource path="res://Polygon2DWithCollisions.gd" type="Script" id=10]
 [ext_resource path="res://images/icon_plusSmall.png" type="Texture" id=12]
@@ -155,12 +156,15 @@ script = ExtResource( 5 )
 
 [node name="Starship" parent="Player" groups=["starship"] instance=ExtResource( 2 )]
 position = Vector2( 1803, 311 )
-base_power = 600.0
+base_power = 6.0
 base_damp = 0.001
 base_gravity = 0
 velocity_damage_rate = 0.05
-energy_per_launch_power_rate = 0.1
+energy_per_launch_power_rate = 0.2
 energy_for_navigation_per_s = 1.0
+
+[node name="BeholderInput" type="Node" parent="Player"]
+script = ExtResource( 8 )
 
 [node name="Controllers" type="CanvasLayer" parent="Player"]
 
@@ -460,6 +464,8 @@ texture = ExtResource( 16 )
 [connection signal="launched" from="Player/Starship" to="GUI/LaunchesLbl" method="_on_Starship_launched"]
 [connection signal="navigation_engaged" from="Player/Starship" to="." method="_on_Starship_navigation_engaged"]
 [connection signal="navigation_engaged" from="Player/Starship" to="Player" method="_on_Starship_navigation_engaged"]
+[connection signal="launching_insert_detected" from="Player/BeholderInput" to="Player" method="_on_BeholderInput_launching_insert_detected"]
+[connection signal="no_insert_detected" from="Player/BeholderInput" to="Player" method="_on_BeholderInput_no_insert_detected"]
 [connection signal="value_changed" from="Player/Controllers/Launching/AngleHSlider" to="Player" method="_on_AngleHSlider_value_changed"]
 [connection signal="value_changed" from="Player/Controllers/Launching/PowerHSlider" to="Player" method="_on_PowerHSlider_value_changed"]
 [connection signal="pressed" from="Player/Controllers/Launching/EngageButton" to="Player" method="_on_EngageButton_pressed"]

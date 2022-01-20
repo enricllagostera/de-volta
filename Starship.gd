@@ -13,7 +13,7 @@ enum Controller{
 	REPAIRING
 }
 
-export var base_power = 40.0;
+export var base_power = 1.0;
 export var base_damp = 0.001;
 export var base_gravity = 20;
 export var velocity_damage_rate = 0.1;
@@ -23,6 +23,8 @@ export var energy_for_navigation_per_s = 0.5;
 
 var controller = Controller.EMPTY;
 var launch_count = 0;
+var launch_angle = 0;
+var launch_power = 0;
 var energy = 100;
 var health = 100;
 var velocity;
@@ -56,8 +58,16 @@ func _process(delta):
 			$LaunchAim.visible = false;
 
 
-func launching(_delta):
+func launching(delta):
 	Engine.time_scale = 1.0;
+	if controller == Controller.LAUNCHING and is_grounded:
+		$LaunchAim.visible = true;
+		$LaunchAim.rotation = $Visual.rotation + deg2rad(launch_angle - 90);
+		if is_navigating:
+			_change_energy(energy - delta * energy_for_navigation_per_s);
+		display_launch_aim();
+	else:
+		$LaunchAim.visible = false;
 
 
 func _physics_process(delta):
@@ -80,17 +90,17 @@ func _physics_process(delta):
 			$LaunchAim.visible = false;	
 
 
-func _launch(power):
-	if energy < power * energy_per_launch_power_rate:
+func _launch():
+	if not has_enough_energy_to_launch():
 		return;
 	is_navigating = false;
 	emit_signal("navigation_engaged", false);
 	var launch_direction = global_position.direction_to($LaunchAim/Tip.global_position);
-	velocity += launch_direction * power * base_power;
+	velocity += launch_direction * (launch_power * base_power);
 	last_launch_direction = launch_direction;
 	$Visual.rotation = get_angle_to(position + last_launch_direction) + deg2rad(90);
 	is_grounded = false;
-	_change_energy(energy + -power * 100 * energy_per_launch_power_rate);
+	_change_energy(energy + -launch_power * energy_per_launch_power_rate);
 	launch_count += 1;
 	emit_signal("launched", launch_count);
 
@@ -112,6 +122,21 @@ func _change_energy(new_energy):
 
 func pull(force):
 	velocity += force;
+
+
+func has_enough_energy_to_launch():
+	return energy >= (launch_power * energy_per_launch_power_rate)
+
+
+func display_launch_aim():
+	var points = $LaunchAim/Power.points;
+	points.set(0, Vector2.ZERO);
+	points.set(1, Vector2(launch_power, 0));
+	$LaunchAim/Power.points = points;
+	if has_enough_energy_to_launch():
+		$LaunchAim/Power.default_color = Color.white;
+	else:
+		$LaunchAim/Power.default_color = Color.black;	
 
 
 func entered_screen():
