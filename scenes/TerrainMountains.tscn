@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://images/patterns_8.png" type="Texture" id=1]
+[ext_resource path="res://Polygon2DWithCollisions.gd" type="Script" id=2]
+[ext_resource path="res://shaders/ShaderTest.gdshader" type="Shader" id=3]
+[ext_resource path="res://images/palettes-4width.png" type="Texture" id=4]
+
+[sub_resource type="ShaderMaterial" id=12]
+shader = ExtResource( 3 )
+shader_param/palette_count = 10.0
+shader_param/palette_index = 7.0
+shader_param/palette = ExtResource( 4 )
+
+[node name="Terrain" type="Polygon2D"]
+material = SubResource( 12 )
+color = Color( 0.145098, 0.137255, 0.262745, 1 )
+texture = ExtResource( 1 )
+texture_rotation_degrees = 15.0
+polygon = PoolVector2Array( -982, -69, -976, -888, -220, -412, 15, -110, 99, 245, 146, 771, 15, 966, 238, 1264, -241, 1685, -970, 2115 )
+script = ExtResource( 2 )
+offset_speed = -2.0
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 2.0
+default_color = Color( 0.0627451, 0.0313726, 0.12549, 1 )
+begin_cap_mode = 1
+end_cap_mode = 1
+antialiased = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]

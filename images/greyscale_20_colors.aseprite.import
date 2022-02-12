@@ -1,0 +1,16 @@
+[remap]
+
+importer="aseprite_animation_importer"
+type="SpriteFrames"
+path="res://.import/greyscale_20_colors.aseprite-016b90a5be5c0ee0163781f5892c4cd8.res"
+
+[deps]
+
+source_file="res://images/greyscale_20_colors.aseprite"
+dest_files=[ "res://.import/greyscale_20_colors.aseprite-016b90a5be5c0ee0163781f5892c4cd8.res" ]
+
+[params]
+
+extrude=false
+default_direction="Forward"
+default_loop=false

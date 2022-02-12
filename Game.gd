@@ -25,6 +25,6 @@ func _on_Starship_goal_reached(_launch_count, _energy):
 
 func reset():
 	print("Reset timer started.");
-	yield(get_tree().create_timer(1.0), "timeout");
+	yield(get_tree().create_timer(2.0), "timeout");
 	print("Timer ended.");
 	assert(get_tree().reload_current_scene() == OK);

@@ -1,0 +1,16 @@
+[remap]
+
+importer="aseprite_animation_importer"
+type="SpriteFrames"
+path="res://.import/starship.aseprite-e70b44c6ddbdbc033d25b96909ad0836.res"
+
+[deps]
+
+source_file="res://images/starship.aseprite"
+dest_files=[ "res://.import/starship.aseprite-e70b44c6ddbdbc033d25b96909ad0836.res" ]
+
+[params]
+
+extrude=false
+default_direction="Forward"
+default_loop=false

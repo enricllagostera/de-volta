@@ -8,11 +8,25 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Starship",
+"language": "GDScript",
+"path": "res://Starship.gd"
+} ]
+_global_script_class_icons={
+"Starship": ""
+}
+
 [application]
 
 config/name="space-hopper"
 run/main_scene="res://scenes/Game.tscn"
 config/icon="res://images/icon.png"
+
+[aseprite_animation_importer]
+
+aseprite_executable_path="C:\\Users\\enric\\AppData\\Roaming\\itch\\apps\\aseprite\\Aseprite.exe"
 
 [display]
 
@@ -20,7 +34,7 @@ window/size/width=800
 window/size/height=450
 window/size/test_width=800
 window/size/test_height=450
-window/stretch/mode="viewport"
+window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
 [global]

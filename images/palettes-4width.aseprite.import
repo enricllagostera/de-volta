@@ -1,0 +1,16 @@
+[remap]
+
+importer="aseprite_animation_importer"
+type="SpriteFrames"
+path="res://.import/palettes-4width.aseprite-d762ebc0ca8845e13aa41fe52c3dc3e9.res"
+
+[deps]
+
+source_file="res://images/palettes-4width.aseprite"
+dest_files=[ "res://.import/palettes-4width.aseprite-d762ebc0ca8845e13aa41fe52c3dc3e9.res" ]
+
+[params]
+
+extrude=false
+default_direction="Forward"
+default_loop=false
