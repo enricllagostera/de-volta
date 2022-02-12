@@ -13,7 +13,7 @@
       engine.startGame();
     </script>
     <script
-      src="https://unpkg.com/beholder-detection@1.3.0/dist/beholder-detection.js"
+      src="https://unpkg.com/beholder-detection@1.3.1/dist/beholder-detection.js"
       crossorigin
     ></script>
     <script>
@@ -28,10 +28,37 @@
       window.Beholder.init("#beholder-root", beholderConfig);
 
       spaceHopper = {};
+      spaceHopper.ready = false;
+
+      /*
+      LIST OF COMMANDS
+      
+      Example:
+      spaceHopper.sendCommand("activate_insert", "empty");
+
+      "activate_insert" : "empty", "launching", "flying", "repairing"
+      
+      // LAUNCHING
+      "set_aiming" : "left", "right" // physical crank
+      "set_power" : "0..100" // throttle or slider
+      "set_engage"  // momentary, either key or protective case and switch
+
+      // FLYING
+      "set_shield" : "true", "false" // toggle
+      "set_boost" // momentary, flip switch
+
+      // NAVIGATION
+      "set_scope" : "x, "y" // continuous, every once in a while
+
+      // REPAIRING (EMPTY) -> Different screen state (hides the map)
+      TBD.
+
+      */
 
       // Sets up callback refs from the Godot app; Each of these is a function.
       spaceHopper.initCallbacks = function (cb) {
         spaceHopper.sendCommand = cb;
+        spaceHopper.ready = true;
       };
 
       // Called by Godot every frame
