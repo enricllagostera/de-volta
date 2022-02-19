@@ -4,15 +4,18 @@ export(NodePath) var source_node
 export var history = []
 export var initial_ticks = 0
 onready var source = get_node(source_node)
+
+var launchpad_index = 0
 var history_index = 0
 var timer = 0.0
 var playback_time_scale
+var level_name
 
 
 func _ready():
 	history_index = 0
-	load_history()
 	timer = 0.0
+	stop();
 
 
 func _process(delta):
@@ -32,20 +35,16 @@ func _process(delta):
 
 func get_next_index(from_index):
 	return 0 if (from_index + 1) >= history.size() else from_index + 1
+	
+	
+func start():
+	initial_ticks = history[0].tick
+	play()
 
 
-func load_history():
-	var path = "user://record_" + source.name + ".sav"
-	# Check if there is a saved file
-	var file = File.new()
-	if not file.file_exists(path):
-		print("No file saved!")
-		return
-	# Try to open existing file
-	if file.open(path, File.READ) != 0:
-		print("Error opening file")
-		return
-	# All is OK, get the data
-	var data = parse_json(file.get_line())
-	history = data.history
-	initial_ticks = data.initial_ticks
+func play():
+	set_process(true)
+	
+	
+func stop():
+	set_process(false)

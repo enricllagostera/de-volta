@@ -1,7 +1,7 @@
 extends Node2D
+class_name Game
 
 export (PackedScene) var level;
-
 
 func _ready():
 	var map = level.instance();
@@ -20,6 +20,7 @@ func _on_Starship_goal_reached(_launch_count, _energy):
 			Vector2(1.2, 1.2), Vector2.ZERO, 
 			0.5, Tween.TRANS_ELASTIC, Tween.EASE_IN);
 	tween.start();
+	Main.play_count += 1
 	reset();
 
 

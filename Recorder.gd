@@ -1,21 +1,26 @@
 extends Node2D
 
-onready var initial_ticks = 0.0;
-export onready var history = []
+export var save_on_exit = true;
 export(NodePath) var position_target;
 export(NodePath) var rotation_target;
 
+export onready var history = []
+export onready var level_name = "level_1";
+export onready var launchpad_index = 0;
+
+onready var initial_ticks = 0.0;
 onready var pos_target = get_node(position_target)
 onready var rot_target = get_node(rotation_target)
 
-export var save_on_exit = true;
 
 var movement_threshold = 1.0;
 var old_position = Vector2.ZERO;
 var timeSinceReady = 0.0;
 
+
 func _ready():
 	save_on_exit = false;
+
 
 func _process(delta):
 	timeSinceReady += delta;
@@ -30,10 +35,12 @@ func _process(delta):
 		new_record.tick = timeSinceReady; 
 		add_record(new_record);
 
+
 func add_record(record):
 	history.append(record);
-	
-func _exit_tree():
+
+
+func prepare_for_saving():
 	# Create a last record to show stopped
 	var new_record = {};
 	new_record.position = pos_target.position
@@ -41,22 +48,3 @@ func _exit_tree():
 	new_record.time_scale = Engine.time_scale
 	new_record.tick = timeSinceReady; 
 	add_record(new_record);
-	if save_on_exit:
-		save_history();
-	
-func save_history():
-	var file = File.new();
-	var path = "user://record_"+ pos_target.name + ".sav";
-	if file.open(path, File.WRITE) != 0:
-		print("Error opening file")
-		return
-	var data = {}
-	data.initial_ticks = initial_ticks
-	data.history = history
-	print(path);
-	file.store_line(to_json(data))
-	file.close()
-
-
-func _on_Starship_goal_reached(_launch_count, _energy):
-	save_on_exit = true;

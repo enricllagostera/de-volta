@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Game",
+"language": "GDScript",
+"path": "res://Game.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Starship",
 "language": "GDScript",
 "path": "res://Starship.gd"
 } ]
 _global_script_class_icons={
+"Game": "",
 "Starship": ""
 }
 
@@ -27,6 +33,10 @@ config/icon="res://images/icon.png"
 [aseprite_animation_importer]
 
 aseprite_executable_path="C:\\Users\\enric\\AppData\\Roaming\\itch\\apps\\aseprite\\Aseprite.exe"
+
+[autoload]
+
+Main="*res://scenes/Main.tscn"
 
 [display]
 
