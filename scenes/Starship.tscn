@@ -98,8 +98,3 @@ damping_random = 0.14
 angle_random = 1.0
 scale_amount_random = 0.41
 scale_amount_curve = SubResource( 3 )
-
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-
-[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="entered_screen"]
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="exited_screen"]

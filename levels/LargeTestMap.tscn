@@ -54,6 +54,8 @@ radius = 18.1108
 
 [node name="TestMap" type="Node2D"]
 script = ExtResource( 9 )
+area_bounds = Rect2( 0, 0, 2800, 2800 )
+map_camera_smooth = 4.0
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -132,28 +134,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameplayCamera2D" type="Camera2D" parent="."]
-position = Vector2( 727, 1175 )
-current = true
-limit_left = -700
-limit_top = -500
-limit_right = 3000
-limit_bottom = 1700
-limit_smoothed = true
-smoothing_enabled = true
-editor_draw_limits = true
-
-[node name="MapCamera2D" type="Camera2D" parent="."]
-offset = Vector2( 3200, -475 )
-zoom = Vector2( 5, 5 )
-limit_left = 0
-limit_top = 0
-limit_right = 0
-limit_bottom = 0
-editor_draw_limits = true
-
 [node name="Backdrop" type="Polygon2D" parent="."]
-position = Vector2( 1342.5, 649 )
+position = Vector2( 2194, 1491 )
 color = Color( 0.133333, 0.133333, 0.133333, 1 )
 texture = ExtResource( 18 )
 texture_scale = Vector2( 0.5, 0.5 )
@@ -163,14 +145,15 @@ script = ExtResource( 17 )
 offset_per_second = Vector2( 3, 1 )
 
 [node name="Scenario" type="Node2D" parent="."]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true
 }
 
 [node name="Terrain" parent="Scenario" instance=ExtResource( 10 )]
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
 material = null
+position = Vector2( 428, 734 )
 color = Color( 1, 1, 1, 1 )
 texture = null
 polygon = PoolVector2Array( -982, -69, -976, -888, -535, -934, -500, -782, -353, -793, -399, -569, -220, -412, 36, -489, -134, -299, -170, -196, -220, -82, -113, 61, -31, 203, 279, 31, 99, 245, 93, 393, 243, 452, 158, 622, 324, 555, 271, 670, 335, 755, 396, 937, 193, 974, 81, 969, 25, 1137, 118, 1212, 239, 1409, 22, 1431, -241, 1685, -970, 2115 )
@@ -179,11 +162,13 @@ polygon = PoolVector2Array( -982, -69, -976, -888, -535, -934, -500, -782, -353,
 default_color = Color( 1, 1, 1, 1 )
 
 [node name="PlanetAttractorLeft3" parent="Scenario" instance=ExtResource( 28 )]
-position = Vector2( -982, 595 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( -554, 1329 )
 
 [node name="Terrain3" parent="Scenario" instance=ExtResource( 10 )]
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
 material = null
-position = Vector2( 2029, -1508 )
+position = Vector2( 2457, -774 )
 color = Color( 1, 1, 1, 1 )
 texture = null
 texture_rotation_degrees = 45.0
@@ -194,11 +179,14 @@ offset_speed = -10.0
 default_color = Color( 1, 1, 1, 1 )
 
 [node name="PlanetAttractorLeft5" parent="Scenario" instance=ExtResource( 28 )]
-position = Vector2( 1047, -913 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( 1475, -179 )
 mass = 5000.0
 
 [node name="Terrain2" parent="Scenario" instance=ExtResource( 11 )]
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
 material = null
+position = Vector2( 2707, 896 )
 texture = null
 polygon = PoolVector2Array( -49, -434, 218, -642, 585, -713, 1065, -761, 1305, -134, 1821, 700, 1168, 1904, 608, 2021, 196, 1860, -129, 1600, -359, 1323, -519, 1088, -578, 802, -602, 522, -535, 310, -457, 140, -375, -76, -270, -233, -157, -353 )
 
@@ -206,10 +194,12 @@ polygon = PoolVector2Array( -49, -434, 218, -642, 585, -713, 1065, -761, 1305, -
 default_color = Color( 1, 1, 1, 1 )
 
 [node name="PlanetAttractorLeft2" parent="Scenario" instance=ExtResource( 28 )]
-position = Vector2( 2885, 789 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( 3313, 1523 )
 
 [node name="Goal" type="Area2D" parent="Scenario"]
-position = Vector2( 727, 1186 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( 1155, 1920 )
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_group_": true
@@ -222,7 +212,8 @@ texture = ExtResource( 13 )
 shape = SubResource( 7 )
 
 [node name="Battery1" type="Area2D" parent="Scenario"]
-position = Vector2( 10, -325 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( 438, 409 )
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
@@ -236,7 +227,8 @@ texture = ExtResource( 12 )
 shape = SubResource( 8 )
 
 [node name="Battery2" type="Area2D" parent="Scenario"]
-position = Vector2( 1015, 254 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( 1443, 988 )
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
@@ -250,7 +242,8 @@ texture = ExtResource( 12 )
 shape = SubResource( 8 )
 
 [node name="Battery3" type="Area2D" parent="Scenario"]
-position = Vector2( 329, 693 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( 757, 1427 )
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
@@ -264,7 +257,8 @@ texture = ExtResource( 12 )
 shape = SubResource( 8 )
 
 [node name="Battery4" type="Area2D" parent="Scenario"]
-position = Vector2( 1641, 757 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( 2069, 1491 )
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
@@ -278,7 +272,8 @@ texture = ExtResource( 12 )
 shape = SubResource( 8 )
 
 [node name="Battery5" type="Area2D" parent="Scenario"]
-position = Vector2( 127, 318 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( 555, 1052 )
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
@@ -292,31 +287,52 @@ texture = ExtResource( 12 )
 shape = SubResource( 8 )
 
 [node name="Asteroid1" parent="Scenario" instance=ExtResource( 28 )]
-position = Vector2( 938, 1268 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( 1366, 2002 )
 mass = 4000.0
 
 [node name="Visual" parent="Scenario/Asteroid1" index="1"]
 scale = Vector2( 5, 5 )
 
 [node name="Asteroid2" parent="Scenario" instance=ExtResource( 28 )]
-position = Vector2( 938, 450 )
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+position = Vector2( 1366, 1184 )
 mass = 4000.0
 
 [node name="Visual" parent="Scenario/Asteroid2" index="1"]
 scale = Vector2( 5, 5 )
+
+[node name="LaunchPoint" parent="Scenario" instance=ExtResource( 20 )]
+self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
+position = Vector2( 284, 694 )
+
+[node name="LaunchPoint2" parent="Scenario" instance=ExtResource( 20 )]
+self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
+position = Vector2( 332, 2334 )
+
+[node name="LaunchPoint3" parent="Scenario" instance=ExtResource( 20 )]
+self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
+position = Vector2( 2580, 478 )
+
+[node name="LaunchPoint4" parent="Scenario" instance=ExtResource( 20 )]
+self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
+position = Vector2( 2140, 1926 )
+
+[node name="LaunchPoint5" parent="Scenario" instance=ExtResource( 20 )]
+self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
+position = Vector2( 1236, 1024 )
 
 [node name="Player" type="Node2D" parent="."]
 script = ExtResource( 5 )
 
 [node name="Starship" parent="Player" groups=["starship"] instance=ExtResource( 2 )]
 modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
-position = Vector2( 1696, 560 )
+position = Vector2( 2124, 1294 )
 base_power = 6.0
 base_damp = 0.001
 base_gravity = 0
 velocity_damage_rate = 0.05
 energy_per_launch_power_rate = 0.2
-energy_for_navigation_per_s = 1.0
 
 [node name="JSBridge" type="Node" parent="Player"]
 script = ExtResource( 8 )
@@ -506,7 +522,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HSlider" type="HSlider" parent="Player/Controllers/Navigating"]
+[node name="NavHSlider" type="HSlider" parent="Player/Controllers/Navigating"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 48.0
@@ -514,7 +530,7 @@ margin_top = -29.0
 margin_right = 256.0
 margin_bottom = -13.0
 
-[node name="VSlider" type="VSlider" parent="Player/Controllers/Navigating"]
+[node name="NavVSlider" type="VSlider" parent="Player/Controllers/Navigating"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 17.0
@@ -567,7 +583,7 @@ __meta__ = {
 
 [node name="PlaybackSystem" type="Node2D" parent="."]
 script = ExtResource( 21 )
-launch_points = [ NodePath("LaunchPoint"), NodePath("LaunchPoint2"), NodePath("LaunchPoint3"), NodePath("LaunchPoint4"), NodePath("LaunchPoint5") ]
+launch_points = [ NodePath("../Scenario/LaunchPoint"), NodePath("../Scenario/LaunchPoint2"), NodePath("../Scenario/LaunchPoint3"), NodePath("../Scenario/LaunchPoint4"), NodePath("../Scenario/LaunchPoint5") ]
 player_node = NodePath("../Player/Starship")
 ghost_prefab = ExtResource( 16 )
 
@@ -577,25 +593,27 @@ save_on_exit = false
 position_target = NodePath("../../Player/Starship")
 rotation_target = NodePath("../../Player/Starship/Visual")
 
-[node name="LaunchPoint" parent="PlaybackSystem" instance=ExtResource( 20 )]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( -144, -40 )
+[node name="MapCamera2D" type="Camera2D" parent="."]
+offset = Vector2( 1000, 0 )
+zoom = Vector2( 2.5, 2.5 )
+limit_left = 0
+limit_top = 0
+limit_right = 2800
+limit_bottom = 2800
+limit_smoothed = true
+smoothing_enabled = true
+editor_draw_limits = true
 
-[node name="LaunchPoint2" parent="PlaybackSystem" instance=ExtResource( 20 )]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( -96, 1600 )
-
-[node name="LaunchPoint3" parent="PlaybackSystem" instance=ExtResource( 20 )]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( 2152, -256 )
-
-[node name="LaunchPoint4" parent="PlaybackSystem" instance=ExtResource( 20 )]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( 1712, 1192 )
-
-[node name="LaunchPoint5" parent="PlaybackSystem" instance=ExtResource( 20 )]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( 808, 290 )
+[node name="GameplayCamera2D" type="Camera2D" parent="."]
+position = Vector2( 727, 1175 )
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 2800
+limit_bottom = 2800
+limit_smoothed = true
+smoothing_enabled = true
+editor_draw_limits = true
 
 [connection signal="body_entered" from="Scenario/Goal" to="Player/Starship" method="_on_Goal_body_entered"]
 [connection signal="body_entered" from="Scenario/Battery1" to="Scenario/Battery1" method="_on_Battery_body_entered"]
@@ -613,6 +631,8 @@ position = Vector2( 808, 290 )
 [connection signal="value_changed" from="Player/Controllers/Launching/PowerHSlider" to="Player" method="_on_PowerHSlider_value_changed"]
 [connection signal="pressed" from="Player/Controllers/Launching/EngageButton" to="Player" method="_on_EngageButton_pressed"]
 [connection signal="toggled" from="Player/Controllers/Flying/ShieldButton" to="Player" method="_on_ShieldButton_toggled"]
+[connection signal="value_changed" from="Player/Controllers/Navigating/NavHSlider" to="." method="_on_NavHSlider_value_changed"]
+[connection signal="value_changed" from="Player/Controllers/Navigating/NavVSlider" to="." method="_on_NavVSlider_value_changed"]
 [connection signal="pressed" from="Player/Controllers/EmptyButton" to="Player" method="_on_EmptyButton_pressed"]
 [connection signal="pressed" from="Player/Controllers/LauncherButton" to="Player" method="_on_LauncherButton_pressed"]
 [connection signal="pressed" from="Player/Controllers/FlyingButton" to="Player" method="_on_FlyingButton_pressed"]

@@ -30,9 +30,10 @@ var velocity
 var last_launch_direction = Vector2.UP
 var is_grounded = false
 var is_navigating = false
-var is_offscreen = false
+var is_out_of_bounds = false
 var is_dying = false
 var is_shielded = false
+var out_of_bounds_timer:Timer
 
 signal energy_changed(new_energy)
 signal launched(launch_count)
@@ -71,14 +72,14 @@ func launching(delta):
 	if controller == Controller.LAUNCHING and is_grounded:
 		$LaunchAim.visible = true
 		$LaunchAim.rotation = $Visual.rotation + deg2rad(launch_angle - 90)
-		if is_navigating:
-			_change_energy(energy - delta * energy_for_navigation_per_s)
 		display_launch_aim()
 	else:
 		$LaunchAim.visible = false
 
 
 func _physics_process(delta):
+	if is_navigating:
+		_change_energy(energy - delta * energy_for_navigation_per_s)
 	if not is_grounded:
 		velocity += -velocity * base_damp
 		var target_rotation = get_angle_to(position + velocity) + deg2rad(90)
@@ -109,7 +110,6 @@ func _physics_process(delta):
 func launch():
 	if not has_enough_energy_to_launch():
 		return
-	is_navigating = false
 	emit_signal("navigation_engaged", false)
 	var launch_direction = global_position.direction_to($LaunchAim/Tip.global_position)
 	velocity += launch_direction * (launch_power * base_power)
@@ -128,7 +128,6 @@ func collect_battery():
 
 func _on_Goal_body_entered(body):
 	if body == self:
-		$VisibilityNotifier2D.free()
 		emit_signal("goal_reached", launch_count, energy)
 
 
@@ -164,14 +163,14 @@ func display_launch_aim():
 		$LaunchAim/Power.default_color = Color.black
 
 
-func entered_screen():
-	is_offscreen = false
+func entered_map_area():
+	is_out_of_bounds = false
 
 
-func exited_screen():
-	if is_offscreen:
+func exited_map_area():
+	if is_out_of_bounds:
 		return
-	is_offscreen = true
+	is_out_of_bounds = true
 	yield(get_tree().create_timer(OFFSCREEN_TIME_MAX), "timeout")
-	if is_offscreen:
+	if is_out_of_bounds:
 		emit_signal("died")

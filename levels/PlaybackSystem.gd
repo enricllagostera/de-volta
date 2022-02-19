@@ -8,8 +8,9 @@ onready var launchpad_count = launch_points.size()
 onready var player = get_node(player_node)
 onready var play_count = Main.play_count;
 
-var current_index;
-var level_name = "level_one";
+var current_index
+var level_name = "level_one"
+
 
 func _ready():
 #	Calculate current launch point current_index based on number of plays
