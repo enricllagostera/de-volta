@@ -11,7 +11,7 @@ const POWER_MAX = 100
 func _ready():
 	_change_launch_angle(0)
 	_change_launch_power(0)
-	activate_empty_controller()
+	activate_launching_controller()
 	$JSBridge.js_call("testFunction")
 
 
@@ -46,10 +46,10 @@ func _launching(_delta):
 	if $Starship.is_grounded:
 		$Controllers/Launching.visible = true
 		# Navigation mode
-		if Input.is_action_just_pressed("ui_accept"):
-			_change_navigation_mode(true)
-		elif Input.is_action_just_released("ui_accept"):
-			_change_navigation_mode(false)
+		# if Input.is_action_just_pressed("ui_accept"):
+		# 	_change_navigation_mode(true)
+		# elif Input.is_action_just_released("ui_accept"):
+		# 	_change_navigation_mode(false)
 		# Angle processing
 		if Input.is_action_just_pressed("ui_left"):
 			_change_launch_angle($Starship.launch_angle - ANGLE_INCREMENT_PER_PRESS)
@@ -68,7 +68,7 @@ func _launching(_delta):
 func _change_navigation_mode(new_state):
 	$Starship.is_navigating = new_state
 	$Starship.emit_signal("navigation_engaged", new_state)
-	$Controllers/Launching/NavigationToggle.pressed = new_state
+	# $Controllers/Launching/NavigationToggle.pressed = new_state
 
 
 func _change_launch_power(new_value):
@@ -102,8 +102,9 @@ func _on_NavigationToggle_toggled(button_pressed):
 	$Starship.emit_signal("navigation_engaged", button_pressed)
 
 
-func _on_Starship_navigation_engaged(is_active):
-	$Controllers/Launching/NavigationToggle.pressed = is_active
+func _on_Starship_navigation_engaged(_is_active):
+	#	$Controllers/Launching/NavigationToggle.pressed = is_active
+	pass
 
 
 func _on_EmptyButton_pressed():
@@ -130,25 +131,39 @@ func _on_BeholderInput_no_insert_detected():
 
 func activate_launching_controller(_args = null):
 	$Controllers/Launching.visible = true
-	$Starship.controller = $Starship.Controller.LAUNCHING
 	$Controllers/Flying.visible = false
+	$Controllers/Navigating.visible = false
+	$Starship.controller = $Starship.Controller.LAUNCHING
+	_change_navigation_mode(false)
 
 
 func activate_empty_controller(_args = null):
 	$Controllers/Launching.visible = false
-	$Starship.controller = $Starship.Controller.EMPTY
-	$Starship.is_navigating = false
+	$Controllers/Navigating.visible = false
 	$Controllers/Flying.visible = false
-	$Starship.emit_signal("navigation_engaged", false)
+	$Starship.controller = $Starship.Controller.EMPTY
+	_change_navigation_mode(false)
 
 
 func activate_flying_controller(_args = null):
 	$Controllers/Launching.visible = false
-	$Starship.controller = $Starship.Controller.FLYING
-	$Starship.is_navigating = false
 	$Controllers/Flying.visible = true
-	$Starship.emit_signal("navigation_engaged", false)
+	$Controllers/Navigating.visible = false
+	$Starship.controller = $Starship.Controller.FLYING
+	_change_navigation_mode(false)
+
+
+func activate_navigating_controller(_args = null):
+	$Controllers/Launching.visible = false
+	$Controllers/Flying.visible = false
+	$Controllers/Navigating.visible = true
+	$Starship.controller = $Starship.Controller.NAVIGATING
+	_change_navigation_mode(true)
 
 
 func _on_ShieldButton_toggled(button_pressed):
-	$Starship.is_shielded = true
+	$Starship.is_shielded = button_pressed
+
+
+func _on_NavigatingButton_pressed():
+	activate_navigating_controller()

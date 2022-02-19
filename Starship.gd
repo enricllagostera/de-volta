@@ -8,7 +8,7 @@ const HEALTH_MIN = 1.0
 const OFFSCREEN_TIME_MAX = 1.0
 const SHIELD_PROTECTION_RATE = 0.8
 
-enum Controller { EMPTY, LAUNCHING, FLYING, REPAIRING }
+enum Controller { EMPTY, LAUNCHING, FLYING, REPAIRING, NAVIGATING }
 
 export var base_power = 1.0
 export var base_damp = 0.001
@@ -20,7 +20,7 @@ export var energy_per_boost = 10
 export var energy_per_battery = 30.0
 export var energy_for_navigation_per_s = 0.5
 
-var controller = Controller.EMPTY
+onready var controller = Controller.LAUNCHING
 var launch_count = 0
 var launch_angle = 0
 var launch_power = 0
@@ -60,7 +60,7 @@ func _process(delta):
 			$LaunchAim.visible = false
 
 
-func _flying(delta):
+func _flying(_delta):
 	Engine.time_scale = 1.0
 	if is_grounded:
 		is_shielded = false
