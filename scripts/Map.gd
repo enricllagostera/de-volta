@@ -7,6 +7,8 @@ var map_camera_target: Vector2
 
 func _ready():
 	get_tree().call_group("gravity_attractor", "add_body", $Player/Starship)
+	$Player/Starship.connect("goal_reached", self, "_on_Starship_goal_reached")
+	$Player/Starship.connect("died", self, "reset")
 
 
 func _process(delta):
@@ -20,6 +22,13 @@ func _process(delta):
 		$Player/Starship.entered_map_area()
 	else:
 		$Player/Starship.exited_map_area()
+
+
+func reset():
+	print("Reset timer started.")
+	yield(get_tree().create_timer(2.0), "timeout")
+	print("Timer ended.")
+	Main.reload_current_level()
 
 
 func _on_Starship_navigation_engaged(is_active):
@@ -47,3 +56,22 @@ func _on_NavVSlider_value_changed(value):
 		$MapCamera2D.limit_bottom - OS.window_size.y * $MapCamera2D.zoom.y
 	)
 	map_camera_target.y = new_y
+
+
+func _on_Starship_goal_reached(_launch_count, _energy):
+	$Player/Starship.velocity = Vector2.ZERO
+	$Player/Starship.set_physics_process(false)
+	$Player/Starship.set_process(false)
+	var tween = $Player/Starship/Tween as Tween
+	tween.interpolate_property(
+		$Player/Starship/Visual,
+		"scale",
+		Vector2(1.2, 1.2),
+		Vector2.ZERO,
+		0.5,
+		Tween.TRANS_ELASTIC,
+		Tween.EASE_IN
+	)
+	tween.start()
+	Main.advance_level()
+	Main.change_level("InBetweenLevels")

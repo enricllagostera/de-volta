@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="space-hopper"
-run/main_scene="res://scenes/Game.tscn"
+run/main_scene="res://levels/InBetweenLevels.tscn"
 config/icon="res://images/icon.png"
 
 [aseprite_animation_importer]

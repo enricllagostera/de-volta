@@ -2,6 +2,8 @@ extends Node2D
 class_name Game
 
 export(PackedScene) var level
+export(PackedScene) var inbetween_scene
+onready var inbetween
 
 
 func _ready():
@@ -12,11 +14,7 @@ func _ready():
 	$Map/Player/Starship.connect("died", self, "reset")
 
 
-func reset():
-	print("Reset timer started.")
-	yield(get_tree().create_timer(2.0), "timeout")
-	print("Timer ended.")
-	assert(get_tree().reload_current_scene() == OK)
+
 
 
 func _on_Starship_goal_reached(_launch_count, _energy):
@@ -34,5 +32,6 @@ func _on_Starship_goal_reached(_launch_count, _energy):
 		Tween.EASE_IN
 	)
 	tween.start()
-	Main.play_count += 1
-	reset()
+	Main.advance_level()
+	Main.change_level("InBetweenLevels")
+#	reset()

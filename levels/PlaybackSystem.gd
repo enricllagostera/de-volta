@@ -13,6 +13,7 @@ var level_name = "level_one"
 
 
 func _ready():
+	level_name = Main.get_current_level_name()
 #	Calculate current launch point current_index based on number of plays
 	current_index = play_count % launchpad_count
 #	Instantiate recorded ghost ships on remaining launch points
@@ -35,7 +36,7 @@ func _notification(what):
 
 func add_ghost(index):
 	var history = load_history(index)
-	if history.size() == 0:
+	if history == null or history.size() == 0:
 		return
 	var new_ghost = ghost_prefab.instance()
 	new_ghost.launchpad_index = index

@@ -5,7 +5,7 @@ export(NodePath) var position_target
 export(NodePath) var rotation_target
 
 export onready var history = []
-export onready var level_name = "level_1"
+export onready var level_name = ""
 export onready var launchpad_index = 0
 
 onready var initial_ticks = 0.0
@@ -18,6 +18,7 @@ var timeSinceReady = 0.0
 
 
 func _ready():
+	level_name = Main.get_current_level_name()
 	save_on_exit = false
 
 
