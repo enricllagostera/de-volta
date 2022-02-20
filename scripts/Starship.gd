@@ -33,7 +33,7 @@ var is_navigating = false
 var is_out_of_bounds = false
 var is_dying = false
 var is_shielded = false
-var out_of_bounds_timer:Timer
+var out_of_bounds_timer: Timer
 
 signal energy_changed(new_energy)
 signal launched(launch_count)

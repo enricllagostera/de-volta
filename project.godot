@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Game",
 "language": "GDScript",
-"path": "res://Game.gd"
+"path": "res://scripts/Game.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Starship",
 "language": "GDScript",
-"path": "res://Starship.gd"
+"path": "res://scripts/Starship.gd"
 } ]
 _global_script_class_icons={
 "Game": "",
@@ -41,11 +41,13 @@ Main="*res://scenes/Main.tscn"
 [display]
 
 window/size/width=800
-window/size/height=450
-window/size/test_width=800
-window/size/test_height=450
+window/size/height=400
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
+
+[gdnative]
+
+singletons=[  ]
 
 [global]
 

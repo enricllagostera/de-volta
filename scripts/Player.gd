@@ -12,8 +12,8 @@ func _ready():
 	_change_launch_angle(0)
 	_change_launch_power(0)
 	activate_launching_controller()
-	$Controllers/Navigating/NavHSlider.value = 50;
-	$Controllers/Navigating/NavVSlider.value = 50;
+	$Controllers/Navigating/NavHSlider.value = 50
+	$Controllers/Navigating/NavVSlider.value = 50
 	$JSBridge.js_call("testFunction")
 
 

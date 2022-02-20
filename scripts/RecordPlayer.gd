@@ -15,7 +15,7 @@ var level_name
 func _ready():
 	history_index = 0
 	timer = 0.0
-	stop();
+	stop()
 
 
 func _process(delta):
@@ -35,8 +35,8 @@ func _process(delta):
 
 func get_next_index(from_index):
 	return 0 if (from_index + 1) >= history.size() else from_index + 1
-	
-	
+
+
 func start():
 	initial_ticks = history[0].tick
 	play()
@@ -44,7 +44,7 @@ func start():
 
 func play():
 	set_process(true)
-	
-	
+
+
 func stop():
 	set_process(false)
