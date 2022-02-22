@@ -165,6 +165,7 @@ func activate_navigating_controller(_args = null):
 
 func _on_ShieldButton_toggled(button_pressed):
 	$Starship.is_shielded = button_pressed
+	$Starship/Shield.visible = button_pressed
 
 
 func _on_NavigatingButton_pressed():

@@ -44,6 +44,7 @@ signal navigation_engaged(is_active)
 
 
 func _ready():
+	$Shield.visible = false
 	velocity = Vector2.ZERO
 	is_grounded = false
 
@@ -91,9 +92,9 @@ func _physics_process(delta):
 		# First calculate landing damage, before changing is_grounded
 		var damage = velocity.length() * velocity_damage_rate
 		if is_shielded:
-			health -= damage
-		else:
 			health -= damage * (1.0 - SHIELD_PROTECTION_RATE)
+		else:
+			health -= damage 
 		# Always land perpendicular to the collision surface
 		$Visual.rotation = get_angle_to(position + collision.normal) + deg2rad(90)
 		is_grounded = true

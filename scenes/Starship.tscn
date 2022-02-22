@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Starship.gd" type="Script" id=1]
 [ext_resource path="res://images/prototyping_shapes3.png" type="Texture" id=2]
+[ext_resource path="res://images/prototyping_shapes6.png" type="Texture" id=3]
 [ext_resource path="res://images/triangle_particles2.png" type="Texture" id=4]
 [ext_resource path="res://images/triangle_particles1.png" type="Texture" id=5]
 
@@ -98,3 +99,7 @@ damping_random = 0.14
 angle_random = 1.0
 scale_amount_random = 0.41
 scale_amount_curve = SubResource( 3 )
+
+[node name="Shield" type="Sprite" parent="."]
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 3 )

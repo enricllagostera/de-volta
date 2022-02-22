@@ -304,7 +304,7 @@ scale = Vector2( 5, 5 )
 
 [node name="LaunchPoint" parent="Scenario" instance=ExtResource( 20 )]
 self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
-position = Vector2( 284, 694 )
+position = Vector2( 1261, 1831 )
 
 [node name="LaunchPoint2" parent="Scenario" instance=ExtResource( 20 )]
 self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
