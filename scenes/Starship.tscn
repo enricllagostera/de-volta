@@ -19,6 +19,7 @@ _data = [ Vector2( 0, 0 ), 0.0, 1.4, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -0.228672, 0.0, 0, 0 ]
 
 [node name="Starship" type="KinematicBody2D"]
+collision_mask = 3
 script = ExtResource( 1 )
 base_damp = 0.01
 

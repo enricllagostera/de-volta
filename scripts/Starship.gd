@@ -79,6 +79,8 @@ func launching(delta):
 
 
 func _physics_process(delta):
+	if is_dying:
+		return
 	if is_navigating:
 		_change_energy(energy - delta * energy_for_navigation_per_s)
 	if not is_grounded:
@@ -175,3 +177,11 @@ func exited_map_area():
 	yield(get_tree().create_timer(OFFSCREEN_TIME_MAX), "timeout")
 	if is_out_of_bounds:
 		emit_signal("died")
+
+
+func touched_ghost(ghost):
+	is_dying = true
+	$DeathExplosion.emitting = true
+	$Visual.visible = false
+	$LaunchAim.visible = false
+	emit_signal("died")

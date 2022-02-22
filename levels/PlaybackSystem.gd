@@ -15,7 +15,8 @@ var level_name = "level_one"
 func _ready():
 	level_name = Main.get_current_level_name()
 #	Calculate current launch point current_index based on number of plays
-	current_index = play_count % launchpad_count
+	var local_count = Main.get_current_level_count()
+	current_index = local_count % launchpad_count
 #	Instantiate recorded ghost ships on remaining launch points
 	for ghost_index in launchpad_count:
 #		Only load history if there is a playthrough for this launchpad
@@ -26,12 +27,6 @@ func _ready():
 	var current_launchpad = get_node(launch_points[current_index]).position;
 	player.position = current_launchpad
 	$Recorder.launchpad_index = current_launchpad
-
-
-func _notification(what):
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		erase_saved_histories();
-		get_tree().quit() # default behavior
 
 
 func add_ghost(index):
@@ -47,17 +42,8 @@ func add_ghost(index):
 	
 
 
-func save_history(history, launchpad_index):
-	var file = File.new();
-	var path = "user://record-"+ player.name + "-" + level_name + "-" + str(launchpad_index) +".sav";
-	print(path);
-	if file.open(path, File.WRITE) != 0:
-		print("Error opening file")
-		return
-	var data = {}
-	data.history = history
-	file.store_line(to_json(data))
-	file.close()
+func save_level_history(history, launchpad_index):
+	Main.save_history(history, player.name, level_name, launchpad_index)
 
 
 func load_history(launchpad_index):
@@ -77,15 +63,9 @@ func load_history(launchpad_index):
 	return history
 
 
-func erase_saved_histories():
-	for ghost_index in launchpad_count:
-		save_history([], ghost_index)
-
-
-	
 func _on_Starship_goal_reached(launch_count, energy):
 	$Recorder.prepare_for_saving()
-	save_history($Recorder.history, current_index)
+	save_level_history($Recorder.history, current_index)
 
 
 

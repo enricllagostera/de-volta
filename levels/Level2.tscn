@@ -53,6 +53,7 @@ radius = 34.0147
 radius = 18.1108
 
 [node name="Level" type="Node2D"]
+position = Vector2( 210, 144 )
 script = ExtResource( 9 )
 area_bounds = Rect2( 0, 0, 2800, 2800 )
 map_camera_smooth = 4.0
@@ -305,11 +306,11 @@ scale = Vector2( 5, 5 )
 
 [node name="LaunchPoint" parent="Scenario" instance=ExtResource( 20 )]
 self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
-position = Vector2( 284, 694 )
+position = Vector2( 1366, 1792 )
 
 [node name="LaunchPoint2" parent="Scenario" instance=ExtResource( 20 )]
 self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
-position = Vector2( 332, 2334 )
+position = Vector2( 1507, 1842 )
 
 [node name="LaunchPoint3" parent="Scenario" instance=ExtResource( 20 )]
 self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )

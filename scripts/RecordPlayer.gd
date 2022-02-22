@@ -48,3 +48,10 @@ func play():
 
 func stop():
 	set_process(false)
+
+
+func _on_GhostShip_body_entered(body):
+	if body is Starship:
+		print("hit player")
+		body.touched_ghost(self)
+	pass # Replace with function body.

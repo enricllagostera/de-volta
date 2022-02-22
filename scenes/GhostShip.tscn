@@ -1,10 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/RecordPlayer.gd" type="Script" id=1]
 [ext_resource path="res://images/prototyping_shapes4.png" type="Texture" id=2]
 [ext_resource path="res://images/prototyping_shapes1.png" type="Texture" id=3]
 
-[node name="GhostShip" type="Node2D"]
+[sub_resource type="CircleShape2D" id=1]
+radius = 20.0
+
+[node name="GhostShip" type="Area2D"]
+collision_layer = 2
+collision_mask = 3
 script = ExtResource( 1 )
 source_node = NodePath("../../Player/Starship")
 
@@ -15,3 +20,8 @@ texture = ExtResource( 2 )
 [node name="ShipL2" type="Sprite" parent="ShipL"]
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="." to="." method="_on_GhostShip_body_entered"]
