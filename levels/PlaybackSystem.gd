@@ -8,25 +8,26 @@ onready var launchpad_count = launch_points.size()
 onready var player = get_node(player_node)
 onready var play_count = Main.play_count;
 
-var current_index
+var current_launchpad_index
 var level_name = "level_one"
 
 
-func _ready():
+func prepare_player_and_ships(map_index):
 	level_name = Main.get_current_level_name()
-#	Calculate current launch point current_index based on number of plays
-	var local_count = Main.get_current_level_count()
-	current_index = local_count % launchpad_count
+#	Calculate current launch point current_launchpad_index based on number of plays
+	var local_count = Main.levels[map_index].level_plays
+	current_launchpad_index = local_count % launchpad_count
 #	Instantiate recorded ghost ships on remaining launch points
 	for ghost_index in launchpad_count:
 #		Only load history if there is a playthrough for this launchpad
 #		AND it isn't the current launchpad
-		if play_count >= ghost_index and ghost_index != current_index:
+		if play_count >= ghost_index and ghost_index != current_launchpad_index:
 			add_ghost(ghost_index)
 #	Move Starship to its starting location
-	var current_launchpad = get_node(launch_points[current_index]).position;
+	var current_launchpad = get_node(launch_points[current_launchpad_index]).position;
 	player.position = current_launchpad
 	$Recorder.launchpad_index = current_launchpad
+
 
 
 func add_ghost(index):
@@ -65,7 +66,7 @@ func load_history(launchpad_index):
 
 func _on_Starship_goal_reached(launch_count, energy):
 	$Recorder.prepare_for_saving()
-	save_level_history($Recorder.history, current_index)
+	save_level_history($Recorder.history, current_launchpad_index)
 
 
 

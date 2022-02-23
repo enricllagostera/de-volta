@@ -14,6 +14,7 @@ func _ready():
 	activate_launching_controller()
 	$Controllers/Navigating/NavHSlider.value = 50
 	$Controllers/Navigating/NavVSlider.value = 50
+	$Controllers/Flying/BoostButton.connect("pressed", self, "_on_boost_click")
 	$JSBridge.js_call("testFunction")
 
 
@@ -83,6 +84,10 @@ func _change_launch_angle(new_value):
 	$Starship.launch_angle = clamp(new_value, ANGLE_MIN, ANGLE_MAX)
 	$Controllers/Launching/AngleHSlider.value = $Starship.launch_angle
 	$Controllers/Launching/AngleLbl.text = "Angle: %d" % $Starship.launch_angle
+
+
+func _on_boost_click():
+	$Starship.boost()
 
 
 func _on_AngleHSlider_value_changed(value):

@@ -3,9 +3,12 @@ extends Node2D
 export var area_bounds: Rect2
 export var map_camera_smooth: float = 2.0
 var map_camera_target: Vector2
+export var map_index = 0
 
 
 func _ready():
+	Main.current_level = map_index
+	$PlaybackSystem.prepare_player_and_ships(map_index)
 	get_tree().call_group("gravity_attractor", "add_body", $Player/Starship)
 	$Player/Starship.connect("goal_reached", self, "_on_Starship_goal_reached")
 	$Player/Starship.connect("died", self, "reset")

@@ -90,7 +90,7 @@ func _physics_process(delta):
 	else:
 		velocity = Vector2.ZERO
 	var collision = move_and_collide(velocity * delta)
-	if collision:
+	if collision and velocity.length() > 0.1:
 		# First calculate landing damage, before changing is_grounded
 		var damage = velocity.length() * velocity_damage_rate
 		if is_shielded:
@@ -121,6 +121,8 @@ func launch():
 	is_grounded = false
 	_change_energy(energy + -launch_power * energy_per_launch_power_rate)
 	launch_count += 1
+	$Visual/Particles2D.lifetime = 2
+	$Visual/Particles2D.restart()
 	$Visual/Particles2D.emitting = true
 	emit_signal("launched", launch_count)
 
@@ -149,6 +151,15 @@ func has_enough_energy_to_launch():
 
 func can_boost():
 	return (not is_grounded) and (energy >= energy_per_boost)
+	
+	
+func boost():
+	if energy >= energy_per_boost:
+		velocity = velocity * 1.5
+		_change_energy(energy - energy_per_boost)
+		$Visual/Particles2D.lifetime = 0.5
+		$Visual/Particles2D.restart()
+		$Visual/Particles2D.emitting = true
 
 
 func can_shield(delta):

@@ -4,9 +4,9 @@ export var play_count = 0
 var current_level = 0
 
 var levels = [
-	{"name": "Level1", "level_count": 0, "launchpad_count": 5},
-	{"name": "Level2", "level_count": 0, "launchpad_count": 5},
-	{"name": "Level3", "level_count": 0, "launchpad_count": 5}
+	{"name": "Level1", "level_plays": 0, "launchpad_count": 5},
+	{"name": "Level2", "level_plays": 0, "launchpad_count": 5},
+	{"name": "Level3", "level_plays": 0, "launchpad_count": 5}
 ]
 
 
@@ -23,7 +23,7 @@ func erase_saved_histories():
 
 
 func advance_level():
-	levels[current_level].level_count += 1
+	levels[current_level].level_plays += 1
 	play_count += 1
 	current_level = play_count % 3
 
@@ -36,8 +36,8 @@ func change_level(level_name):
 	get_tree().get_root().add_child(new_level)
 
 
-func get_current_level_count():
-	return levels[current_level].level_count;
+func get_current_level_plays():
+	return levels[current_level].level_plays;
 
 
 func get_current_level_name():

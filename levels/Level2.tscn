@@ -53,10 +53,10 @@ radius = 34.0147
 radius = 18.1108
 
 [node name="Level" type="Node2D"]
-position = Vector2( 210, 144 )
 script = ExtResource( 9 )
 area_bounds = Rect2( 0, 0, 2800, 2800 )
 map_camera_smooth = 4.0
+map_index = 1
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -136,7 +136,7 @@ __meta__ = {
 }
 
 [node name="Backdrop" type="Polygon2D" parent="."]
-self_modulate = Color( 0.313726, 1, 0, 1 )
+self_modulate = Color( 0.160784, 0.741176, 0.0941176, 1 )
 position = Vector2( 2194, 1491 )
 color = Color( 0.133333, 0.133333, 0.133333, 1 )
 texture = ExtResource( 18 )
@@ -144,12 +144,14 @@ texture_scale = Vector2( 0.5, 0.5 )
 texture_rotation_degrees = 71.6
 polygon = PoolVector2Array( -2370.5, -1603, -2383.5, 1566, 2439.5, 1586, 2379.5, -1636 )
 script = ExtResource( 17 )
+__meta__ = {
+"_edit_lock_": true
+}
 offset_per_second = Vector2( 3, 1 )
 
 [node name="Scenario" type="Node2D" parent="."]
 __meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true
+"_edit_group_": true
 }
 
 [node name="Terrain" parent="Scenario" instance=ExtResource( 10 )]
@@ -306,11 +308,11 @@ scale = Vector2( 5, 5 )
 
 [node name="LaunchPoint" parent="Scenario" instance=ExtResource( 20 )]
 self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
-position = Vector2( 1366, 1792 )
+position = Vector2( 1424, 1800 )
 
 [node name="LaunchPoint2" parent="Scenario" instance=ExtResource( 20 )]
 self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
-position = Vector2( 1507, 1842 )
+position = Vector2( 1298, 1370 )
 
 [node name="LaunchPoint3" parent="Scenario" instance=ExtResource( 20 )]
 self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
