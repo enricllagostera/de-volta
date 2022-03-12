@@ -1,10 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/GravitationalAsteroid.gd" type="Script" id=1]
-[ext_resource path="res://images/prototyping_shapes1.png" type="Texture" id=2]
+[ext_resource path="res://images/prototyping_kit/circle_filled.png" type="Texture" id=2]
+[ext_resource path="res://images/gravity_pull.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=9]
 radius = 157.08
+
+[sub_resource type="Curve" id=10]
+_data = [ Vector2( 0, 0 ), 0.0, 1.4, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=11]
+colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1 )
 
 [node name="PlanetAttractorLeft" type="StaticBody2D" groups=["gravity_attractor"]]
 position = Vector2( -557, 595 )
@@ -21,7 +28,12 @@ shape = SubResource( 9 )
 texture = ExtResource( 2 )
 
 [node name="Line2D" type="Line2D" parent="."]
-default_color = Color( 0.4, 0.501961, 1, 0.380392 )
+visible = false
+width_curve = SubResource( 10 )
+default_color = Color( 1, 1, 1, 1 )
+gradient = SubResource( 11 )
+texture = ExtResource( 3 )
+texture_mode = 1
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2

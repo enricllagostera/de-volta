@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="StreamTexture" id=5]
+load_path = "res://.import/animated_starship.png-9c3da582af720462fd464b8aacf9a86a.stex"
+
+[sub_resource type="Animation" id=1]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 6.0, 7.0, 8.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2.0, 3.0, 4.0, 5.0 ]
+}
+
+[node name="Visuals" type="Sprite"]
+texture = SubResource( 5 )
+hframes = 3
+vframes = 3
+frame = 5
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2ltYWdlcy9zdGFyc2hpcC9hbmltYXRlZF9zdGFyc2hpcC5hc2Vwcml0ZQpsYXllcnw9Cm9wX2V4cHw9RmFsc2UKb19mb2xkZXJ8PXJlczovL2ltYWdlcy9zdGFyc2hpcApvX25hbWV8PQpvbmx5X3Zpc2libGV8PUZhbHNlCm9fZXhfcHw9Cg=="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/flying = SubResource( 1 )
+anims/grounded = SubResource( 4 )
+anims/landing = SubResource( 2 )

@@ -64,11 +64,6 @@ func load_history(launchpad_index):
 	return history
 
 
-func _on_Starship_goal_reached(launch_count, energy):
+func _on_Starship_goal_reached(_launch_count, _energy):
 	$Recorder.prepare_for_saving()
 	save_level_history($Recorder.history, current_launchpad_index)
-
-
-
-
-

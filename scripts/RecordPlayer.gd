@@ -40,6 +40,7 @@ func get_next_index(from_index):
 func start():
 	initial_ticks = history[0].tick
 	play()
+	$ShipL/AnimationPlayer.play("default")
 
 
 func play():

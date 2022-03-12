@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="StreamTexture" id=1]
+load_path = "res://.import/import_test.png-1af1f5f42b39c56ee78327e87263fadb.stex"
+
+[sub_resource type="Animation" id=2]
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0 ]
+}
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = SubResource( 1 )
+hframes = 2
+frame = 1
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVNwcml0ZS9BbmltYXRpb25QbGF5ZXIKc291cmNlfD1yZXM6Ly9pbWFnZXMvc3RhcnNoaXAvaW1wb3J0X3Rlc3QuYXNlcHJpdGUKbGF5ZXJ8PQpvcF9leHB8PUZhbHNlCm9fZm9sZGVyfD1yZXM6Ly9pbWFnZXMvc3RhcnNoaXAKb19uYW1lfD0Kb25seV92aXNpYmxlfD1GYWxzZQpvX2V4X3B8PQo="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+anims/idle = SubResource( 2 )

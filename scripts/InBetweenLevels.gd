@@ -44,7 +44,8 @@ func add_outer_ring():
 	$Level3/On.visible = false
 
 
-
 func load_next_level():
+	if current_level >= Main.levels.size():
+		current_level = 0
 	Main.change_level(Main.levels[current_level].name)
 

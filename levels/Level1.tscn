@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=2]
@@ -10,17 +10,85 @@
 [ext_resource path="res://scripts/JSBridge.gd" type="Script" id=8]
 [ext_resource path="res://scripts/Map.gd" type="Script" id=9]
 [ext_resource path="res://scenes/TerrainMountains.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/TerrainOcean.tscn" type="PackedScene" id=11]
-[ext_resource path="res://images/prototyping_shapes1.png" type="Texture" id=12]
-[ext_resource path="res://images/prototyping_shapes2.png" type="Texture" id=13]
+[ext_resource path="res://scenes/ParallaxBackdrop.tscn" type="PackedScene" id=11]
+[ext_resource path="res://images/prototyping_kit/circle_filled.png" type="Texture" id=12]
+[ext_resource path="res://images/prototyping_kit/square_filled.png" type="Texture" id=13]
 [ext_resource path="res://fonts/BaseFont.tres" type="DynamicFont" id=14]
 [ext_resource path="res://scripts/Recorder.gd" type="Script" id=15]
-[ext_resource path="res://scenes/GhostShip.tscn" type="PackedScene" id=16]
+[ext_resource path="res://ghost/GhostShip.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scripts/TextureScroll.gd" type="Script" id=17]
-[ext_resource path="res://images/pattern02.png" type="Texture" id=18]
+[ext_resource path="res://images/experiments/pattern02.png" type="Texture" id=18]
+[ext_resource path="res://images/experiments/pattern01.png" type="Texture" id=19]
 [ext_resource path="res://scenes/LaunchPoint.tscn" type="PackedScene" id=20]
 [ext_resource path="res://levels/PlaybackSystem.gd" type="Script" id=21]
 [ext_resource path="res://scenes/GravityAttractor.tscn" type="PackedScene" id=28]
+
+[sub_resource type="StreamTexture" id=22]
+load_path = "res://.import/hud_lives.png-0deea7635876207e5db45793787fd653.stex"
+
+[sub_resource type="Animation" id=11]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 6.0, 7.0, 8.0 ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 4.0, 5.0, 4.0 ]
+}
+
+[sub_resource type="Animation" id=13]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 2.0, 3.0, 2.0 ]
+}
+
+[sub_resource type="Animation" id=14]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0, 0.0 ]
+}
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.933333, 0.192157, 0.435294, 1 )
@@ -46,11 +114,84 @@ size = 32
 outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
 font_data = ExtResource( 1 )
 
+[sub_resource type="StreamTexture" id=18]
+load_path = "res://.import/health_bar.png-a5cc159f1bd86dd1c792302a9bac36e7.stex"
+
+[sub_resource type="Animation" id=16]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 2.0, 3.0, 4.0 ]
+}
+
+[sub_resource type="Animation" id=17]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="StreamTexture" id=23]
+load_path = "res://.import/energy_bar.png-6ecf4612c167f6ad2cd5444a8c0c1318.stex"
+
+[sub_resource type="Animation" id=20]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 2.0, 3.0, 4.0 ]
+}
+
+[sub_resource type="Animation" id=21]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0, 0.0 ]
+}
+
 [sub_resource type="CircleShape2D" id=7]
 radius = 34.0147
 
 [sub_resource type="CircleShape2D" id=8]
 radius = 18.1108
+
+[sub_resource type="StreamTexture" id=9]
+load_path = "res://.import/animated_starship.png-9c3da582af720462fd464b8aacf9a86a.stex"
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 9 )
@@ -59,11 +200,29 @@ map_camera_smooth = 4.0
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
+[node name="Lives" type="Sprite" parent="HUD"]
+texture = SubResource( 22 )
+centered = false
+hframes = 3
+vframes = 3
+frame = 1
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUhVRC9MaXZlcy9BbmltYXRpb25QbGF5ZXIKc291cmNlfD1yZXM6Ly9odWRfbGl2ZXMvaHVkX2xpdmVzLmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9cmVzOi8vaHVkX2xpdmVzCm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9RmFsc2UKb19leF9wfD0K"
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Lives"]
+playback_speed = 0.5
+anims/lives0 = SubResource( 11 )
+anims/lives1 = SubResource( 12 )
+anims/lives2 = SubResource( 13 )
+anims/lives3 = SubResource( 14 )
+
 [node name="HealthBar" type="ProgressBar" parent="HUD"]
-margin_left = 74.0
-margin_top = 8.0
-margin_right = 274.0
-margin_bottom = 37.0
+margin_left = 20.0
+margin_top = 268.0
+margin_right = 178.0
+margin_bottom = 289.0
+rect_rotation = -89.9999
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 14 )
 custom_styles/fg = SubResource( 5 )
@@ -76,6 +235,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="HUD/HealthBar"]
+visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = -66.0
@@ -91,10 +251,11 @@ __meta__ = {
 }
 
 [node name="EnergyBar" type="ProgressBar" parent="HUD"]
-margin_left = 368.0
-margin_top = 8.0
-margin_right = 580.0
-margin_bottom = 37.0
+margin_left = 762.0
+margin_top = 268.0
+margin_right = 919.0
+margin_bottom = 289.0
+rect_rotation = -89.9999
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 14 )
 custom_styles/fg = SubResource( 3 )
@@ -107,6 +268,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="HUD/EnergyBar"]
+visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = -63.0
@@ -134,7 +296,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Tween" type="Tween" parent="HUD"]
+
+[node name="HealthBarOverlay" type="Sprite" parent="HUD"]
+position = Vector2( 32, 200 )
+scale = Vector2( 1.25, 1 )
+texture = SubResource( 18 )
+hframes = 3
+vframes = 2
+frame = 1
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUhVRC9IZWFsdGhCYXJPdmVybGF5L0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2h1ZF9iYXJzL2h1ZF9iYXJzLmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9cmVzOi8vaHVkX2JhcnMKb19uYW1lfD1oZWFsdGhfYmFyCm9ubHlfdmlzaWJsZXw9VHJ1ZQpvX2V4X3B8PQo="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/HealthBarOverlay"]
+anims/energy = SubResource( 16 )
+anims/health = SubResource( 17 )
+
+[node name="EnergyBarOverlay" type="Sprite" parent="HUD"]
+position = Vector2( 772, 200 )
+scale = Vector2( 1.25, 1 )
+texture = SubResource( 23 )
+hframes = 3
+vframes = 2
+frame = 4
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUhVRC9FbmVyZ3lCYXJPdmVybGF5L0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2h1ZF9iYXJzL2h1ZF9iYXJzLmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9cmVzOi8vaHVkX2JhcnMKb19uYW1lfD1lbmVyZ3lfYmFyCm9ubHlfdmlzaWJsZXw9VHJ1ZQpvX2V4X3B8PQo="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/EnergyBarOverlay"]
+anims/energy = SubResource( 20 )
+anims/health = SubResource( 21 )
+
 [node name="Backdrop" type="Polygon2D" parent="."]
+visible = false
 self_modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 2194, 1491 )
 color = Color( 0.133333, 0.133333, 0.133333, 1 )
@@ -150,51 +345,53 @@ offset_per_second = Vector2( 3, 1 )
 
 [node name="Scenario" type="Node2D" parent="."]
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_lock_": true
 }
 
 [node name="Terrain" parent="Scenario" instance=ExtResource( 10 )]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-material = null
 position = Vector2( 428, 734 )
-color = Color( 1, 1, 1, 1 )
-texture = null
+color = Color( 1, 0.517647, 0.14902, 1 )
+texture = ExtResource( 19 )
+texture_scale = Vector2( 2, 2 )
 polygon = PoolVector2Array( -982, -69, -976, -888, -535, -934, -500, -782, -353, -793, -399, -569, -220, -412, 36, -489, -134, -299, -170, -196, -220, -82, -113, 61, -31, 203, 279, 31, 99, 245, 93, 393, 243, 452, 158, 622, 324, 555, 271, 670, 335, 755, 396, 937, 193, 974, 81, 969, 25, 1137, 118, 1212, 239, 1409, 22, 1431, -241, 1685, -970, 2115 )
+uv = PoolVector2Array( -982, -69, -976, -888, -535, -934, -500, -782, -353, -793, -399, -569, -220, -412, 36, -489, -134, -299, -170, -196, -220, -82, -113, 61, -31, 203, 279, 31, 99, 245, 93, 393, 243, 452, 158, 622, 324, 555, 271, 670, 335, 755, 396, 937, 193, 974, 81, 969, 25, 1137, 118, 1212, 239, 1409, 22, 1431, -241, 1685, -970, 2115 )
+offset_speed = 3.0
 
 [node name="Line2D" parent="Scenario/Terrain" index="0"]
-default_color = Color( 1, 1, 1, 1 )
+width = 8.0
+default_color = Color( 1, 0.517647, 0.14902, 1 )
 
 [node name="PlanetAttractorLeft3" parent="Scenario" instance=ExtResource( 28 )]
 modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
 position = Vector2( -554, 1329 )
 
 [node name="Terrain3" parent="Scenario" instance=ExtResource( 10 )]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-material = null
 position = Vector2( 2457, -774 )
-color = Color( 1, 1, 1, 1 )
-texture = null
+color = Color( 0.0627451, 0.823529, 0.458824, 1 )
+texture = ExtResource( 19 )
 texture_rotation_degrees = 45.0
 polygon = PoolVector2Array( -982, -69, -976, -888, -535, -934, -500, -782, -353, -793, -399, -569, -220, -412, 36, -489, -134, -299, -170, -196, -220, -82, -113, 61, -31, 203, 99, 245, 93, 393, 158, 622, 271, 670, 238, 700, 190, 720, 102, 772, 26, 808, 26, 1008, 6, 1152, -70, 1156, -230, 1140, -522, 1276, -934, 1220, -1334, 1092, -1538, 936, -1802, 344 )
 offset_speed = -10.0
 
 [node name="Line2D" parent="Scenario/Terrain3" index="0"]
-default_color = Color( 1, 1, 1, 1 )
+width = 8.0
+default_color = Color( 0.0627451, 0.823529, 0.458824, 1 )
 
 [node name="PlanetAttractorLeft5" parent="Scenario" instance=ExtResource( 28 )]
 modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
 position = Vector2( 1475, -179 )
 mass = 5000.0
 
-[node name="Terrain2" parent="Scenario" instance=ExtResource( 11 )]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-material = null
-position = Vector2( 2707, 896 )
-texture = null
-polygon = PoolVector2Array( -49, -434, 218, -642, 585, -713, 1065, -761, 1305, -134, 1821, 700, 1168, 1904, 608, 2021, 196, 1860, -129, 1600, -359, 1323, -519, 1088, -578, 802, -602, 522, -535, 310, -457, 140, -375, -76, -270, -233, -157, -353 )
+[node name="Terrain2" parent="Scenario" instance=ExtResource( 10 )]
+position = Vector2( 3637, 988 )
+color = Color( 0.407843, 0.682353, 0.831373, 1 )
+texture = ExtResource( 19 )
+polygon = PoolVector2Array( -1341, -47, -1007, -492, -722, -832, -373, -1013, -220, -412, 15, -110, 99, 245, 146, 771, 15, 966, 238, 1264, -241, 1685, -970, 2115, -1295, 1531, -1425, 1001, -1514, 716, -1482, 475, -1442, 265 )
 
-[node name="Line2D" parent="Scenario/Terrain2" index="1"]
-default_color = Color( 1, 1, 1, 1 )
+[node name="Line2D" parent="Scenario/Terrain2" index="0"]
+width = 8.0
+default_color = Color( 0.407843, 0.682353, 0.831373, 1 )
 
 [node name="PlanetAttractorLeft2" parent="Scenario" instance=ExtResource( 28 )]
 modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
@@ -325,6 +522,9 @@ position = Vector2( 2140, 1926 )
 self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
 position = Vector2( 1236, 1024 )
 
+[node name="Backdrop2" parent="Scenario" instance=ExtResource( 11 )]
+position = Vector2( -1, -1 )
+
 [node name="Player" type="Node2D" parent="."]
 script = ExtResource( 5 )
 
@@ -337,14 +537,16 @@ base_gravity = 0
 velocity_damage_rate = 0.05
 energy_per_launch_power_rate = 0.2
 
+[node name="Visual" parent="Player/Starship" index="1"]
+texture = SubResource( 9 )
+
 [node name="JSBridge" type="Node" parent="Player"]
 script = ExtResource( 8 )
-target = NodePath("..")
+target = NodePath("../..")
 
 [node name="Controllers" type="CanvasLayer" parent="Player"]
 
 [node name="Empty" type="Control" parent="Player/Controllers"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -357,9 +559,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -190.5
-margin_top = -36.0
+margin_top = 139.0
 margin_right = 190.5
-margin_bottom = 36.0
+margin_bottom = 211.0
 custom_fonts/font = ExtResource( 14 )
 text = "No controller selected."
 align = 1

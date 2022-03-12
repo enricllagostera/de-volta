@@ -47,6 +47,9 @@ func _ready():
 	$Shield.visible = false
 	velocity = Vector2.ZERO
 	is_grounded = false
+	_change_energy(Main.current_energy)
+	_change_health(Main.current_health)
+	
 
 
 func _process(delta):
@@ -58,7 +61,7 @@ func _process(delta):
 		Controller.FLYING:
 			_flying(delta)
 		Controller.EMPTY:
-			Engine.time_scale = 0.1
+			Engine.time_scale = 1.0
 			$LaunchAim.visible = false
 
 
@@ -68,7 +71,7 @@ func _flying(_delta):
 		is_shielded = false
 
 
-func launching(delta):
+func launching(_delta):
 	Engine.time_scale = 1.0
 	if controller == Controller.LAUNCHING and is_grounded:
 		$LaunchAim.visible = true
@@ -100,6 +103,8 @@ func _physics_process(delta):
 		# Always land perpendicular to the collision surface
 		$Visual.rotation = get_angle_to(position + collision.normal) + deg2rad(90)
 		is_grounded = true
+		$Visual/AnimationPlayer.play("landing")
+		$Visual/AnimationPlayer.queue("grounded")
 		# Apply health change consequences
 		emit_signal("health_changed", health)
 		if health <= HEALTH_MIN and not is_dying:
@@ -111,7 +116,7 @@ func _physics_process(delta):
 
 
 func launch():
-	if not has_enough_energy_to_launch():
+	if not has_enough_energy_to_launch() or not is_grounded:
 		return
 	emit_signal("navigation_engaged", false)
 	var launch_direction = global_position.direction_to($LaunchAim/Tip.global_position)
@@ -124,6 +129,7 @@ func launch():
 	$Visual/Particles2D.lifetime = 2
 	$Visual/Particles2D.restart()
 	$Visual/Particles2D.emitting = true
+	$Visual/AnimationPlayer.play("flying")
 	emit_signal("launched", launch_count)
 
 
@@ -139,6 +145,11 @@ func _on_Goal_body_entered(body):
 func _change_energy(new_energy):
 	energy = clamp(new_energy, ENERGY_MIN, ENERGY_MAX)
 	emit_signal("energy_changed", energy)
+
+
+func _change_health(new_health):
+	health = clamp(new_health, HEALTH_MIN, HEALTH_MAX)
+	emit_signal("health_changed", health)
 
 
 func pull(force):
@@ -167,14 +178,20 @@ func can_shield(delta):
 
 
 func display_launch_aim():
-	var points = $LaunchAim/Power.points
-	points.set(0, Vector2.ZERO)
-	points.set(1, Vector2(launch_power, 0))
-	$LaunchAim/Power.points = points
-	if has_enough_energy_to_launch():
-		$LaunchAim/Power.default_color = Color.white
+	if(launch_power > 0):
+		$LaunchAim.visible = true
+		var points = $LaunchAim/Power.points
+		points.set(0, Vector2.ZERO)
+		points.set(1, Vector2(40 + launch_power, 0))
+		$LaunchAim/Power.points = points
+		if has_enough_energy_to_launch():
+			$LaunchAim/Power.default_color = Color.white
+		else:
+			$LaunchAim/Power.default_color = Color.black
+		$LaunchAim/Tip.position.x = 40 + launch_power + 5
+		$LaunchAim/MaxTip.position.x = 40 + (100) + 5
 	else:
-		$LaunchAim/Power.default_color = Color.black
+		$LaunchAim.visible = false
 
 
 func entered_map_area():
@@ -190,7 +207,7 @@ func exited_map_area():
 		emit_signal("died")
 
 
-func touched_ghost(ghost):
+func touched_ghost(_ghost):
 	is_dying = true
 	$DeathExplosion.emitting = true
 	$Visual.visible = false

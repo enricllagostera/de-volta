@@ -15,11 +15,10 @@ func _ready():
 	$Controllers/Navigating/NavHSlider.value = 50
 	$Controllers/Navigating/NavVSlider.value = 50
 	$Controllers/Flying/BoostButton.connect("pressed", self, "_on_boost_click")
-	$JSBridge.js_call("testFunction")
 
 
 func _input(_event):
-#	Keyboard controls
+# Keyboard controls
 	if Input.is_action_just_pressed("empty_controller"):
 		activate_empty_controller()
 	if Input.is_action_just_pressed("launching_controller"):
@@ -42,18 +41,11 @@ func _flying(delta):
 	$Controllers/Flying/BoostButton.disabled = not $Starship.can_boost()
 	$Controllers/Flying/ShieldButton.disabled = not $Starship.can_shield(delta)
 	$Controllers/Flying/ShieldButton.pressed = $Starship.is_shielded
-	pass
 
 
 func _launching(_delta):
 	if $Starship.is_grounded:
 		$Controllers/Launching.visible = true
-		# Navigation mode
-		# if Input.is_action_just_pressed("ui_accept"):
-		# 	_change_navigation_mode(true)
-		# elif Input.is_action_just_released("ui_accept"):
-		# 	_change_navigation_mode(false)
-		# Angle processing
 		if Input.is_action_just_pressed("ui_left"):
 			_change_launch_angle($Starship.launch_angle - ANGLE_INCREMENT_PER_PRESS)
 		if Input.is_action_just_pressed("ui_right"):
@@ -92,6 +84,10 @@ func _on_boost_click():
 
 func _on_AngleHSlider_value_changed(value):
 	_change_launch_angle(value)
+
+
+func change_navigation_target(x, y):
+	pass
 
 
 func _on_PowerHSlider_value_changed(value):

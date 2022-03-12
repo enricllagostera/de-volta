@@ -28,7 +28,7 @@ _global_script_class_icons={
 
 config/name="space-hopper"
 run/main_scene="res://levels/InBetweenLevels.tscn"
-config/icon="res://images/icon.png"
+config/icon="res://images/experiments/icon.png"
 
 [aseprite_animation_importer]
 
@@ -44,6 +44,10 @@ window/size/width=800
 window/size/height=400
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/AsepriteWizard/plugin.cfg" )
 
 [gdnative]
 
@@ -83,7 +87,9 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 quality/driver/driver_name="GLES2"
+quality/driver/fallback_to_gles2=true
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+gles2/compatibility/disable_half_float=true
 environment/default_clear_color=Color( 0.133333, 0.133333, 0.133333, 1 )
 environment/default_environment="res://resources/default_env.tres"

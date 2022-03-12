@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="StreamTexture" id=3]
+load_path = "res://.import/Layer 1.png-25f6c94e6db613c4ea8d707767a9b440.stex"
+
+[sub_resource type="StreamTexture" id=4]
+load_path = "res://.import/Layer 2.png-07cbdb0d35f02ee84e906ccf0c4f465c.stex"
+
+[sub_resource type="StreamTexture" id=5]
+flags = 4
+load_path = "res://.import/Layer 3.png-5562d81b0432ca3db3baf2f39e66618b.stex"
+
+[sub_resource type="Animation" id=2]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("ParallaxLayer3/Sprite2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ParallaxLayer/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ParallaxLayer2/Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0.0 ]
+}
+
+[node name="Backdrop" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.99, 0.99 )
+
+[node name="Sprite2" type="Sprite" parent="ParallaxBackground/ParallaxLayer3"]
+scale = Vector2( 4, 4 )
+texture = SubResource( 3 )
+centered = false
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVBhcmFsbGF4QmFja2dyb3VuZC9BbmltYXRpb25QbGF5ZXIKc291cmNlfD1yZXM6Ly9pbWFnZXMvYmFja2Ryb3AvYmFja2Ryb3AuYXNlcHJpdGUKbGF5ZXJ8PUxheWVyIDEKb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9Cm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9RmFsc2UKb19leF9wfD0K"
+}
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.2, 0.2 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+scale = Vector2( 2, 2 )
+texture = SubResource( 4 )
+centered = false
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVBhcmFsbGF4QmFja2dyb3VuZC9BbmltYXRpb25QbGF5ZXIKc291cmNlfD1yZXM6Ly9pbWFnZXMvYmFja2Ryb3AvYmFja2Ryb3AuYXNlcHJpdGUKbGF5ZXJ8PUxheWVyIDIKb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9Cm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9RmFsc2UKb19leF9wfD0K"
+}
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.9, 0.9 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
+scale = Vector2( 4, 4 )
+texture = SubResource( 5 )
+centered = false
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVBhcmFsbGF4QmFja2dyb3VuZC9BbmltYXRpb25QbGF5ZXIKc291cmNlfD1yZXM6Ly9pbWFnZXMvYmFja2Ryb3AvYmFja2Ryb3AuYXNlcHJpdGUKbGF5ZXJ8PUxheWVyIDMKb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9Cm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9RmFsc2UKb19leF9wfD0K"
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ParallaxBackground"]
+anims/default = SubResource( 2 )

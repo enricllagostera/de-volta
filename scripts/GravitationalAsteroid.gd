@@ -2,6 +2,8 @@ extends StaticBody2D
 
 export var mass = 200.0
 var attracted = []
+export var line_width_min = 0
+export var line_width_max = 40
 onready var points = PoolVector2Array()
 
 
@@ -15,7 +17,7 @@ func _process(delta):
 		points.append(body.position - position)
 		if $Line2D:
 			# print((direction * attraction).length())
-			$Line2D.width = (direction * attraction).length()
+			$Line2D.width = clamp((direction * attraction).length(), line_width_min, line_width_max)
 			$Line2D.points = points
 
 

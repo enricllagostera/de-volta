@@ -1,0 +1,16 @@
+[remap]
+
+importer="texture_atlas"
+type="Texture"
+path="res://.import/initial_sketches.png-25557b05b1000a7d59897020a4193c14.res"
+
+[deps]
+
+source_file="res://images/starship/initial_sketches.png"
+dest_files=[ "res://.import/initial_sketches.png-25557b05b1000a7d59897020a4193c14.res" ]
+
+[params]
+
+atlas_file="res://images/starship/initial_sketches.png"
+import_mode=0
+crop_to_region=false
