@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Custom Template (with Beholder integration)</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body onkeyup="kbTest(event)">
+    <canvas id="canvas"></canvas>
+    <div id="beholder-root"></div>
+    <script src="index.js"></script>
+    <script>
+      var engine = new Engine({"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":723728,"index.wasm":17493574},"focusCanvas":true,"gdnativeLibs":[]});
+      engine.startGame();
+    </script>
+    <script
+      src="https://unpkg.com/beholder-detection@1.3.1/dist/beholder-detection.js"
+      crossorigin
+    ></script>
+    <script>
+      const beholderConfig = {
+        camera_params: {
+          videoSize: 0, // The video size values map to the following [320 x 240, 640 x 480, 1280 x 720, 1920 x 1080]
+          rearCamera: false, // Boolean value for defaulting to the rear facing camera. Only works on mobile
+          torch: false, // Boolean value for if torch/flashlight is on. Only works for rear facing mobile cameras. Can only be set from init
+        },
+      };
+      window.Beholder = window["beholder-detection"].default;
+      window.Beholder.init("#beholder-root", beholderConfig);
+
+      /*
+      LIST OF COMMANDS
+
+      Example:
+      spaceHopper.sendCommand("activate_insert", "empty");
+
+      "activate_insert" : "empty", "launching", "navigating", "repairing"
+
+      // LAUNCHING
+      "set_aiming" : "left", "right" // physical crank
+      "set_power" : "0..100" // throttle or slider
+      "set_engage"  // momentary, either key or protective case and switch
+
+      ~~ Deprecated - FLYING
+      ~~ "set_shield" : "true", "false" // toggle
+      ~~ "set_boost" // momentary, flip switch
+
+      // NAVIGATION
+      "set_scope" : "x, "y" // continuous, every once in a while
+
+      // REPAIRING
+      "bolt_incremented" : "left", "right" 
+      */
+
+      // Sets up callback refs from the Godot app; Each of these is a function.
+      spaceHopper = {};
+
+      spaceHopper.initCallbacks = function (cb) {
+        spaceHopper.sendCommand = cb;
+      };
+
+      // Called by Godot every frame
+      // It is from inside this function that the sendCommand calls can be made
+      spaceHopper.gameUpdate = function () {
+          Beholder.update();
+        };
+
+      // The game object needs to be added to `window`
+      window.spaceHopper = spaceHopper;
+
+      // DEBUG only method. It sends commands on keyup events, for checking 
+      // that all commands are well-interpreted in Godot
+      function kbTest(event) {
+        console.log(event)
+        // CHANGING INSERTS
+        //"activate_insert" : "empty", "launching", "navigating", "repairing"
+        if (event.key == "q") {
+          spaceHopper.sendCommand("activate_insert", "empty")
+        }
+        if (event.key == "w") {
+          spaceHopper.sendCommand("activate_insert", "launching")
+        }
+        if (event.key == "e") {
+          spaceHopper.sendCommand("activate_insert", "navigating")
+        }
+        if (event.key == "r") {
+          spaceHopper.sendCommand("activate_insert", "repairing")
+        }
+        // LAUNCHING
+        // "set_aiming" : "left", "right" // physical crank
+        // "set_power" : "0..100" // throttle or slider
+        // "set_engage"  // momentary, either key or protective case and switch
+        if (event.key == "u") {
+          spaceHopper.sendCommand("set_aiming", "left")
+        }
+        if (event.key == "i") {
+          spaceHopper.sendCommand("set_aiming", "right")
+        }
+        if (event.key == "o") {
+          // For now it just sends some random value 
+          spaceHopper.sendCommand("set_power", random0to100())
+        }
+        if (event.key == "p") {
+          spaceHopper.sendCommand("set_engage")
+        }
+        /* 
+        // NAVIGATION
+        "set_scope" : "x, "y" // continuous, every once in a while 
+        */
+        if (event.key == "j") {
+          spaceHopper.sendCommand("set_scope", random0to100(), random0to100())
+        }
+        /*
+        // REPAIRING
+        "bolt_incremented" : "left", "right" 
+        */
+        if (event.key == "k") {
+          spaceHopper.sendCommand("bolt_incremented", "left")
+        }
+        if (event.key == "l") {
+          spaceHopper.sendCommand("bolt_incremented", "right")
+        }
+      };     
+
+      function random0to100(){
+        return Math.floor(Math.random()*100);
+      }
+    </script>
+  </body>
+</html>
+
