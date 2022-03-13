@@ -17,15 +17,35 @@
       crossorigin
     ></script>
     <script>
-      const beholderConfig = {
+        const Beholder = window['beholder-detection'].default;
+      let beholderConfig = {
         camera_params: {
-          videoSize: 0, // The video size values map to the following [320 x 240, 640 x 480, 1280 x 720, 1920 x 1080]
-          rearCamera: false, // Boolean value for defaulting to the rear facing camera. Only works on mobile
-          torch: false, // Boolean value for if torch/flashlight is on. Only works for rear facing mobile cameras. Can only be set from init
+          videoSize: 1, // The video size values map to the following [320 x 240, 640 x 480, 1280 x 720, 1920 x 1080]
+          rearCamera: true, // Boolean value for defaulting to the rear facing camera. Only works on mobile
+          torch: true, // Boolean value for if torch/flashlight is on. Only works for rear facing mobile cameras. Can only be set from init
+        },
+        detection_params: {
+          minMarkerDistance: 2,
+          minMarkerPerimeter: 0.01,
+          maxMarkerPerimeter: 1,
+          sizeAfterPerspectiveRemoval: 49,
+          area: {
+            start: { x: 0.35, y: 0.16 },
+            end:   { x: 1, y: 0.85 },
+          },
+        },
+        feed_params: {
+          contrast: 0,
+          brightness: 0,
+          grayscale: 0,
+          flip: false,
+        },
+        overlay_params: {
+          present: true, // Determines if the Beholder overlay will display or be invisible entirely via display: none
+          hide: true, // Determines if the overlay should be hidden on the left of the screen or visible
         },
       };
-      window.Beholder = window["beholder-detection"].default;
-      window.Beholder.init("#beholder-root", beholderConfig);
+      Beholder.init("#beholder-root", beholderConfig);
 
       /*
       LIST OF COMMANDS
@@ -53,16 +73,89 @@
 
       // Sets up callback refs from the Godot app; Each of these is a function.
       spaceHopper = {};
+      let navAnchor, navFocus, repair1, repair2;
 
       spaceHopper.initCallbacks = function (cb) {
         spaceHopper.sendCommand = cb;
+        spaceHopper.sendCommand("activate_insert", "empty");
+
+        navAnchor = Beholder.getMarker(7);
+        navAnchor.timeout = 200;
+        navFocus = Beholder.getMarker(5);
+        navFocus.timeout = 200;
+        repair1 = Beholder.getMarker(6);
+        repair1.timeout = 200;
+        // repair2.rotationSmoothing = 0.1;
+        repair2 = Beholder.getMarker(9);
+        repair2.timeout = 200;
+        // repair2.rotationSmoothing = 0.1;
       };
+
+      function runNavigation() {
+        // x 81 - 280
+        // y 25 -> -36
+        let focusOffset = navFocus.center.clone().sub(navAnchor.center).sub({ x: 81, y: 19 });
+        // focusOffset.y *= ;
+        focusOffset.y /= 40;
+        focusOffset.y += 1;
+        focusOffset.x /= 150;
+        // console.log(focusOffset.x, focusOffset.y);
+        focusOffset.scale(100);
+        spaceHopper.sendCommand("set_scope", focusOffset.x, focusOffset.y)
+      }
+
+      function runRepair() {
+        if (repair1.deltaRotation > 0.12 || repair1.deltaRotation < -0.12) spaceHopper.sendCommand("bolt_incremented", "left");
+        // console.log(repair2.deltaRotation);
+        if (repair2.deltaRotation > 0.12 || repair2.deltaRotation < -0.12) spaceHopper.sendCommand("bolt_incremented", "right");
+      }
+
+      let currentInsert = 'empty';
+      function detectInserts() {
+        if (currentInsert !== 'navigating') {
+          if (navAnchor.present) {
+            spaceHopper.sendCommand("activate_insert", "navigating");
+            currentInsert = 'navigating';
+          }
+        }
+
+        if (currentInsert !== 'repairing') {
+          if (repair1.present) {
+            spaceHopper.sendCommand("activate_insert", "repairing");
+            currentInsert = 'repairing';
+          }
+        }
+
+        if (currentInsert !== 'empty') {
+          if (!repair1.present && !navAnchor.present) {
+            spaceHopper.sendCommand("activate_insert", "empty");
+            currentInsert = 'empty';
+          }
+        }
+      }
 
       // Called by Godot every frame
       // It is from inside this function that the sendCommand calls can be made
+      let prevTime = Date.now();
+      const FRAME_RATE = 1000 / 20;
+      let frameTimer = FRAME_RATE;
       spaceHopper.gameUpdate = function () {
-          Beholder.update();
-        };
+        let currentTime = Date.now();
+        let dt = currentTime - prevTime;
+        frameTimer -= dt;
+        if (frameTimer > 0) return;
+
+        frameTimer = FRAME_RATE;
+        Beholder.update();
+        // console.log(currentInsert);
+
+        detectInserts();
+        switch(currentInsert) {
+          case 'empty': break;
+          case 'navigating': runNavigation(); break;
+          case 'repairing': runRepair(); break;
+        }
+      };
 
       // The game object needs to be added to `window`
       window.spaceHopper = spaceHopper;
