@@ -9,12 +9,13 @@ const POWER_MAX = 100
 
 
 func _ready():
+	activate_empty_controller()
 	_change_launch_angle(0)
 	_change_launch_power(0)
-	activate_launching_controller()
 	$Controllers/Navigating/NavHSlider.value = 50
 	$Controllers/Navigating/NavVSlider.value = 50
 	$Controllers/Flying/BoostButton.connect("pressed", self, "_on_boost_click")
+	$Controllers/Repairing.connect("repaired", self, "_on_repaired")
 
 
 func _input(_event):
@@ -33,6 +34,9 @@ func _process(delta):
 		Starship.Controller.LAUNCHING:
 			$Controllers/Empty.visible = false
 			_launching(delta)
+		Starship.Controller.REPAIRING:
+			$Controllers/Empty.visible = false
+			_repairing()
 		Starship.Controller.EMPTY:
 			$Controllers/Empty.visible = true
 
@@ -58,6 +62,10 @@ func _launching(_delta):
 		$Controllers/Launching/EngageButton.disabled = not $Starship.has_enough_energy_to_launch()
 	else:
 		$Controllers/Launching.visible = false
+
+
+func _repairing():
+	pass
 
 
 func _change_navigation_mode(new_state):
@@ -132,10 +140,18 @@ func _on_BeholderInput_no_insert_detected():
 		activate_empty_controller()
 
 
+func _on_repaired():
+	print("making repairs")
+	$Starship._change_energy($Starship.energy - 5)
+	$Starship._change_health($Starship.health + 5)
+
+
 func activate_launching_controller(_args = null):
 	$Controllers/Launching.visible = true
 	$Controllers/Flying.visible = false
 	$Controllers/Navigating.visible = false
+	$Controllers/Repairing.visible = false	
+	
 	$Starship.controller = $Starship.Controller.LAUNCHING
 	_change_navigation_mode(false)
 
@@ -144,6 +160,8 @@ func activate_empty_controller(_args = null):
 	$Controllers/Launching.visible = false
 	$Controllers/Navigating.visible = false
 	$Controllers/Flying.visible = false
+	$Controllers/Repairing.visible = false	
+	
 	$Starship.controller = $Starship.Controller.EMPTY
 	_change_navigation_mode(false)
 
@@ -152,6 +170,8 @@ func activate_flying_controller(_args = null):
 	$Controllers/Launching.visible = false
 	$Controllers/Flying.visible = true
 	$Controllers/Navigating.visible = false
+	$Controllers/Repairing.visible = false	
+	
 	$Starship.controller = $Starship.Controller.FLYING
 	_change_navigation_mode(false)
 
@@ -160,6 +180,7 @@ func activate_navigating_controller(_args = null):
 	$Controllers/Launching.visible = false
 	$Controllers/Flying.visible = false
 	$Controllers/Navigating.visible = true
+	$Controllers/Repairing.visible = false	
 	$Starship.controller = $Starship.Controller.NAVIGATING
 	_change_navigation_mode(true)
 
@@ -171,3 +192,12 @@ func _on_ShieldButton_toggled(button_pressed):
 
 func _on_NavigatingButton_pressed():
 	activate_navigating_controller()
+
+
+func _on_RepairingButton_pressed():
+	$Controllers/Launching.visible = false
+	$Controllers/Flying.visible = false
+	$Controllers/Navigating.visible = false
+	$Controllers/Repairing.visible = true
+	$Starship.controller = $Starship.Controller.REPAIRING
+	_change_navigation_mode(false)

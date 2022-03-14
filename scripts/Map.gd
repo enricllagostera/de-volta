@@ -11,10 +11,12 @@ func _ready():
 	$PlaybackSystem.prepare_player_and_ships(map_index)
 	get_tree().call_group("gravity_attractor", "add_body", $Player/Starship)
 	$Player/Starship.connect("goal_reached", self, "_on_Starship_goal_reached")
+	$Player/Starship.connect("health_changed", self, "_on_Starship_health_changed")
+	$Player/Starship.connect("energy_changed", self, "_on_Starship_energy_changed")
 	$Player/Starship.connect("died", self, "_on_Starship_died")
 	$HUD/Lives/AnimationPlayer.play("lives"+str(Main.lives))
-	$HUD/EnergyBarOverlay/AnimationPlayer.play("energy")
-	$HUD/HealthBarOverlay/AnimationPlayer.play("health")
+	$HUD/EnergyGUI/EnergyBarOverlay/AnimationPlayer.play("energy")
+	$HUD/HealthGUI/HealthBarOverlay/AnimationPlayer.play("health")
 
 
 func _process(delta):
@@ -65,6 +67,7 @@ func _on_NavVSlider_value_changed(value):
 
 
 func _on_Starship_goal_reached(_launch_count, _energy):
+	$Player/Starship.can_be_killed = false
 	$Player/Starship.velocity = Vector2.ZERO
 	$Player/Starship.set_physics_process(false)
 	$Player/Starship.set_process(false)
@@ -82,8 +85,22 @@ func _on_Starship_goal_reached(_launch_count, _energy):
 	print("Reached goal timer started.")
 	yield(get_tree().create_timer(2.0), "timeout")
 	print("RG Timer ended.")
+	# Minimum amountsto carry over for the next level
+	$Player/Starship.health = clamp($Player/Starship.health, Starship.CRITICAL_HEALTH + 10, Starship.HEALTH_MAX)
+	$Player/Starship.energy = clamp($Player/Starship.energy, Starship.CRITICAL_ENERGY + 10, Starship.ENERGY_MAX)
 	Main.advance_level($Player/Starship.health, $Player/Starship.energy)
 	Main.change_level("InBetweenLevels")
+
+
+func _on_Starship_health_changed(_value):
+	$HUD/Tween.interpolate_property($HUD/HealthGUI, "scale", Vector2(1.3,1.3), Vector2(1, 1), 0.3, Tween.TRANS_BACK)
+	$HUD/Tween.start()
+
+
+func _on_Starship_energy_changed(_value):
+	$HUD/Tween.interpolate_property($HUD/EnergyGUI, "scale", Vector2(1.3,1.3), Vector2(1, 1), 0.3, Tween.TRANS_BACK)
+	$HUD/Tween.start()
+
 
 
 func _on_Starship_died():
@@ -141,7 +158,10 @@ func set_scope(x, y):
 
 func bolt_incremented(bolt_position):
 	print("repair bolt ", bolt_position)
-	
+	if bolt_position == "left":
+		$Player/Controllers/Repairing.activate_bolt1()
+	else:
+		$Player/Controllers/Repairing.activate_bolt2()
 
 
 func change_navigation_target(x, y):

@@ -9,7 +9,7 @@
     <div id="beholder-root"></div>
     <script src="index.js"></script>
     <script>
-      var engine = new Engine({"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":723728,"index.wasm":17493574},"focusCanvas":true,"gdnativeLibs":[]});
+      var engine = new Engine({"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":732896,"index.wasm":17493574},"focusCanvas":true,"gdnativeLibs":[]});
       engine.startGame();
     </script>
     <script
@@ -17,7 +17,7 @@
       crossorigin
     ></script>
     <script>
-      const Beholder = window['beholder-detection'].default;
+        const Beholder = window['beholder-detection'].default;
       let beholderConfig = {
         camera_params: {
           videoSize: 1, // The video size values map to the following [320 x 240, 640 x 480, 1280 x 720, 1920 x 1080]
@@ -163,6 +163,7 @@
       // DEBUG only method. It sends commands on keyup events, for checking 
       // that all commands are well-interpreted in Godot
       function kbTest(event) {
+        console.log(event)
         // CHANGING INSERTS
         //"activate_insert" : "empty", "launching", "navigating", "repairing"
         if (event.key == "q") {

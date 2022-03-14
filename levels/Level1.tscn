@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=2]
@@ -21,7 +21,100 @@
 [ext_resource path="res://images/experiments/pattern01.png" type="Texture" id=19]
 [ext_resource path="res://scenes/LaunchPoint.tscn" type="PackedScene" id=20]
 [ext_resource path="res://levels/PlaybackSystem.gd" type="Script" id=21]
+[ext_resource path="res://images/terrain_outline_tex.tres" type="Texture" id=22]
+[ext_resource path="res://images/prototyping_kit/triangle_filled.png" type="Texture" id=23]
+[ext_resource path="res://images/prototyping_kit/circle_outline.png" type="Texture" id=24]
+[ext_resource path="res://scripts/Repairing.gd" type="Script" id=25]
 [ext_resource path="res://scenes/GravityAttractor.tscn" type="PackedScene" id=28]
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.933333, 0.192157, 0.435294, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StreamTexture" id=18]
+load_path = "res://.import/health_bar.png-a5cc159f1bd86dd1c792302a9bac36e7.stex"
+
+[sub_resource type="Animation" id=16]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 2.0, 3.0, 4.0 ]
+}
+
+[sub_resource type="Animation" id=17]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.192157, 0.556863, 0.933333, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StreamTexture" id=23]
+load_path = "res://.import/energy_bar.png-6ecf4612c167f6ad2cd5444a8c0c1318.stex"
+
+[sub_resource type="Animation" id=20]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 2.0, 3.0, 4.0 ]
+}
+
+[sub_resource type="Animation" id=21]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0, 0.0 ]
+}
 
 [sub_resource type="StreamTexture" id=22]
 load_path = "res://.import/hud_lives.png-0deea7635876207e5db45793787fd653.stex"
@@ -90,99 +183,10 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.933333, 0.192157, 0.435294, 1 )
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.192157, 0.556863, 0.933333, 1 )
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color( 0, 0, 0, 1 )
-
 [sub_resource type="DynamicFont" id=6]
 size = 32
 outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
 font_data = ExtResource( 1 )
-
-[sub_resource type="StreamTexture" id=18]
-load_path = "res://.import/health_bar.png-a5cc159f1bd86dd1c792302a9bac36e7.stex"
-
-[sub_resource type="Animation" id=16]
-length = 0.3
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ 2.0, 3.0, 4.0 ]
-}
-
-[sub_resource type="Animation" id=17]
-length = 0.3
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ 0.0, 1.0, 0.0 ]
-}
-
-[sub_resource type="StreamTexture" id=23]
-load_path = "res://.import/energy_bar.png-6ecf4612c167f6ad2cd5444a8c0c1318.stex"
-
-[sub_resource type="Animation" id=20]
-length = 0.3
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ 2.0, 3.0, 4.0 ]
-}
-
-[sub_resource type="Animation" id=21]
-length = 0.3
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ 0.0, 1.0, 0.0 ]
-}
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 34.0147
@@ -193,12 +197,132 @@ radius = 18.1108
 [sub_resource type="StreamTexture" id=9]
 load_path = "res://.import/animated_starship.png-9c3da582af720462fd464b8aacf9a86a.stex"
 
+[sub_resource type="StyleBoxFlat" id=24]
+bg_color = Color( 0.101961, 0.101961, 0.101961, 1 )
+border_color = Color( 0.0627451, 0.823529, 0.458824, 1 )
+
+[sub_resource type="DynamicFont" id=25]
+size = 12
+outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
+font_data = ExtResource( 1 )
+
 [node name="Level" type="Node2D"]
 script = ExtResource( 9 )
+__meta__ = {
+"_edit_vertical_guides_": [ 400.0 ]
+}
 area_bounds = Rect2( 0, 0, 2800, 2800 )
 map_camera_smooth = 4.0
 
 [node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="HealthGUI" type="Node2D" parent="HUD"]
+position = Vector2( 29, 200 )
+
+[node name="HealthBar" type="ProgressBar" parent="HUD/HealthGUI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -79.0
+margin_top = -21.0
+margin_right = 79.0
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 79, 10.086 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 14 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 4 )
+value = 100.0
+rounded = true
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD/HealthGUI/HealthBar"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -66.0
+margin_top = -10.5
+margin_right = -6.0
+margin_bottom = 10.5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "Health"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBarOverlay" type="Sprite" parent="HUD/HealthGUI"]
+scale = Vector2( 1.25, 1 )
+texture = SubResource( 18 )
+hframes = 3
+vframes = 2
+frame = 1
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUhVRC9IZWFsdGhCYXJPdmVybGF5L0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2h1ZF9iYXJzL2h1ZF9iYXJzLmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9cmVzOi8vaHVkX2JhcnMKb19uYW1lfD1oZWFsdGhfYmFyCm9ubHlfdmlzaWJsZXw9VHJ1ZQpvX2V4X3B8PQo="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/HealthGUI/HealthBarOverlay"]
+anims/energy = SubResource( 16 )
+anims/health = SubResource( 17 )
+
+[node name="Tween" type="Tween" parent="HUD"]
+
+[node name="EnergyGUI" type="Node2D" parent="HUD"]
+position = Vector2( 774, 200 )
+
+[node name="EnergyBar" type="ProgressBar" parent="HUD/EnergyGUI"]
+margin_left = -79.0
+margin_top = -17.0
+margin_right = 78.0
+margin_bottom = 4.0
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 79, 10 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 14 )
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+value = 100.0
+rounded = true
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD/EnergyGUI/EnergyBar"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -63.0
+margin_top = -10.5
+margin_right = -3.0
+margin_bottom = 10.5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "Energy"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyBarOverlay" type="Sprite" parent="HUD/EnergyGUI"]
+position = Vector2( 0, 4 )
+scale = Vector2( 1.25, 1 )
+texture = SubResource( 23 )
+hframes = 3
+vframes = 2
+frame = 4
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUhVRC9FbmVyZ3lCYXJPdmVybGF5L0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2h1ZF9iYXJzL2h1ZF9iYXJzLmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9cmVzOi8vaHVkX2JhcnMKb19uYW1lfD1lbmVyZ3lfYmFyCm9ubHlfdmlzaWJsZXw9VHJ1ZQpvX2V4X3B8PQo="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/EnergyGUI/EnergyBarOverlay"]
+anims/energy = SubResource( 20 )
+anims/health = SubResource( 21 )
 
 [node name="Lives" type="Sprite" parent="HUD"]
 texture = SubResource( 22 )
@@ -217,72 +341,6 @@ anims/lives1 = SubResource( 12 )
 anims/lives2 = SubResource( 13 )
 anims/lives3 = SubResource( 14 )
 
-[node name="HealthBar" type="ProgressBar" parent="HUD"]
-margin_left = 20.0
-margin_top = 268.0
-margin_right = 178.0
-margin_bottom = 289.0
-rect_rotation = -89.9999
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = ExtResource( 14 )
-custom_styles/fg = SubResource( 5 )
-custom_styles/bg = SubResource( 4 )
-value = 100.0
-rounded = true
-script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="HUD/HealthBar"]
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = -66.0
-margin_top = -10.5
-margin_right = -6.0
-margin_bottom = 10.5
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = ExtResource( 14 )
-text = "Health"
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="EnergyBar" type="ProgressBar" parent="HUD"]
-margin_left = 762.0
-margin_top = 268.0
-margin_right = 919.0
-margin_bottom = 289.0
-rect_rotation = -89.9999
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = ExtResource( 14 )
-custom_styles/fg = SubResource( 3 )
-custom_styles/bg = SubResource( 4 )
-value = 100.0
-rounded = true
-script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="HUD/EnergyBar"]
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = -63.0
-margin_top = -10.5
-margin_right = -3.0
-margin_bottom = 10.5
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = ExtResource( 14 )
-text = "Energy"
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="LaunchesLbl" type="Label" parent="HUD"]
 margin_left = 497.0
 margin_top = 386.0
@@ -295,38 +353,6 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Tween" type="Tween" parent="HUD"]
-
-[node name="HealthBarOverlay" type="Sprite" parent="HUD"]
-position = Vector2( 32, 200 )
-scale = Vector2( 1.25, 1 )
-texture = SubResource( 18 )
-hframes = 3
-vframes = 2
-frame = 1
-__meta__ = {
-"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUhVRC9IZWFsdGhCYXJPdmVybGF5L0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2h1ZF9iYXJzL2h1ZF9iYXJzLmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9cmVzOi8vaHVkX2JhcnMKb19uYW1lfD1oZWFsdGhfYmFyCm9ubHlfdmlzaWJsZXw9VHJ1ZQpvX2V4X3B8PQo="
-}
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/HealthBarOverlay"]
-anims/energy = SubResource( 16 )
-anims/health = SubResource( 17 )
-
-[node name="EnergyBarOverlay" type="Sprite" parent="HUD"]
-position = Vector2( 772, 200 )
-scale = Vector2( 1.25, 1 )
-texture = SubResource( 23 )
-hframes = 3
-vframes = 2
-frame = 4
-__meta__ = {
-"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUhVRC9FbmVyZ3lCYXJPdmVybGF5L0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2h1ZF9iYXJzL2h1ZF9iYXJzLmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9cmVzOi8vaHVkX2JhcnMKb19uYW1lfD1lbmVyZ3lfYmFyCm9ubHlfdmlzaWJsZXw9VHJ1ZQpvX2V4X3B8PQo="
-}
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/EnergyBarOverlay"]
-anims/energy = SubResource( 20 )
-anims/health = SubResource( 21 )
 
 [node name="Backdrop" type="Polygon2D" parent="."]
 visible = false
@@ -534,11 +560,16 @@ position = Vector2( 2124, 1294 )
 base_power = 6.0
 base_damp = 0.001
 base_gravity = 0
-velocity_damage_rate = 0.05
+velocity_damage_rate = 0.01
 energy_per_launch_power_rate = 0.2
 
 [node name="Visual" parent="Player/Starship" index="1"]
 texture = SubResource( 9 )
+
+[node name="Power" parent="Player/Starship/LaunchAim" index="1"]
+width = 8.0
+texture = ExtResource( 22 )
+texture_mode = 1
 
 [node name="JSBridge" type="Node" parent="Player"]
 script = ExtResource( 8 )
@@ -566,6 +597,9 @@ custom_fonts/font = ExtResource( 14 )
 text = "No controller selected."
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Launching" type="Panel" parent="Player/Controllers"]
 visible = false
@@ -743,6 +777,99 @@ margin_top = -181.0
 margin_right = 33.0
 margin_bottom = -30.0
 
+[node name="Repairing" type="Panel" parent="Player/Controllers"]
+modulate = Color( 1, 1, 1, 0.901961 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -137.0
+margin_top = 66.0
+margin_right = 138.0
+margin_bottom = 193.0
+custom_styles/panel = SubResource( 24 )
+script = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Player/Controllers/Repairing"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = -117.0
+margin_right = 255.0
+margin_bottom = -96.0
+custom_fonts/font = ExtResource( 14 )
+text = "REPAIRING"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title2" type="Label" parent="Player/Controllers/Repairing"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = -95.0
+margin_right = 255.0
+margin_bottom = -60.0
+custom_fonts/font = SubResource( 25 )
+text = "Align to convert energy 
+into health"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bolt2" type="Sprite" parent="Player/Controllers/Repairing"]
+position = Vector2( 240, 90 )
+scale = Vector2( 0.605469, 0.605469 )
+texture = ExtResource( 13 )
+
+[node name="Bolt2Button" type="TextureButton" parent="Player/Controllers/Repairing/Bolt2"]
+margin_left = -33.0323
+margin_top = -36.3355
+margin_right = 32.9677
+margin_bottom = 32.6645
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BgSlide" type="Sprite" parent="Player/Controllers/Repairing"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 137, 90 )
+scale = Vector2( 2.35938, 0.184375 )
+texture = ExtResource( 13 )
+
+[node name="Pointer" type="Sprite" parent="Player/Controllers/Repairing"]
+position = Vector2( 137, 90 )
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 12 )
+
+[node name="Target" type="Sprite" parent="Player/Controllers/Repairing"]
+position = Vector2( 137, 90 )
+scale = Vector2( 0.59375, 0.59375 )
+texture = ExtResource( 24 )
+
+[node name="Bolt1" type="Sprite" parent="Player/Controllers/Repairing"]
+position = Vector2( 35, 90 )
+scale = Vector2( 0.59375, 0.59375 )
+texture = ExtResource( 23 )
+
+[node name="Bolt1Button" type="TextureButton" parent="Player/Controllers/Repairing/Bolt1"]
+margin_left = -33.6842
+margin_top = -37.0526
+margin_right = 32.3158
+margin_bottom = 31.9474
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="Player/Controllers/Repairing"]
+
 [node name="EmptyButton" type="Button" parent="Player/Controllers"]
 margin_left = 625.0
 margin_top = 10.0
@@ -782,6 +909,17 @@ margin_right = 742.0
 margin_bottom = 177.0
 rect_pivot_offset = Vector2( 39, 11 )
 text = "Navigation"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RepairingButton" type="Button" parent="Player/Controllers"]
+margin_left = 625.0
+margin_top = 191.0
+margin_right = 742.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( 39, 11 )
+text = "Repairing"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -826,9 +964,9 @@ editor_draw_limits = true
 [connection signal="body_entered" from="Scenario/Battery3" to="Scenario/Battery3" method="_on_Battery_body_entered"]
 [connection signal="body_entered" from="Scenario/Battery4" to="Scenario/Battery4" method="_on_Battery_body_entered"]
 [connection signal="body_entered" from="Scenario/Battery5" to="Scenario/Battery5" method="_on_Battery_body_entered"]
-[connection signal="energy_changed" from="Player/Starship" to="HUD/EnergyBar" method="_on_Starship_energy_changed"]
+[connection signal="energy_changed" from="Player/Starship" to="HUD/EnergyGUI/EnergyBar" method="_on_Starship_energy_changed"]
 [connection signal="goal_reached" from="Player/Starship" to="PlaybackSystem" method="_on_Starship_goal_reached"]
-[connection signal="health_changed" from="Player/Starship" to="HUD/HealthBar" method="_on_Starship_health_changed"]
+[connection signal="health_changed" from="Player/Starship" to="HUD/HealthGUI/HealthBar" method="_on_Starship_health_changed"]
 [connection signal="launched" from="Player/Starship" to="HUD/LaunchesLbl" method="_on_Starship_launched"]
 [connection signal="navigation_engaged" from="Player/Starship" to="." method="_on_Starship_navigation_engaged"]
 [connection signal="navigation_engaged" from="Player/Starship" to="Player" method="_on_Starship_navigation_engaged"]
@@ -838,10 +976,13 @@ editor_draw_limits = true
 [connection signal="toggled" from="Player/Controllers/Flying/ShieldButton" to="Player" method="_on_ShieldButton_toggled"]
 [connection signal="value_changed" from="Player/Controllers/Navigating/NavHSlider" to="." method="_on_NavHSlider_value_changed"]
 [connection signal="value_changed" from="Player/Controllers/Navigating/NavVSlider" to="." method="_on_NavVSlider_value_changed"]
+[connection signal="pressed" from="Player/Controllers/Repairing/Bolt2/Bolt2Button" to="Player/Controllers/Repairing" method="_on_Bolt2Button_pressed"]
+[connection signal="pressed" from="Player/Controllers/Repairing/Bolt1/Bolt1Button" to="Player/Controllers/Repairing" method="_on_Bolt1Button_pressed"]
 [connection signal="pressed" from="Player/Controllers/EmptyButton" to="Player" method="_on_EmptyButton_pressed"]
 [connection signal="pressed" from="Player/Controllers/LauncherButton" to="Player" method="_on_LauncherButton_pressed"]
 [connection signal="pressed" from="Player/Controllers/FlyingButton" to="Player" method="_on_FlyingButton_pressed"]
 [connection signal="pressed" from="Player/Controllers/NavigatingButton" to="Player" method="_on_NavigatingButton_pressed"]
+[connection signal="pressed" from="Player/Controllers/RepairingButton" to="Player" method="_on_RepairingButton_pressed"]
 
 [editable path="Scenario/Terrain"]
 [editable path="Scenario/Terrain3"]

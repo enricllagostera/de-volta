@@ -7,18 +7,23 @@ const ENERGY_MIN = 1.0
 const HEALTH_MIN = 1.0
 const OFFSCREEN_TIME_MAX = 1.0
 const SHIELD_PROTECTION_RATE = 0.8
+const CRITICAL_ENERGY = 10
+const CRITICAL_HEALTH = 10
 
 enum Controller { EMPTY, LAUNCHING, FLYING, REPAIRING, NAVIGATING }
 
 export var base_power = 1.0
 export var base_damp = 0.001
 export var base_gravity = 20
-export var velocity_damage_rate = 0.1
+export var velocity_damage_rate = 0.05
 export var energy_per_launch_power_rate = 0.004
 export var energy_per_shield_rate = 5
 export var energy_per_boost = 10
 export var energy_per_battery = 30.0
 export var energy_for_navigation_per_s = 0.5
+export var critical_energy_mod = 0.5
+export var critical_health_mod = 0.5
+
 
 onready var controller = Controller.LAUNCHING
 var launch_count = 0
@@ -34,6 +39,8 @@ var is_out_of_bounds = false
 var is_dying = false
 var is_shielded = false
 var out_of_bounds_timer: Timer
+var can_be_killed = true
+
 
 signal energy_changed(new_energy)
 signal launched(launch_count)
@@ -47,19 +54,25 @@ func _ready():
 	$Shield.visible = false
 	velocity = Vector2.ZERO
 	is_grounded = false
+	can_be_killed = true
 	_change_energy(Main.current_energy)
 	_change_health(Main.current_health)
 	
 
 
 func _process(delta):
+#	if $Visual.visible == false:
+#		$LaunchAim.visible = false
 	if is_dying:
 		$LaunchAim.visible = false
+		return
 	match controller:
 		Controller.LAUNCHING:
 			launching(delta)
 		Controller.FLYING:
 			_flying(delta)
+		Controller.REPAIRING:
+			repairing()
 		Controller.EMPTY:
 			Engine.time_scale = 1.0
 			$LaunchAim.visible = false
@@ -81,9 +94,23 @@ func launching(_delta):
 		$LaunchAim.visible = false
 
 
-func _physics_process(delta):
-	if is_dying:
+func repairing():
+	Engine.time_scale = 1.0
+	$LaunchAim.visible = false
+	if not is_grounded:
 		return
+	
+
+
+func _physics_process(delta):
+	if $Visual.visible == false:
+		$LaunchAim.visible = false
+	if is_dying or not can_be_killed:
+		return
+	if health <= CRITICAL_HEALTH:
+		_change_health(health - critical_health_mod*delta)
+	if energy <= CRITICAL_ENERGY:
+		_change_energy(energy - critical_energy_mod*delta)
 	if is_navigating:
 		_change_energy(energy - delta * energy_for_navigation_per_s)
 	if not is_grounded:
@@ -107,12 +134,18 @@ func _physics_process(delta):
 		$Visual/AnimationPlayer.queue("grounded")
 		# Apply health change consequences
 		emit_signal("health_changed", health)
-		if health <= HEALTH_MIN and not is_dying:
-			emit_signal("died")
-			is_dying = true
-			$DeathExplosion.emitting = true
-			$Visual.visible = false
-			$LaunchAim.visible = false
+		if health <= HEALTH_MIN:
+			start_dying()
+
+
+func start_dying():
+	if is_dying:
+		return;
+	is_dying = true
+	$DeathExplosion.emitting = true
+	$Visual.visible = false
+	$LaunchAim.visible = false
+	emit_signal("died")
 
 
 func launch():
@@ -143,11 +176,21 @@ func _on_Goal_body_entered(body):
 
 
 func _change_energy(new_energy):
+	if new_energy <= ENERGY_MIN:
+		energy = 0
+		emit_signal("energy_changed", 0)
+		start_dying()
+		return
 	energy = clamp(new_energy, ENERGY_MIN, ENERGY_MAX)
 	emit_signal("energy_changed", energy)
 
 
 func _change_health(new_health):
+	if new_health <= HEALTH_MIN:
+		health = 0
+		emit_signal("health_changed", 0)
+		start_dying()
+		return
 	health = clamp(new_health, HEALTH_MIN, HEALTH_MAX)
 	emit_signal("health_changed", health)
 
