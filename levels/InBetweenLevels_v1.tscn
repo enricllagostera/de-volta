@@ -1,0 +1,84 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
+[ext_resource path="res://scripts/InBetweenLevels.gd" type="Script" id=2]
+[ext_resource path="res://images/prototyping_kit/square_filled.png" type="Texture" id=3]
+[ext_resource path="res://images/prototyping_kit/circle_outline.png" type="Texture" id=4]
+[ext_resource path="res://images/prototyping_kit/circle_filled.png" type="Texture" id=5]
+[ext_resource path="res://images/prototyping_kit/triangle_filled.png" type="Texture" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 72
+outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
+font_data = ExtResource( 1 )
+
+[node name="Level" type="Node2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_vertical_guides_": [ 400.0 ]
+}
+
+[node name="Backdrop" type="Sprite" parent="."]
+modulate = Color( 0.133333, 0.133333, 0.133333, 1 )
+position = Vector2( 401, 201 )
+scale = Vector2( 12.6875, 6.5625 )
+texture = ExtResource( 3 )
+
+[node name="PlayCountLbl" type="Label" parent="."]
+margin_left = 123.0
+margin_top = 146.0
+margin_right = 677.0
+margin_bottom = 288.0
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level1" type="Node2D" parent="."]
+position = Vector2( 266, 288 )
+
+[node name="Off" type="Sprite" parent="Level1"]
+texture = ExtResource( 4 )
+
+[node name="On" type="Sprite" parent="Level1"]
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 5 )
+
+[node name="Level2" type="Node2D" parent="."]
+position = Vector2( 400, 114 )
+
+[node name="Off" type="Sprite" parent="Level2"]
+texture = ExtResource( 4 )
+
+[node name="On" type="Sprite" parent="Level2"]
+position = Vector2( -3.05176e-05, 0 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 5 )
+
+[node name="Level3" type="Node2D" parent="."]
+position = Vector2( 517, 288 )
+
+[node name="Off" type="Sprite" parent="Level3"]
+texture = ExtResource( 4 )
+
+[node name="On" type="Sprite" parent="Level3"]
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 5 )
+
+[node name="CurrentLevel" type="Sprite" parent="."]
+position = Vector2( 267, 207 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 6 )
+
+[node name="ContinueButton" type="Button" parent="."]
+margin_left = 350.0
+margin_top = 339.0
+margin_right = 451.0
+margin_bottom = 390.0
+text = "Continue"
+__meta__ = {
+"_edit_use_anchors_": false
+}

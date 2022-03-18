@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/Main.gd" type="Script" id=1]
+[ext_resource path="res://title_screen/gui_theme.tres" type="Theme" id=2]
+[ext_resource path="res://gui/fullscreen.png" type="Texture" id=3]
+[ext_resource path="res://gui/exit.png" type="Texture" id=4]
+
+[node name="Main" type="Node"]
+script = ExtResource( 1 )
+
+[node name="PermanentGUI" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="FullscreenBtn" type="Button" parent="PermanentGUI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -120.0
+margin_top = 8.0
+margin_right = -51.4456
+margin_bottom = 77.1847
+rect_scale = Vector2( 0.75, 0.75 )
+theme = ExtResource( 2 )
+icon = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitBtn" type="Button" parent="PermanentGUI"]
+margin_left = 744.0
+margin_top = 8.0
+margin_right = 813.0
+margin_bottom = 77.1847
+rect_scale = Vector2( 0.75, 0.75 )
+theme = ExtResource( 2 )
+icon = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

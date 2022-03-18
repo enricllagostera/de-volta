@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=2]
@@ -31,7 +31,7 @@
 [ext_resource path="res://batteries/Battery.tscn" type="PackedScene" id=30]
 
 [sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.933333, 0.192157, 0.435294, 1 )
+bg_color = Color( 0.839216, 0.141176, 0.0666667, 1 )
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
@@ -77,7 +77,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.192157, 0.556863, 0.933333, 1 )
+bg_color = Color( 1, 0.517647, 0.14902, 1 )
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
@@ -190,6 +190,25 @@ tracks/0/keys = {
 size = 32
 outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
 font_data = ExtResource( 1 )
+
+[sub_resource type="StreamTexture" id=36]
+load_path = "res://.import/goal_v1.png-e1d7fac0e002690f782974adf936b3bb.stex"
+
+[sub_resource type="Animation" id=35]
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0, 2.0 ]
+}
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 34.0147
@@ -461,15 +480,23 @@ modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
 position = Vector2( 3313, 1523 )
 
 [node name="Goal" type="Area2D" parent="Scenario"]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
 position = Vector2( 1155, 1920 )
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_group_": true
 }
+rotation_speed = -1
 
 [node name="Visual" type="Sprite" parent="Scenario/Goal"]
-texture = ExtResource( 13 )
+texture = SubResource( 36 )
+hframes = 2
+vframes = 2
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVNjZW5hcmlvL0dvYWwvVmlzdWFsL0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2dvYWwvZ29hbF92MS5hc2Vwcml0ZQpsYXllcnw9Cm9wX2V4cHw9RmFsc2UKb19mb2xkZXJ8PXJlczovL2dvYWwKb19uYW1lfD0Kb25seV92aXNpYmxlfD1UcnVlCm9fZXhfcHw9Cg=="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Scenario/Goal/Visual"]
+anims/default = SubResource( 35 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Goal"]
 shape = SubResource( 7 )

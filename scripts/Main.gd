@@ -95,4 +95,4 @@ func on_quit():
 	#get_tree().notification(MainLoop.NOTIFICATION_WM_QUIT_REQUEST)
 	reset_game()
 	erase_saved_histories();	
-	change_level("InBetweenLevels");
+	change_level("TitleScreen");

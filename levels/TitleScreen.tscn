@@ -1,11 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://title_screen/gui_theme.tres" type="Theme" id=1]
-[ext_resource path="res://fonts/hud.tres" type="DynamicFont" id=2]
-[ext_resource path="res://scripts/InBetweenLevels.gd" type="Script" id=3]
-[ext_resource path="res://fonts/CasualEncounter.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://title_screen/TitleScreen.gd" type="Script" id=2]
 
-[sub_resource type="StreamTexture" id=5]
+[sub_resource type="StreamTexture" id=4]
 flags = 4
 load_path = "res://.import/title_v2.png-ea645e9a83e8f7f794f86b72e0f18ea6.stex"
 
@@ -25,7 +23,7 @@ tracks/0/keys = {
 "values": [ 3.0, 4.0, 5.0 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -57,75 +55,46 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0, 2.0 ]
 }
 
-[sub_resource type="DynamicFont" id=4]
-size = 72
-extra_spacing_bottom = -1
-font_data = ExtResource( 4 )
-
-[node name="InBetween" type="Sprite"]
-texture = SubResource( 5 )
+[node name="TitleScreen" type="Sprite"]
+texture = SubResource( 4 )
 centered = false
 hframes = 4
 vframes = 3
-frame = 4
-script = ExtResource( 3 )
+frame = 1
+script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL3RpdGxlX3NjcmVlbi90aXRsZV92Mi5hc2Vwcml0ZQpsYXllcnw9Cm9wX2V4cHw9RmFsc2UKb19mb2xkZXJ8PQpvX25hbWV8PQpvbmx5X3Zpc2libGV8PUZhbHNlCm9fZXhfcHw9Cg=="
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/between = SubResource( 2 )
-anims/game_over = SubResource( 6 )
+anims/game_over = SubResource( 5 )
 anims/title = SubResource( 3 )
 
-[node name="ContinueButton" type="Button" parent="."]
-margin_left = 246.0
-margin_top = 311.0
-margin_right = 552.554
-margin_bottom = 378.185
+[node name="StartButton" type="Button" parent="."]
+margin_left = 222.0
+margin_top = 320.0
+margin_right = 397.0
+margin_bottom = 387.185
 theme = ExtResource( 1 )
 custom_colors/font_color_hover = Color( 1, 0.517647, 0.14902, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.517647, 0.14902, 1 )
 shortcut_in_tooltip = false
-text = "continue your travels"
+text = "new game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
-margin_left = 207.0
-margin_top = 95.0
-margin_right = 598.0
-margin_bottom = 184.0
-rect_pivot_offset = Vector2( 196, 0 )
-custom_fonts/font = ExtResource( 2 )
-text = "you found your way home"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="."]
-margin_left = 207.0
-margin_top = 242.0
-margin_right = 598.0
-margin_bottom = 284.0
-rect_pivot_offset = Vector2( 196, 0 )
-custom_fonts/font = ExtResource( 2 )
-text = "time"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CountLbl" type="Label" parent="."]
-margin_left = 207.0
-margin_top = 136.0
-margin_right = 598.0
-margin_bottom = 245.0
-custom_fonts/font = SubResource( 4 )
-text = "1"
-align = 1
+[node name="StartButton2" type="Button" parent="."]
+margin_left = 410.0
+margin_top = 320.0
+margin_right = 585.0
+margin_bottom = 387.185
+theme = ExtResource( 1 )
+custom_colors/font_color_hover = Color( 1, 0.517647, 0.14902, 1 )
+custom_colors/font_color_pressed = Color( 1, 0.517647, 0.14902, 1 )
+shortcut_in_tooltip = false
+text = "credits"
 __meta__ = {
 "_edit_use_anchors_": false
 }

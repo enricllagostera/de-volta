@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="space-hopper"
-run/main_scene="res://levels/InBetweenLevels.tscn"
+run/main_scene="res://levels/TitleScreen.tscn"
 config/icon="res://images/experiments/icon.png"
 
 [aseprite_animation_importer]
@@ -48,7 +48,7 @@ aseprite_executable_path="C:\\Users\\enric\\AppData\\Roaming\\itch\\apps\\asepri
 
 [autoload]
 
-Main="*res://scenes/Main.tscn"
+Main="*res://Main.tscn"
 
 [display]
 
