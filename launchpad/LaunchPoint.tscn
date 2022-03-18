@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/LaunchPoint.gd" type="Script" id=2]
+
+[sub_resource type="StreamTexture" id=3]
+load_path = "res://.import/launchpad.png-70d6e35a5456568ab31328abda3c6c33.stex"
+
+[sub_resource type="Animation" id=2]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0, 2.0 ]
+}
+
+[node name="LaunchPoint" type="Sprite"]
+texture = SubResource( 3 )
+hframes = 2
+vframes = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2xhdW5jaHBhZC9sYXVuY2hwYWQuYXNlcHJpdGUKbGF5ZXJ8PWxhdW5jaHBhZApvcF9leHB8PUZhbHNlCm9fZm9sZGVyfD0Kb19uYW1lfD0Kb25seV92aXNpYmxlfD1GYWxzZQpvX2V4X3B8PQo="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 0.5
+anims/default = SubResource( 2 )

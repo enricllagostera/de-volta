@@ -14,14 +14,26 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Game.gd"
 }, {
+"base": "Camera2D",
+"class": "ShakeCamera2D",
+"language": "GDScript",
+"path": "res://scripts/ShakeCamera2D.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Starship",
 "language": "GDScript",
 "path": "res://scripts/Starship.gd"
+}, {
+"base": "Line2D",
+"class": "Trail2D",
+"language": "GDScript",
+"path": "res://scenes/Trail2D.gd"
 } ]
 _global_script_class_icons={
 "Game": "",
-"Starship": ""
+"ShakeCamera2D": "",
+"Starship": "",
+"Trail2D": ""
 }
 
 [application]

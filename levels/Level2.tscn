@@ -18,7 +18,7 @@
 [ext_resource path="res://ghost/GhostShip.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scripts/TextureScroll.gd" type="Script" id=17]
 [ext_resource path="res://images/experiments/pattern02.png" type="Texture" id=18]
-[ext_resource path="res://scenes/LaunchPoint.tscn" type="PackedScene" id=20]
+[ext_resource path="res://launchpad/LaunchPoint.tscn" type="PackedScene" id=20]
 [ext_resource path="res://levels/PlaybackSystem.gd" type="Script" id=21]
 [ext_resource path="res://scenes/GravityAttractor.tscn" type="PackedScene" id=28]
 

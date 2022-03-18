@@ -1,9 +1,8 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/LaunchesLbl.gd" type="Script" id=3]
-[ext_resource path="res://scripts/Battery.gd" type="Script" id=4]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=5]
 [ext_resource path="res://scripts/Goal.gd" type="Script" id=6]
 [ext_resource path="res://scripts/GUIBars.gd" type="Script" id=7]
@@ -19,13 +18,17 @@
 [ext_resource path="res://scripts/TextureScroll.gd" type="Script" id=17]
 [ext_resource path="res://images/experiments/pattern02.png" type="Texture" id=18]
 [ext_resource path="res://images/experiments/pattern01.png" type="Texture" id=19]
-[ext_resource path="res://scenes/LaunchPoint.tscn" type="PackedScene" id=20]
+[ext_resource path="res://launchpad/LaunchPoint.tscn" type="PackedScene" id=20]
 [ext_resource path="res://levels/PlaybackSystem.gd" type="Script" id=21]
 [ext_resource path="res://images/terrain_outline_tex.tres" type="Texture" id=22]
 [ext_resource path="res://images/prototyping_kit/triangle_filled.png" type="Texture" id=23]
 [ext_resource path="res://images/prototyping_kit/circle_outline.png" type="Texture" id=24]
 [ext_resource path="res://scripts/Repairing.gd" type="Script" id=25]
+[ext_resource path="res://scripts/ShakeCamera2D.gd" type="Script" id=26]
+[ext_resource path="res://fonts/hud.tres" type="DynamicFont" id=27]
 [ext_resource path="res://scenes/GravityAttractor.tscn" type="PackedScene" id=28]
+[ext_resource path="res://fonts/hud_bar.tres" type="DynamicFont" id=29]
+[ext_resource path="res://batteries/Battery.tscn" type="PackedScene" id=30]
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.933333, 0.192157, 0.435294, 1 )
@@ -191,9 +194,6 @@ font_data = ExtResource( 1 )
 [sub_resource type="CircleShape2D" id=7]
 radius = 34.0147
 
-[sub_resource type="CircleShape2D" id=8]
-radius = 18.1108
-
 [sub_resource type="StreamTexture" id=9]
 load_path = "res://.import/animated_starship.png-9c3da582af720462fd464b8aacf9a86a.stex"
 
@@ -206,6 +206,44 @@ size = 12
 outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
 font_data = ExtResource( 1 )
 
+[sub_resource type="StreamTexture" id=33]
+load_path = "res://.import/nav_overlay.png-c9a1f2c2505765d22b582a8cb2e5e4e2.stex"
+
+[sub_resource type="Animation" id=32]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0, 2.0 ]
+}
+
+[sub_resource type="StreamTexture" id=30]
+load_path = "res://.import/Layer 1.png-b9db7144593fd295d9db73823ed46ed0.stex"
+
+[sub_resource type="Animation" id=27]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0, 2.0 ]
+}
+
 [node name="Level" type="Node2D"]
 script = ExtResource( 9 )
 __meta__ = {
@@ -215,43 +253,43 @@ area_bounds = Rect2( 0, 0, 2800, 2800 )
 map_camera_smooth = 4.0
 
 [node name="HUD" type="CanvasLayer" parent="."]
+layer = 5
 
 [node name="HealthGUI" type="Node2D" parent="HUD"]
-position = Vector2( 29, 200 )
+position = Vector2( 33, 200 )
 
 [node name="HealthBar" type="ProgressBar" parent="HUD/HealthGUI"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -79.0
+margin_left = -81.0
 margin_top = -21.0
-margin_right = 79.0
+margin_right = 77.0
 rect_rotation = -90.0
 rect_pivot_offset = Vector2( 79, 10.086 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = ExtResource( 14 )
+custom_colors/font_color = Color( 1, 1, 1, 0 )
+custom_fonts/font = ExtResource( 29 )
 custom_styles/fg = SubResource( 5 )
 custom_styles/bg = SubResource( 4 )
 value = 100.0
-rounded = true
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="HUD/HealthGUI/HealthBar"]
-visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = -66.0
-margin_top = -10.5
-margin_right = -6.0
-margin_bottom = 10.5
+margin_left = 190.086
+margin_top = -24.414
+margin_right = 246.086
+margin_bottom = -0.413994
+rect_rotation = 90.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = ExtResource( 14 )
-text = "Health"
-valign = 1
+custom_fonts/font = ExtResource( 27 )
+text = "100%"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -273,38 +311,37 @@ anims/health = SubResource( 17 )
 [node name="Tween" type="Tween" parent="HUD"]
 
 [node name="EnergyGUI" type="Node2D" parent="HUD"]
-position = Vector2( 774, 200 )
+position = Vector2( 764, 188 )
 
 [node name="EnergyBar" type="ProgressBar" parent="HUD/EnergyGUI"]
 margin_left = -79.0
-margin_top = -17.0
+margin_top = -16.0
 margin_right = 78.0
-margin_bottom = 4.0
+margin_bottom = 5.0
 rect_rotation = -90.0
 rect_pivot_offset = Vector2( 79, 10 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = ExtResource( 14 )
+custom_colors/font_color = Color( 1, 1, 1, 0 )
+custom_fonts/font = ExtResource( 29 )
 custom_styles/fg = SubResource( 3 )
 custom_styles/bg = SubResource( 4 )
 value = 100.0
-rounded = true
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="HUD/EnergyGUI/EnergyBar"]
-visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = -63.0
-margin_top = -10.5
-margin_right = -3.0
-margin_bottom = 10.5
+margin_left = 192.0
+margin_top = -25.5
+margin_right = 248.0
+margin_bottom = 5.5
+rect_rotation = 90.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = ExtResource( 14 )
-text = "Energy"
-valign = 1
+custom_fonts/font = ExtResource( 27 )
+text = "100%"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -342,10 +379,10 @@ anims/lives2 = SubResource( 13 )
 anims/lives3 = SubResource( 14 )
 
 [node name="LaunchesLbl" type="Label" parent="HUD"]
-margin_left = 497.0
-margin_top = 386.0
-margin_right = 782.0
-margin_bottom = 444.0
+margin_left = 512.0
+margin_top = 413.0
+margin_right = 797.0
+margin_bottom = 471.0
 custom_fonts/font = SubResource( 6 )
 text = "Launches: 0"
 align = 2
@@ -437,80 +474,37 @@ texture = ExtResource( 13 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Goal"]
 shape = SubResource( 7 )
 
-[node name="Battery1" type="Area2D" parent="Scenario"]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( 438, 409 )
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="Battery1" parent="Scenario" instance=ExtResource( 30 )]
 
-[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery1"]
-scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 12 )
+[node name="Battery2" parent="Scenario" instance=ExtResource( 30 )]
+position = Vector2( 967, 239 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery1"]
-shape = SubResource( 8 )
+[node name="Battery3" parent="Scenario" instance=ExtResource( 30 )]
+position = Vector2( 2198, 428 )
 
-[node name="Battery2" type="Area2D" parent="Scenario"]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( 1443, 988 )
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="Battery4" parent="Scenario" instance=ExtResource( 30 )]
+position = Vector2( 2089, 1568 )
 
-[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery2"]
-scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 12 )
+[node name="Battery5" parent="Scenario" instance=ExtResource( 30 )]
+position = Vector2( 1560, 2032 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery2"]
-shape = SubResource( 8 )
+[node name="Battery6" parent="Scenario" instance=ExtResource( 30 )]
+position = Vector2( 769, 1708 )
 
-[node name="Battery3" type="Area2D" parent="Scenario"]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( 757, 1427 )
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="Battery7" parent="Scenario" instance=ExtResource( 30 )]
+position = Vector2( 346, 2305 )
 
-[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery3"]
-scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 12 )
+[node name="Battery8" parent="Scenario" instance=ExtResource( 30 )]
+position = Vector2( 2263, 2372 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery3"]
-shape = SubResource( 8 )
+[node name="Battery9" parent="Scenario" instance=ExtResource( 30 )]
+position = Vector2( 1425, 993 )
 
-[node name="Battery4" type="Area2D" parent="Scenario"]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( 2069, 1491 )
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="Battery10" parent="Scenario" instance=ExtResource( 30 )]
+position = Vector2( 1502, 1319 )
 
-[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery4"]
-scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 12 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery4"]
-shape = SubResource( 8 )
-
-[node name="Battery5" type="Area2D" parent="Scenario"]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( 555, 1052 )
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="IconPlusSmall" type="Sprite" parent="Scenario/Battery5"]
-scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 12 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenario/Battery5"]
-shape = SubResource( 8 )
+[node name="Battery11" parent="Scenario" instance=ExtResource( 30 )]
+position = Vector2( 2525, 82 )
 
 [node name="Asteroid1" parent="Scenario" instance=ExtResource( 28 )]
 modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
@@ -553,6 +547,7 @@ position = Vector2( -1, -1 )
 
 [node name="Player" type="Node2D" parent="."]
 script = ExtResource( 5 )
+debug_gui = [ null, null, null, null, null, null, null, null, null ]
 
 [node name="Starship" parent="Player" groups=["starship"] instance=ExtResource( 2 )]
 modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
@@ -560,7 +555,7 @@ position = Vector2( 2124, 1294 )
 base_power = 6.0
 base_damp = 0.001
 base_gravity = 0
-velocity_damage_rate = 0.01
+velocity_damage_rate = 0.015
 energy_per_launch_power_rate = 0.2
 
 [node name="Visual" parent="Player/Starship" index="1"]
@@ -576,8 +571,10 @@ script = ExtResource( 8 )
 target = NodePath("../..")
 
 [node name="Controllers" type="CanvasLayer" parent="Player"]
+layer = 2
 
-[node name="Empty" type="Control" parent="Player/Controllers"]
+[node name="Empty" type="Control" parent="Player/Controllers" groups=["debug_gui"]]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -594,14 +591,13 @@ margin_top = 139.0
 margin_right = 190.5
 margin_bottom = 211.0
 custom_fonts/font = ExtResource( 14 )
-text = "No controller selected."
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Launching" type="Panel" parent="Player/Controllers"]
+[node name="Launching" type="Panel" parent="Player/Controllers" groups=["debug_gui"]]
 visible = false
 modulate = Color( 1, 1, 1, 0.478431 )
 anchor_top = 1.0
@@ -684,7 +680,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Flying" type="Panel" parent="Player/Controllers"]
+[node name="Flying" type="Panel" parent="Player/Controllers" groups=["debug_gui"]]
 visible = false
 modulate = Color( 1, 1, 1, 0.478431 )
 anchor_top = 1.0
@@ -733,7 +729,7 @@ margin_bottom = -60.0
 text = "FLYING CONTROL INSERT"
 align = 1
 
-[node name="Navigating" type="Panel" parent="Player/Controllers"]
+[node name="Navigating" type="Panel" parent="Player/Controllers" groups=["debug_gui"]]
 visible = false
 modulate = Color( 1, 1, 1, 0.478431 )
 anchor_top = 1.0
@@ -783,10 +779,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -137.0
-margin_top = 66.0
-margin_right = 138.0
-margin_bottom = 193.0
+margin_left = -138.0
+margin_top = -55.0
+margin_right = 137.0
+margin_bottom = 72.0
 custom_styles/panel = SubResource( 24 )
 script = ExtResource( 25 )
 __meta__ = {
@@ -870,7 +866,7 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="Player/Controllers/Repairing"]
 
-[node name="EmptyButton" type="Button" parent="Player/Controllers"]
+[node name="EmptyButton" type="Button" parent="Player/Controllers" groups=["debug_gui"]]
 margin_left = 625.0
 margin_top = 10.0
 margin_right = 742.0
@@ -880,7 +876,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LauncherButton" type="Button" parent="Player/Controllers"]
+[node name="LauncherButton" type="Button" parent="Player/Controllers" groups=["debug_gui"]]
 margin_left = 625.0
 margin_top = 53.0
 margin_right = 742.0
@@ -891,7 +887,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FlyingButton" type="Button" parent="Player/Controllers"]
+[node name="FlyingButton" type="Button" parent="Player/Controllers" groups=["debug_gui"]]
 margin_left = 625.0
 margin_top = 96.0
 margin_right = 742.0
@@ -902,7 +898,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NavigatingButton" type="Button" parent="Player/Controllers"]
+[node name="NavigatingButton" type="Button" parent="Player/Controllers" groups=["debug_gui"]]
 margin_left = 625.0
 margin_top = 144.0
 margin_right = 742.0
@@ -913,13 +909,51 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RepairingButton" type="Button" parent="Player/Controllers"]
+[node name="RepairingButton" type="Button" parent="Player/Controllers" groups=["debug_gui"]]
 margin_left = 625.0
 margin_top = 191.0
 margin_right = 742.0
 margin_bottom = 224.0
 rect_pivot_offset = Vector2( 39, 11 )
 text = "Repairing"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NavOverlay" type="Sprite" parent="Player/Controllers"]
+texture = SubResource( 33 )
+centered = false
+hframes = 2
+vframes = 2
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVBsYXllci9Db250cm9sbGVycy9OYXZPdmVybGF5L0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2d1aS9uYXZfb3ZlcmxheS5hc2Vwcml0ZQpsYXllcnw9bmF2X292ZXJsYXkKb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9cmVzOi8vZ3VpCm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9RmFsc2UKb19leF9wfD0K"
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Controllers/NavOverlay"]
+anims/default = SubResource( 32 )
+
+[node name="InsertsGUI" type="Sprite" parent="Player/Controllers"]
+texture = SubResource( 30 )
+offset = Vector2( 400, 200 )
+hframes = 2
+vframes = 2
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUhVRC9JbnNlcnRzR1VJL0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2d1aS9pbnNlcnRzX2d1aS5hc2Vwcml0ZQpsYXllcnw9TGF5ZXIgMQpvcF9leHB8PUZhbHNlCm9fZm9sZGVyfD1yZXM6Ly9ndWkKb19uYW1lfD0Kb25seV92aXNpYmxlfD1GYWxzZQpvX2V4X3B8PQo="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Controllers/InsertsGUI"]
+playback_speed = 0.5
+anims/default = SubResource( 27 )
+
+[node name="InsertsLbl" type="Label" parent="Player/Controllers"]
+modulate = Color( 0.407843, 0.682353, 0.831373, 1 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -32.0
+custom_fonts/font = ExtResource( 27 )
+text = "controls on standby"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -957,16 +991,19 @@ limit_bottom = 2800
 limit_smoothed = true
 smoothing_enabled = true
 editor_draw_limits = true
+script = ExtResource( 26 )
+decay = 1.0
+base_offset = Vector2( 0, -25 )
+max_offset = Vector2( 50, 25 )
+max_roll = 0.0
+target = NodePath("../Player/Starship")
 
 [connection signal="body_entered" from="Scenario/Goal" to="Player/Starship" method="_on_Goal_body_entered"]
-[connection signal="body_entered" from="Scenario/Battery1" to="Scenario/Battery1" method="_on_Battery_body_entered"]
-[connection signal="body_entered" from="Scenario/Battery2" to="Scenario/Battery2" method="_on_Battery_body_entered"]
-[connection signal="body_entered" from="Scenario/Battery3" to="Scenario/Battery3" method="_on_Battery_body_entered"]
-[connection signal="body_entered" from="Scenario/Battery4" to="Scenario/Battery4" method="_on_Battery_body_entered"]
-[connection signal="body_entered" from="Scenario/Battery5" to="Scenario/Battery5" method="_on_Battery_body_entered"]
 [connection signal="energy_changed" from="Player/Starship" to="HUD/EnergyGUI/EnergyBar" method="_on_Starship_energy_changed"]
 [connection signal="goal_reached" from="Player/Starship" to="PlaybackSystem" method="_on_Starship_goal_reached"]
 [connection signal="health_changed" from="Player/Starship" to="HUD/HealthGUI/HealthBar" method="_on_Starship_health_changed"]
+[connection signal="landed" from="Player/Starship" to="." method="_on_Starship_landed"]
+[connection signal="launched" from="Player/Starship" to="." method="_on_Starship_launched"]
 [connection signal="launched" from="Player/Starship" to="HUD/LaunchesLbl" method="_on_Starship_launched"]
 [connection signal="navigation_engaged" from="Player/Starship" to="." method="_on_Starship_navigation_engaged"]
 [connection signal="navigation_engaged" from="Player/Starship" to="Player" method="_on_Starship_navigation_engaged"]

@@ -9,7 +9,7 @@
     <div id="beholder-root"></div>
     <script src="index.js"></script>
     <script>
-      var engine = new Engine({"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":732896,"index.wasm":17493574},"focusCanvas":true,"gdnativeLibs":[]});
+      var engine = new Engine({"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":783744,"index.wasm":17493574},"focusCanvas":true,"gdnativeLibs":[]});
       engine.startGame();
     </script>
     <script
@@ -211,11 +211,17 @@
         }
         if (event.key == "l") {
           spaceHopper.sendCommand("bolt_incremented", "right")
+          vibrate()
         }
+
       };     
 
       function random0to100(){
         return Math.floor(Math.random()*100);
+      }
+
+      function vibrate(){
+        window.navigator.vibrate(200);
       }
     </script>
   </body>

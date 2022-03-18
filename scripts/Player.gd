@@ -7,15 +7,23 @@ const POWER_INCREMENT_PER_PRESS = 10
 const POWER_MIN = 0
 const POWER_MAX = 100
 
+export(Array) var debug_gui
+
 
 func _ready():
 	activate_empty_controller()
 	_change_launch_angle(0)
 	_change_launch_power(0)
+	get_tree().set_group("debug_gui", "visible", not OS.has_feature("HTML5"))
 	$Controllers/Navigating/NavHSlider.value = 50
 	$Controllers/Navigating/NavVSlider.value = 50
 	$Controllers/Flying/BoostButton.connect("pressed", self, "_on_boost_click")
 	$Controllers/Repairing.connect("repaired", self, "_on_repaired")
+	$Controllers/InsertsLbl.text = "all systems: standby"
+	$Controllers/InsertsGUI/AnimationPlayer.play("default")
+	$Controllers/NavOverlay/AnimationPlayer.play("default")
+	
+	
 
 
 func _input(_event):
@@ -27,14 +35,17 @@ func _input(_event):
 
 
 func _process(delta):
+	get_tree().set_group("debug_gui", "visible", not OS.has_feature("HTML5"))
 	match $Starship.controller:
 		Starship.Controller.FLYING:
 			$Controllers/Empty.visible = false
 			_flying(delta)
 		Starship.Controller.LAUNCHING:
+			$Controllers/InsertsLbl.text = "launch system: " +  ("online" if $Starship.is_grounded else "standby")			
 			$Controllers/Empty.visible = false
 			_launching(delta)
 		Starship.Controller.REPAIRING:
+			$Controllers/InsertsLbl.text = "repairing system: " +  ("online" if $Starship.is_grounded else "standby")
 			$Controllers/Empty.visible = false
 			_repairing()
 		Starship.Controller.EMPTY:
@@ -48,6 +59,7 @@ func _flying(delta):
 
 
 func _launching(_delta):
+	$Controllers/InsertsLbl.text = "launch system: " +  ("online" if $Starship.is_grounded else "standby")
 	if $Starship.is_grounded:
 		$Controllers/Launching.visible = true
 		if Input.is_action_just_pressed("ui_left"):
@@ -71,6 +83,7 @@ func _repairing():
 func _change_navigation_mode(new_state):
 	$Starship.is_navigating = new_state
 	$Starship.emit_signal("navigation_engaged", new_state)
+	$Controllers/NavOverlay.visible = new_state
 	# $Controllers/Launching/NavigationToggle.pressed = new_state
 
 
@@ -148,26 +161,40 @@ func _on_repaired():
 
 func activate_launching_controller(_args = null):
 	$Controllers/Launching.visible = true
+	$Starship/LaunchAim.visible = true	
 	$Controllers/Flying.visible = false
 	$Controllers/Navigating.visible = false
-	$Controllers/Repairing.visible = false	
-	
-	$Starship.controller = $Starship.Controller.LAUNCHING
+	$Controllers/Repairing.visible = false
+	$Controllers/InsertsGUI/AnimationPlayer.play("default")
+	$Controllers/InsertsLbl.text = "launch system: " +  ("online" if $Starship.is_grounded else "standby")
 	_change_navigation_mode(false)
+	$Starship.controller = $Starship.Controller.LAUNCHING
 
 
 func activate_empty_controller(_args = null):
 	$Controllers/Launching.visible = false
+	$Starship/LaunchAim.visible = false		
 	$Controllers/Navigating.visible = false
 	$Controllers/Flying.visible = false
-	$Controllers/Repairing.visible = false	
-	
+	$Controllers/Repairing.visible = false
+	$Controllers/InsertsLbl.text = "all systems: standby"
 	$Starship.controller = $Starship.Controller.EMPTY
+	_change_navigation_mode(false)
+
+
+func activate_repairing_controller(_args = null):
+	$Controllers/Launching.visible = false
+	$Starship/LaunchAim.visible = false		
+	$Controllers/Navigating.visible = false
+	$Controllers/Flying.visible = false
+	$Controllers/Repairing.visible = true
+	$Starship.controller = $Starship.Controller.REPAIRING
 	_change_navigation_mode(false)
 
 
 func activate_flying_controller(_args = null):
 	$Controllers/Launching.visible = false
+	$Starship/LaunchAim.visible = false	
 	$Controllers/Flying.visible = true
 	$Controllers/Navigating.visible = false
 	$Controllers/Repairing.visible = false	
@@ -178,9 +205,11 @@ func activate_flying_controller(_args = null):
 
 func activate_navigating_controller(_args = null):
 	$Controllers/Launching.visible = false
+	$Starship/LaunchAim.visible = false
 	$Controllers/Flying.visible = false
 	$Controllers/Navigating.visible = true
-	$Controllers/Repairing.visible = false	
+	$Controllers/Repairing.visible = false
+	$Controllers/InsertsLbl.text = "navigation system: " +  ("online" if $Starship.is_grounded else "standby")
 	$Starship.controller = $Starship.Controller.NAVIGATING
 	_change_navigation_mode(true)
 
@@ -200,4 +229,7 @@ func _on_RepairingButton_pressed():
 	$Controllers/Navigating.visible = false
 	$Controllers/Repairing.visible = true
 	$Starship.controller = $Starship.Controller.REPAIRING
+	$Controllers/InsertsLbl.text = "repairing system: " +  ("online" if $Starship.is_grounded else "standby")
 	_change_navigation_mode(false)
+	if OS.has_feature("HTML5"):
+		$JSBridge.navigator.vibrate(300)

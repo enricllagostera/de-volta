@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/Starship.gd" type="Script" id=1]
 [ext_resource path="res://images/prototyping_kit/triangle_filled.png" type="Texture" id=2]
@@ -7,12 +7,17 @@
 [ext_resource path="res://images/experiments/triangle_particles1.png" type="Texture" id=5]
 [ext_resource path="res://scenes/StarshipVisuals.tscn" type="PackedScene" id=6]
 [ext_resource path="res://images/prototyping_kit/triangle_outline.png" type="Texture" id=7]
+[ext_resource path="res://scenes/Trail2D.gd" type="Script" id=8]
+[ext_resource path="res://images/terrain_outline_tex.tres" type="Texture" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 22.0
 
 [sub_resource type="StreamTexture" id=6]
 load_path = "res://.import/animated_starship.png-be7026567fd102549f3a08cd3bf2fe47.stex"
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0, 0 ), 0.0, 1.0, 0, 1, Vector2( 1, 1 ), 1.0, 0.0, 1, 0 ]
 
 [sub_resource type="Curve" id=5]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.00480771 ), 0.0, 0.0, 0, 0 ]
@@ -34,6 +39,18 @@ shape = SubResource( 1 )
 [node name="Visual" parent="." instance=ExtResource( 6 )]
 texture = SubResource( 6 )
 offset = Vector2( 0, -10 )
+
+[node name="Line2D" type="Line2D" parent="Visual"]
+z_index = -5
+width = 30.0
+width_curve = SubResource( 7 )
+default_color = Color( 1, 0.819608, 0, 0.235294 )
+texture = ExtResource( 9 )
+texture_mode = 2
+script = ExtResource( 8 )
+is_emitting = true
+lifetime = 0.25
+target_path = NodePath("..")
 
 [node name="Particles2D" type="CPUParticles2D" parent="Visual"]
 show_behind_parent = true

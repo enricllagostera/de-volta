@@ -41,10 +41,14 @@ var is_shielded = false
 var out_of_bounds_timer: Timer
 var can_be_killed = true
 
+var is_critical_energy = false
+var is_critical_health = false
 
-signal energy_changed(new_energy)
+
+signal energy_changed(new_energy, old_energy)
 signal launched(launch_count)
-signal health_changed(new_health)
+signal health_changed(new_health, old_health)
+signal landed(landing_speed)
 signal died
 signal goal_reached(launch_count, energy)
 signal navigation_engaged(is_active)
@@ -105,11 +109,13 @@ func repairing():
 func _physics_process(delta):
 	if $Visual.visible == false:
 		$LaunchAim.visible = false
+	is_critical_energy = (energy <= CRITICAL_ENERGY)
+	is_critical_health = (health <= CRITICAL_HEALTH)
 	if is_dying or not can_be_killed:
 		return
-	if health <= CRITICAL_HEALTH:
+	if is_critical_health:
 		_change_health(health - critical_health_mod*delta)
-	if energy <= CRITICAL_ENERGY:
+	if is_critical_energy:
 		_change_energy(energy - critical_energy_mod*delta)
 	if is_navigating:
 		_change_energy(energy - delta * energy_for_navigation_per_s)
@@ -123,17 +129,19 @@ func _physics_process(delta):
 	if collision and velocity.length() > 0.1:
 		# First calculate landing damage, before changing is_grounded
 		var damage = velocity.length() * velocity_damage_rate
+		var apply_damage = 0
 		if is_shielded:
-			health -= damage * (1.0 - SHIELD_PROTECTION_RATE)
+			apply_damage = damage * (1.0 - SHIELD_PROTECTION_RATE)
 		else:
-			health -= damage 
+			apply_damage = damage 
 		# Always land perpendicular to the collision surface
 		$Visual.rotation = get_angle_to(position + collision.normal) + deg2rad(90)
 		is_grounded = true
 		$Visual/AnimationPlayer.play("landing")
 		$Visual/AnimationPlayer.queue("grounded")
+		emit_signal("landed", velocity.length())
 		# Apply health change consequences
-		emit_signal("health_changed", health)
+		_change_health(health - apply_damage)
 		if health <= HEALTH_MIN:
 			start_dying()
 
@@ -178,21 +186,23 @@ func _on_Goal_body_entered(body):
 func _change_energy(new_energy):
 	if new_energy <= ENERGY_MIN:
 		energy = 0
-		emit_signal("energy_changed", 0)
+		emit_signal("energy_changed", 0, 0)
 		start_dying()
 		return
+	var old_energy = energy
 	energy = clamp(new_energy, ENERGY_MIN, ENERGY_MAX)
-	emit_signal("energy_changed", energy)
+	emit_signal("energy_changed", energy, old_energy)
 
 
 func _change_health(new_health):
 	if new_health <= HEALTH_MIN:
 		health = 0
-		emit_signal("health_changed", 0)
+		emit_signal("health_changed", 0, 0)
 		start_dying()
 		return
+	var old_health = health
 	health = clamp(new_health, HEALTH_MIN, HEALTH_MAX)
-	emit_signal("health_changed", health)
+	emit_signal("health_changed", health, old_health)
 
 
 func pull(force):

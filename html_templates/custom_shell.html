@@ -211,11 +211,17 @@
         }
         if (event.key == "l") {
           spaceHopper.sendCommand("bolt_incremented", "right")
+          vibrate();
         }
+
       };     
 
       function random0to100(){
         return Math.floor(Math.random()*100);
+      }
+
+      function vibrate(){
+        window.navigator.vibrate(200);
       }
     </script>
   </body>

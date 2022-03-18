@@ -25,7 +25,7 @@ func _process(delta):
 			$MapCamera2D.offset, map_camera_target, delta * map_camera_smooth
 		)
 	var target_pos = $Player/Starship.position
-	$GameplayCamera2D.position = target_pos + Vector2(0, -25)
+	#$GameplayCamera2D.position = target_pos + Vector2(0, -25)
 	if area_bounds.has_point(target_pos):
 		$Player/Starship.entered_map_area()
 	else:
@@ -92,18 +92,26 @@ func _on_Starship_goal_reached(_launch_count, _energy):
 	Main.change_level("InBetweenLevels")
 
 
-func _on_Starship_health_changed(_value):
+func _on_Starship_health_changed(_value, old = 0):
+	var diff = floor(old) - floor(_value)
+	if diff > 0 and diff <= 1:
+#if old - _value > 0 and old % floor(_value) > 0:
+		$GameplayCamera2D.add_trauma(0.6)
 	$HUD/Tween.interpolate_property($HUD/HealthGUI, "scale", Vector2(1.3,1.3), Vector2(1, 1), 0.3, Tween.TRANS_BACK)
 	$HUD/Tween.start()
 
 
-func _on_Starship_energy_changed(_value):
+func _on_Starship_energy_changed(_value, old = 0):
+	var diff = floor(old) - floor(_value)
+	if diff > 0 and diff <= 1:
+		$GameplayCamera2D.add_trauma(0.6)
 	$HUD/Tween.interpolate_property($HUD/EnergyGUI, "scale", Vector2(1.3,1.3), Vector2(1, 1), 0.3, Tween.TRANS_BACK)
 	$HUD/Tween.start()
 
 
 
 func _on_Starship_died():
+	$GameplayCamera2D.add_trauma(1)
 	$HUD/Tween.interpolate_property($HUD/Lives, "position", Vector2(0, -20), Vector2.ZERO, 0.5, Tween.TRANS_BOUNCE)
 	$HUD/Tween.start()
 	$HUD/Lives/AnimationPlayer.play("lives"+str(Main.lives-1))
@@ -125,6 +133,7 @@ func activate_insert(insert):
 			$Player.activate_navigating_controller()
 		"repairing":
 			print("repair insert")
+			$Player.activate_repairing_controller()
 		_: 
 #			Default is empty
 			print("empty insert")
@@ -181,3 +190,13 @@ func change_navigation_target(x, y):
 	)
 	map_camera_target.x = new_x
 	map_camera_target.y = new_y
+
+
+func _on_Starship_launched(launch_count):
+	$GameplayCamera2D.add_trauma(0.2)
+	pass # Replace with function body.
+
+
+func _on_Starship_landed(landing_speed):
+	$GameplayCamera2D.add_trauma(0.0015 * landing_speed)	
+	pass # Replace with function body.

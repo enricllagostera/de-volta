@@ -7,6 +7,7 @@ export(NodePath) var target
 var js_obj
 var cb_command
 var target_node
+var navigator
 
 
 func _ready():
@@ -17,6 +18,7 @@ func _ready():
 	cb_command = JavaScript.create_callback(self, "_interpretCommand")
 	js_obj = JavaScript.get_interface(js_object_name)
 	js_obj.initCallbacks(cb_command)
+	navigator = JavaScript.get_interface("navigator")
 
 
 func _process(_delta):
