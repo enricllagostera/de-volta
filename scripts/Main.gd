@@ -10,6 +10,10 @@ var levels = [
 	{"name": "Level1", "level_plays": 0, "launchpad_count": 5},
 ]
 
+func _ready():
+	$PermanentGUI/FullscreenBtn.connect("pressed", self, "on_fullscreen")
+	$PermanentGUI/QuitBtn.connect("pressed", self, "on_quit")
+
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
@@ -80,3 +84,15 @@ func save_history(history, object_name, level_name, launchpad_index):
 	data.history = history
 	file.store_line(to_json(data))
 	file.close()
+
+
+func on_fullscreen():
+	OS.window_fullscreen = !OS.window_fullscreen
+	
+	
+func on_quit():
+	#get_tree().notification(MainLoop.NOTIFICATION_WM_QUIT_REQUEST)
+	#get_tree().notification(MainLoop.NOTIFICATION_WM_QUIT_REQUEST)
+	reset_game()
+	erase_saved_histories();	
+	change_level("InBetweenLevels");
