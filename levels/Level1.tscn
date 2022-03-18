@@ -1,8 +1,9 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/LaunchesLbl.gd" type="Script" id=3]
+[ext_resource path="res://asteroid/Asteroid.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=5]
 [ext_resource path="res://scripts/Goal.gd" type="Script" id=6]
 [ext_resource path="res://scripts/GUIBars.gd" type="Script" id=7]
@@ -533,22 +534,6 @@ position = Vector2( 1502, 1319 )
 [node name="Battery11" parent="Scenario" instance=ExtResource( 30 )]
 position = Vector2( 2525, 82 )
 
-[node name="Asteroid1" parent="Scenario" instance=ExtResource( 28 )]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( 1366, 2002 )
-mass = 4000.0
-
-[node name="Visual" parent="Scenario/Asteroid1" index="1"]
-scale = Vector2( 5, 5 )
-
-[node name="Asteroid2" parent="Scenario" instance=ExtResource( 28 )]
-modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
-position = Vector2( 1366, 1184 )
-mass = 4000.0
-
-[node name="Visual" parent="Scenario/Asteroid2" index="1"]
-scale = Vector2( 5, 5 )
-
 [node name="LaunchPoint" parent="Scenario" instance=ExtResource( 20 )]
 self_modulate = Color( 0.803922, 0.803922, 0.803922, 1 )
 position = Vector2( 1424, 1800 )
@@ -571,6 +556,32 @@ position = Vector2( 1236, 1024 )
 
 [node name="Backdrop2" parent="Scenario" instance=ExtResource( 11 )]
 position = Vector2( -1, -1 )
+
+[node name="Asteroid" parent="Scenario" instance=ExtResource( 4 )]
+position = Vector2( 1367, 1184 )
+
+[node name="Attractor" parent="Scenario/Asteroid" index="0"]
+mass = 4000.0
+
+[node name="Terrain" parent="Scenario/Asteroid" index="1"]
+polygon = PoolVector2Array( -23.616, 152, -106.785, 147, -143.749, 100, -131.427, 0, -156.07, -25, -145.802, -109, -77.0083, -155, 1.02673, -169, 90.3563, -156, 113.972, -121, 131.427, -71, 131.427, 0, 155.043, 32, 98.5705, 88, 74.9546, 137 )
+
+[node name="Line2D" parent="Scenario/Asteroid/Terrain" index="0"]
+default_color = Color( 0.411765, 0.411765, 0.411765, 1 )
+
+[node name="Asteroid2" parent="Scenario" instance=ExtResource( 4 )]
+position = Vector2( 1370, 2002 )
+
+[node name="Attractor" parent="Scenario/Asteroid2" index="0"]
+mass = 4000.0
+
+[node name="Terrain" parent="Scenario/Asteroid2" index="1"]
+color = Color( 0.356863, 0.337255, 0.337255, 1 )
+texture_rotation_degrees = -140.1
+polygon = PoolVector2Array( 20.5355, 172, -63.6602, 144, -98.5705, 88, -146.829, 66, -180.713, 0, -159.15, -118, -98.5706, -162, -5.13391, -180, 108.838, -147, 180.713, -88, 166.338, 44, 103.704, 130 )
+
+[node name="Line2D" parent="Scenario/Asteroid2/Terrain" index="0"]
+default_color = Color( 0.411765, 0.411765, 0.411765, 1 )
 
 [node name="Player" type="Node2D" parent="."]
 script = ExtResource( 5 )
@@ -1051,6 +1062,8 @@ target = NodePath("../Player/Starship")
 [editable path="Scenario/Terrain"]
 [editable path="Scenario/Terrain3"]
 [editable path="Scenario/Terrain2"]
-[editable path="Scenario/Asteroid1"]
+[editable path="Scenario/Asteroid"]
+[editable path="Scenario/Asteroid/Terrain"]
 [editable path="Scenario/Asteroid2"]
+[editable path="Scenario/Asteroid2/Terrain"]
 [editable path="Player/Starship"]

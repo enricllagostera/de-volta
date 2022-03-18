@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://images/experiments/pattern01.png" type="Texture" id=1]
+[ext_resource path="res://scripts/GravitationalAsteroid.gd" type="Script" id=2]
+[ext_resource path="res://scenes/TerrainMountains.tscn" type="PackedScene" id=3]
+
+[node name="Asteroid" type="Node2D" groups=["gravity_attractor"]]
+
+[node name="Attractor" type="Node2D" parent="." groups=["gravity_attractor"]]
+modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+mass = 10000.0
+
+[node name="Terrain" parent="." instance=ExtResource( 3 )]
+scale = Vector2( 0.973922, 1 )
+color = Color( 0.411765, 0.411765, 0.411765, 1 )
+texture = ExtResource( 1 )
+texture_scale = Vector2( 2, 2 )
+texture_rotation_degrees = -18.4
+polygon = PoolVector2Array( 0, 128, -98.5705, 88, -131.427, 0, -98.5705, -96, 0, -128, 98.5705, -96, 131.427, 0, 98.5705, 88 )
+uv = PoolVector2Array( -982, -69, -976, -888, -535, -934, -500, -782, -353, -793, -399, -569, -220, -412, 36, -489, -134, -299, -170, -196, -220, -82, -113, 61, -31, 203, 279, 31, 99, 245, 93, 393, 243, 452, 158, 622, 324, 555, 271, 670, 335, 755, 396, 937, 193, 974, 81, 969, 25, 1137, 118, 1212, 239, 1409, 22, 1431, -241, 1685, -970, 2115 )
+offset_speed = 1.0
+
+[node name="Line2D" parent="Terrain" index="0"]
+width = 8.0
+default_color = Color( 1, 0.517647, 0.14902, 1 )
+
+[node name="StaticBody2D" parent="Terrain" index="1" groups=["gravity_attractor"]]
+
+[editable path="Terrain"]
