@@ -1,0 +1,173 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://title_screen/gui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://fonts/hud.tres" type="DynamicFont" id=2]
+[ext_resource path="res://scripts/CreditsScreen.gd" type="Script" id=3]
+[ext_resource path="res://fonts/CasualEncounter.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="StreamTexture" id=5]
+flags = 4
+load_path = "res://.import/title_v2.png-ea645e9a83e8f7f794f86b72e0f18ea6.stex"
+
+[sub_resource type="Animation" id=2]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 3.0, 4.0, 5.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6.0, 7.0, 8.0, 9.0, 10.0, 11.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0, 2.0 ]
+}
+
+[sub_resource type="DynamicFont" id=7]
+outline_color = Color( 1, 0.819608, 0, 1 )
+extra_spacing_bottom = 20
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 72
+extra_spacing_bottom = -1
+font_data = ExtResource( 4 )
+
+[node name="Credits" type="Sprite"]
+texture = SubResource( 5 )
+centered = false
+hframes = 4
+vframes = 3
+frame = 3
+script = ExtResource( 3 )
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL3RpdGxlX3NjcmVlbi90aXRsZV92Mi5hc2Vwcml0ZQpsYXllcnw9Cm9wX2V4cHw9RmFsc2UKb19mb2xkZXJ8PQpvX25hbWV8PQpvbmx5X3Zpc2libGV8PUZhbHNlCm9fZXhfcHw9Cg=="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/between = SubResource( 2 )
+anims/game_over = SubResource( 6 )
+anims/title = SubResource( 3 )
+
+[node name="ContinueButton" type="Button" parent="."]
+margin_left = 558.0
+margin_top = 313.0
+margin_right = 777.0
+margin_bottom = 380.0
+theme = ExtResource( 1 )
+custom_colors/font_color_hover = Color( 1, 0.517647, 0.14902, 1 )
+custom_colors/font_color_pressed = Color( 1, 0.517647, 0.14902, 1 )
+shortcut_in_tooltip = false
+text = "back to title"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+modulate = Color( 1, 0.819608, 0, 1 )
+margin_left = 102.371
+margin_top = 79.5563
+margin_right = 543.371
+margin_bottom = 386.556
+rect_rotation = -9.5
+rect_pivot_offset = Vector2( 258.941, 35.8804 )
+custom_fonts/font = SubResource( 7 )
+text = "Enric Llagostera
+
+
+
+Peter Gyory
+
+
+Perry Owens
+
+"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 102.371
+margin_top = 79.5563
+margin_right = 543.371
+margin_bottom = 386.556
+rect_rotation = -9.5
+rect_pivot_offset = Vector2( 258.941, 35.8804 )
+custom_fonts/font = SubResource( 7 )
+text = "
+Game design, controller design, programming & visuals
+
+
+Controller design & programming
+
+
+Controller design & fabrication
+"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+margin_left = 207.0
+margin_top = 242.0
+margin_right = 598.0
+margin_bottom = 284.0
+rect_pivot_offset = Vector2( 196, 0 )
+custom_fonts/font = ExtResource( 2 )
+text = "time"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CountLbl" type="Label" parent="."]
+visible = false
+margin_left = 207.0
+margin_top = 136.0
+margin_right = 598.0
+margin_bottom = 245.0
+custom_fonts/font = SubResource( 4 )
+text = "1"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

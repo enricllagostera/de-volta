@@ -3,7 +3,7 @@
 [ext_resource path="res://title_screen/gui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://title_screen/TitleScreen.gd" type="Script" id=2]
 
-[sub_resource type="StreamTexture" id=4]
+[sub_resource type="StreamTexture" id=6]
 flags = 4
 load_path = "res://.import/title_v2.png-ea645e9a83e8f7f794f86b72e0f18ea6.stex"
 
@@ -56,14 +56,14 @@ tracks/0/keys = {
 }
 
 [node name="TitleScreen" type="Sprite"]
-texture = SubResource( 4 )
+texture = SubResource( 6 )
 centered = false
 hframes = 4
 vframes = 3
 frame = 1
 script = ExtResource( 2 )
 __meta__ = {
-"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL3RpdGxlX3NjcmVlbi90aXRsZV92Mi5hc2Vwcml0ZQpsYXllcnw9Cm9wX2V4cHw9RmFsc2UKb19mb2xkZXJ8PQpvX25hbWV8PQpvbmx5X3Zpc2libGV8PUZhbHNlCm9fZXhfcHw9Cg=="
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL3RpdGxlX3NjcmVlbi90aXRsZV92Mi5hc2Vwcml0ZQpsYXllcnw9Cm9wX2V4cHw9RmFsc2UKb19mb2xkZXJ8PQpvX25hbWV8PQpvbmx5X3Zpc2libGV8PVRydWUKb19leF9wfD0K"
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -85,7 +85,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StartButton2" type="Button" parent="."]
+[node name="CreditsButton" type="Button" parent="."]
 margin_left = 410.0
 margin_top = 320.0
 margin_right = 585.0
