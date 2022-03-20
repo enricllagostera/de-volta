@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=72 format=2]
 
 [ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=2]
@@ -11,7 +11,7 @@
 [ext_resource path="res://scripts/Map.gd" type="Script" id=9]
 [ext_resource path="res://scenes/TerrainMountains.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/ParallaxBackdrop.tscn" type="PackedScene" id=11]
-[ext_resource path="res://images/prototyping_kit/circle_filled.png" type="Texture" id=12]
+[ext_resource path="res://title_screen/gui_theme.tres" type="Theme" id=12]
 [ext_resource path="res://images/prototyping_kit/square_filled.png" type="Texture" id=13]
 [ext_resource path="res://fonts/BaseFont.tres" type="DynamicFont" id=14]
 [ext_resource path="res://scripts/Recorder.gd" type="Script" id=15]
@@ -22,8 +22,6 @@
 [ext_resource path="res://launchpad/LaunchPoint.tscn" type="PackedScene" id=20]
 [ext_resource path="res://levels/PlaybackSystem.gd" type="Script" id=21]
 [ext_resource path="res://images/terrain_outline_tex.tres" type="Texture" id=22]
-[ext_resource path="res://images/prototyping_kit/triangle_filled.png" type="Texture" id=23]
-[ext_resource path="res://images/prototyping_kit/circle_outline.png" type="Texture" id=24]
 [ext_resource path="res://scripts/Repairing.gd" type="Script" id=25]
 [ext_resource path="res://scripts/ShakeCamera2D.gd" type="Script" id=26]
 [ext_resource path="res://fonts/hud.tres" type="DynamicFont" id=27]
@@ -217,14 +215,273 @@ radius = 34.0147
 [sub_resource type="StreamTexture" id=9]
 load_path = "res://.import/animated_starship.png-9c3da582af720462fd464b8aacf9a86a.stex"
 
-[sub_resource type="StyleBoxFlat" id=24]
-bg_color = Color( 0.101961, 0.101961, 0.101961, 1 )
-border_color = Color( 0.0627451, 0.823529, 0.458824, 1 )
+[sub_resource type="StreamTexture" id=37]
+load_path = "res://.import/repair_parts.png-ab27cd322145c1e0fe0731803cf01169.stex"
 
-[sub_resource type="DynamicFont" id=25]
-size = 12
-outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
-font_data = ExtResource( 1 )
+[sub_resource type="Animation" id=38]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=39]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=40]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3.0 ]
+}
+
+[sub_resource type="Animation" id=41]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2.0 ]
+}
+
+[sub_resource type="StreamTexture" id=42]
+load_path = "res://.import/repair_parts.png-ab27cd322145c1e0fe0731803cf01169.stex"
+
+[sub_resource type="Animation" id=43]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Pointer:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=44]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Pointer:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=45]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Pointer:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3.0 ]
+}
+
+[sub_resource type="Animation" id=46]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Pointer:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2.0 ]
+}
+
+[sub_resource type="StreamTexture" id=47]
+load_path = "res://.import/repair_parts.png-ab27cd322145c1e0fe0731803cf01169.stex"
+
+[sub_resource type="Animation" id=48]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Target:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=49]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Target:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=50]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Target:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3.0 ]
+}
+
+[sub_resource type="Animation" id=51]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Target:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2.0 ]
+}
+
+[sub_resource type="StreamTexture" id=52]
+load_path = "res://.import/repair_parts.png-ab27cd322145c1e0fe0731803cf01169.stex"
+
+[sub_resource type="Animation" id=53]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Bolt1:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=54]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Bolt1:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=55]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Bolt1:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3.0 ]
+}
+
+[sub_resource type="Animation" id=56]
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Bolt1:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2.0 ]
+}
 
 [sub_resource type="StreamTexture" id=33]
 load_path = "res://.import/nav_overlay.png-c9a1f2c2505765d22b582a8cb2e5e4e2.stex"
@@ -817,11 +1074,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -138.0
-margin_top = -55.0
-margin_right = 137.0
-margin_bottom = 72.0
-custom_styles/panel = SubResource( 24 )
+margin_left = -206.0
+margin_top = -92.0
+margin_right = 69.0
+margin_bottom = 35.0
+rect_scale = Vector2( 1.5, 1.5 )
+theme = ExtResource( 12 )
 script = ExtResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -831,10 +1089,11 @@ __meta__ = {
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 16.0
-margin_top = -117.0
+margin_top = -121.0
 margin_right = 255.0
-margin_bottom = -96.0
-custom_fonts/font = ExtResource( 14 )
+margin_bottom = -100.0
+theme = ExtResource( 12 )
+custom_fonts/font = ExtResource( 27 )
 text = "REPAIRING"
 align = 1
 valign = 1
@@ -849,7 +1108,7 @@ margin_left = 16.0
 margin_top = -95.0
 margin_right = 255.0
 margin_bottom = -60.0
-custom_fonts/font = SubResource( 25 )
+theme = ExtResource( 12 )
 text = "Align to convert energy 
 into health"
 align = 1
@@ -861,7 +1120,13 @@ __meta__ = {
 [node name="Bolt2" type="Sprite" parent="Player/Controllers/Repairing"]
 position = Vector2( 240, 90 )
 scale = Vector2( 0.605469, 0.605469 )
-texture = ExtResource( 13 )
+texture = SubResource( 37 )
+hframes = 2
+vframes = 2
+frame = 1
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVBsYXllci9Db250cm9sbGVycy9SZXBhaXJpbmcvQm9sdDIvQW5pbWF0aW9uUGxheWVyCnNvdXJjZXw9cmVzOi8vZ3VpL3JlcGFpcmluZ19zeXN0ZW0vcmVwYWlyX3BhcnRzLmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9Cm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9RmFsc2UKb19leF9wfD0K"
+}
 
 [node name="Bolt2Button" type="TextureButton" parent="Player/Controllers/Repairing/Bolt2"]
 margin_left = -33.0323
@@ -872,6 +1137,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Controllers/Repairing/Bolt2"]
+anims/bolt_1 = SubResource( 38 )
+anims/bolt_2 = SubResource( 39 )
+anims/mover = SubResource( 40 )
+anims/target = SubResource( 41 )
+
 [node name="BgSlide" type="Sprite" parent="Player/Controllers/Repairing"]
 modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 137, 90 )
@@ -881,17 +1152,48 @@ texture = ExtResource( 13 )
 [node name="Pointer" type="Sprite" parent="Player/Controllers/Repairing"]
 position = Vector2( 137, 90 )
 scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 12 )
+texture = SubResource( 42 )
+hframes = 2
+vframes = 2
+frame = 3
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVBsYXllci9Db250cm9sbGVycy9SZXBhaXJpbmcvUG9pbnRlci9BbmltYXRpb25QbGF5ZXIyCnNvdXJjZXw9cmVzOi8vZ3VpL3JlcGFpcmluZ19zeXN0ZW0vcmVwYWlyX3BhcnRzLmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9Cm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9RmFsc2UKb19leF9wfD0K"
+}
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Player/Controllers/Repairing/Pointer"]
+root_node = NodePath("../../Bolt2")
+anims/bolt_1 = SubResource( 43 )
+anims/bolt_2 = SubResource( 44 )
+anims/mover = SubResource( 45 )
+anims/target = SubResource( 46 )
 
 [node name="Target" type="Sprite" parent="Player/Controllers/Repairing"]
 position = Vector2( 137, 90 )
 scale = Vector2( 0.59375, 0.59375 )
-texture = ExtResource( 24 )
+texture = SubResource( 47 )
+hframes = 2
+vframes = 2
+frame = 2
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVBsYXllci9Db250cm9sbGVycy9SZXBhaXJpbmcvVGFyZ2V0L0FuaW1hdGlvblBsYXllcjMKc291cmNlfD1yZXM6Ly9ndWkvcmVwYWlyaW5nX3N5c3RlbS9yZXBhaXJfcGFydHMuYXNlcHJpdGUKbGF5ZXJ8PQpvcF9leHB8PUZhbHNlCm9fZm9sZGVyfD0Kb19uYW1lfD0Kb25seV92aXNpYmxlfD1GYWxzZQpvX2V4X3B8PQo="
+}
+
+[node name="AnimationPlayer3" type="AnimationPlayer" parent="Player/Controllers/Repairing/Target"]
+root_node = NodePath("../../Bolt2")
+anims/bolt_1 = SubResource( 48 )
+anims/bolt_2 = SubResource( 49 )
+anims/mover = SubResource( 50 )
+anims/target = SubResource( 51 )
 
 [node name="Bolt1" type="Sprite" parent="Player/Controllers/Repairing"]
 position = Vector2( 35, 90 )
 scale = Vector2( 0.59375, 0.59375 )
-texture = ExtResource( 23 )
+texture = SubResource( 52 )
+hframes = 2
+vframes = 2
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVBsYXllci9Db250cm9sbGVycy9SZXBhaXJpbmcvQm9sdDEvQW5pbWF0aW9uUGxheWVyNApzb3VyY2V8PXJlczovL2d1aS9yZXBhaXJpbmdfc3lzdGVtL3JlcGFpcl9wYXJ0cy5hc2Vwcml0ZQpsYXllcnw9Cm9wX2V4cHw9RmFsc2UKb19mb2xkZXJ8PQpvX25hbWV8PQpvbmx5X3Zpc2libGV8PUZhbHNlCm9fZXhfcHw9Cg=="
+}
 
 [node name="Bolt1Button" type="TextureButton" parent="Player/Controllers/Repairing/Bolt1"]
 margin_left = -33.6842
@@ -901,6 +1203,13 @@ margin_bottom = 31.9474
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer4" type="AnimationPlayer" parent="Player/Controllers/Repairing/Bolt1"]
+root_node = NodePath("../../Bolt2")
+anims/bolt_1 = SubResource( 53 )
+anims/bolt_2 = SubResource( 54 )
+anims/mover = SubResource( 55 )
+anims/target = SubResource( 56 )
 
 [node name="Tween" type="Tween" parent="Player/Controllers/Repairing"]
 
