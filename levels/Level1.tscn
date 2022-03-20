@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=2]
+[gd_scene load_steps=77 format=2]
 
 [ext_resource path="res://fonts/JETBRAINSMONO-MEDIUM.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Starship.tscn" type="PackedScene" id=2]
@@ -189,6 +189,74 @@ tracks/0/keys = {
 size = 32
 outline_color = Color( 0.219608, 0.219608, 0.482353, 1 )
 font_data = ExtResource( 1 )
+
+[sub_resource type="StreamTexture" id=57]
+flags = 4
+load_path = "res://.import/critical_stats.png-354dadd42db0010fe98aa83137eb2637.stex"
+
+[sub_resource type="Animation" id=58]
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2.0, 3.0 ]
+}
+
+[sub_resource type="Animation" id=59]
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=60]
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2.0, 3.0 ]
+}
+
+[sub_resource type="Animation" id=61]
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0.0, 1.0 ]
+}
 
 [sub_resource type="StreamTexture" id=36]
 load_path = "res://.import/goal_v1.png-e1d7fac0e002690f782974adf936b3bb.stex"
@@ -667,6 +735,34 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CriticalHealth" type="Sprite" parent="HUD"]
+position = Vector2( 78, 194 )
+texture = SubResource( 57 )
+hframes = 2
+vframes = 2
+frame = 1
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUhVRC9Dcml0aWNhbEhlYWx0aC9BbmltYXRpb25QbGF5ZXIKc291cmNlfD1yZXM6Ly9ndWkvY3JpdGljYWxfc3RhdHMuYXNlcHJpdGUKbGF5ZXJ8PQpvcF9leHB8PUZhbHNlCm9fZm9sZGVyfD0Kb19uYW1lfD0Kb25seV92aXNpYmxlfD1GYWxzZQpvX2V4X3B8PQo="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/CriticalHealth"]
+anims/critical_energy = SubResource( 58 )
+anims/critical_health = SubResource( 59 )
+
+[node name="CriticalEnergy" type="Sprite" parent="HUD"]
+position = Vector2( 712, 194 )
+texture = SubResource( 57 )
+hframes = 2
+vframes = 2
+frame = 2
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUhVRC9Dcml0aWNhbEhlYWx0aC9BbmltYXRpb25QbGF5ZXIKc291cmNlfD1yZXM6Ly9ndWkvY3JpdGljYWxfc3RhdHMuYXNlcHJpdGUKbGF5ZXJ8PQpvcF9leHB8PUZhbHNlCm9fZm9sZGVyfD0Kb19uYW1lfD0Kb25seV92aXNpYmxlfD1GYWxzZQpvX2V4X3B8PQo="
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/CriticalEnergy"]
+anims/critical_energy = SubResource( 60 )
+anims/critical_health = SubResource( 61 )
 
 [node name="Backdrop" type="Polygon2D" parent="."]
 visible = false

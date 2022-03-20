@@ -17,6 +17,11 @@ func _ready():
 	$HUD/Lives/AnimationPlayer.play("lives"+str(Main.lives))
 	$HUD/EnergyGUI/EnergyBarOverlay/AnimationPlayer.play("energy")
 	$HUD/HealthGUI/HealthBarOverlay/AnimationPlayer.play("health")
+	$HUD/CriticalHealth.visible = false
+	$HUD/CriticalHealth/AnimationPlayer.play("critical_health")
+	$HUD/CriticalEnergy.visible = false
+	$HUD/CriticalEnergy/AnimationPlayer.play("critical_energy")
+	
 
 
 func _process(delta):
@@ -97,16 +102,18 @@ func _on_Starship_health_changed(_value, old = 0):
 	if diff > 0 and diff <= 1:
 #if old - _value > 0 and old % floor(_value) > 0:
 		$GameplayCamera2D.add_trauma(0.6)
-	$HUD/Tween.interpolate_property($HUD/HealthGUI, "scale", Vector2(1.3,1.3), Vector2(1, 1), 0.3, Tween.TRANS_BACK)
-	$HUD/Tween.start()
+		$HUD/Tween.interpolate_property($HUD/HealthGUI, "scale", Vector2(1.3,1.3), Vector2(1, 1), 0.3, Tween.TRANS_BACK)
+		$HUD/Tween.start()
+	$HUD/CriticalHealth.visible = true if _value <= $Player/Starship.CRITICAL_HEALTH else false
 
 
 func _on_Starship_energy_changed(_value, old = 0):
 	var diff = floor(old) - floor(_value)
 	if diff > 0 and diff <= 1:
 		$GameplayCamera2D.add_trauma(0.6)
-	$HUD/Tween.interpolate_property($HUD/EnergyGUI, "scale", Vector2(1.3,1.3), Vector2(1, 1), 0.3, Tween.TRANS_BACK)
-	$HUD/Tween.start()
+		$HUD/Tween.interpolate_property($HUD/EnergyGUI, "scale", Vector2(1.3,1.3), Vector2(1, 1), 0.3, Tween.TRANS_BACK)
+		$HUD/Tween.start()
+	$HUD/CriticalEnergy.visible = true if _value <= $Player/Starship.CRITICAL_ENERGY else false
 
 
 
