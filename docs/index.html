@@ -73,35 +73,72 @@
 
       // Sets up callback refs from the Godot app; Each of these is a function.
       spaceHopper = {};
-      let navAnchor, navFocus, repair1, repair2;
+      let navAnchorL, navAnchorR, navFocus, repair1, repair2, launchCrank, launchKey, launchSlider;
+      let keyInitial = false;
+      let keyInitialTimer = 200;
+      let keyInitialSet = false;
 
       spaceHopper.initCallbacks = function (cb) {
         spaceHopper.sendCommand = cb;
         spaceHopper.sendCommand("activate_insert", "empty");
 
-        navAnchor = Beholder.getMarker(7);
-        navAnchor.timeout = 200;
-        navFocus = Beholder.getMarker(5);
+        navAnchorL = Beholder.getMarker(2);
+        navAnchorL.timeout = 200;
+        navAnchorR = Beholder.getMarker(4);
+        navAnchorR.timeout = 200;
+        navFocus = Beholder.getMarker(9);
         navFocus.timeout = 200;
-        repair1 = Beholder.getMarker(6);
+        repair1 = Beholder.getMarker(1);
         repair1.timeout = 200;
         // repair2.rotationSmoothing = 0.1;
-        repair2 = Beholder.getMarker(9);
+        repair2 = Beholder.getMarker(0);
         repair2.timeout = 200;
         // repair2.rotationSmoothing = 0.1;
+
+        launchCrank = Beholder.getMarker(6);
+        launchCrank.timeout = 200;
+        launchSlider = Beholder.getMarker(8);
+        launchSlider.timeout = 200;
+        launchKey = Beholder.getMarker(7);
+        launchKey.timeout = 100
       };
 
       function runNavigation() {
-        // x 81 - 280
-        // y 25 -> -36
-        let focusOffset = navFocus.center.clone().sub(navAnchor.center).sub({ x: 81, y: 19 });
-        // focusOffset.y *= ;
-        focusOffset.y /= 40;
-        focusOffset.y += 1;
-        focusOffset.x /= 150;
-        // console.log(focusOffset.x, focusOffset.y);
-        focusOffset.scale(100);
-        spaceHopper.sendCommand("set_scope", focusOffset.x, focusOffset.y)
+        let navMaxX = navAnchorR.center.x - navAnchorL.center.x;
+        let navMaxY = navAnchorR.center.y - navAnchorL.center.y;
+
+        spaceHopper.sendCommand("set_scope",
+          (navFocus.center.x - navAnchorL.center.x) / navMaxX * 120,
+          (1-(navFocus.center.y - navAnchorL.center.y) / navMaxY) * 100,
+        );
+      }
+
+      function lerp(a, b, v) {
+        return a + (b - a) * v;
+      }
+
+      // function map(a, b)
+
+      function runLaunching(dt) {
+        if (keyInitialTimer <= 0) {
+          if (!keyInitialSet) {
+            keyInitial = launchKey.present;
+            keyInitialSet = true;
+          }
+        } else {
+          keyInitialTimer -= dt;
+        }
+
+        if (keyInitialSet && keyInitial !== launchKey.present) {
+          keyInitial = launchKey.present;
+          spaceHopper.sendCommand("set_engage");
+        }
+
+        let powerVal = ((launchSlider.center.y - launchCrank.center.y) + 50);
+        spaceHopper.sendCommand("set_power", powerVal);
+
+        if (launchCrank.deltaRotation < -0.12) spaceHopper.sendCommand("set_aiming", "left");
+        if (launchCrank.deltaRotation > 0.12) spaceHopper.sendCommand("set_aiming", "right");
       }
 
       function runRepair() {
@@ -113,7 +150,7 @@
       let currentInsert = 'empty';
       function detectInserts() {
         if (currentInsert !== 'navigating') {
-          if (navAnchor.present) {
+          if (navAnchorL.present) {
             spaceHopper.sendCommand("activate_insert", "navigating");
             currentInsert = 'navigating';
           }
@@ -123,13 +160,23 @@
           if (repair1.present) {
             spaceHopper.sendCommand("activate_insert", "repairing");
             currentInsert = 'repairing';
+            // window.navigator.vibrate(200);
           }
         }
 
         if (currentInsert !== 'empty') {
-          if (!repair1.present && !navAnchor.present) {
+          if (!repair1.present && !navAnchorL.present && !launchCrank.present) {
             spaceHopper.sendCommand("activate_insert", "empty");
             currentInsert = 'empty';
+          }
+        }
+
+        if (currentInsert !== 'launching') {
+          if (launchCrank.present) {
+            spaceHopper.sendCommand("activate_insert", "launching");
+            currentInsert = 'launching';
+            keyInitialTimer = 200;
+            keyInitialSet = false;
           }
         }
       }
@@ -137,12 +184,13 @@
       // Called by Godot every frame
       // It is from inside this function that the sendCommand calls can be made
       let prevTime = Date.now();
-      const FRAME_RATE = 1000 / 20;
+      const FRAME_RATE = 1000 / 15;
       let frameTimer = FRAME_RATE;
       spaceHopper.gameUpdate = function () {
         let currentTime = Date.now();
         let dt = currentTime - prevTime;
         frameTimer -= dt;
+        // throttle it baby
         if (frameTimer > 0) return;
 
         frameTimer = FRAME_RATE;
@@ -154,6 +202,7 @@
           case 'empty': break;
           case 'navigating': runNavigation(); break;
           case 'repairing': runRepair(); break;
+          case 'launching': runLaunching(dt); break;
         }
       };
 
@@ -163,7 +212,7 @@
       // DEBUG only method. It sends commands on keyup events, for checking 
       // that all commands are well-interpreted in Godot
       function kbTest(event) {
-        console.log(event)
+        // console.log(event)
         // CHANGING INSERTS
         //"activate_insert" : "empty", "launching", "navigating", "repairing"
         if (event.key == "q") {
