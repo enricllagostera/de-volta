@@ -38,8 +38,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="DE VOLTA, br Enric Llagostera, Peter Gyory and Perry Owens (1.0)"
-config/description="An alternative controller game by Enric Llagostera, Peter Gyory and Perry Owens."
+config/name="DE VOLTA, by Enric Llagostera, Peter Gyory and Perry Owens (1.0)"
+config/description="An alternative controller game by Enric Lla	gostera, Peter Gyory and Perry Owens."
 run/main_scene="res://levels/TitleScreen.tscn"
 config/icon="res://images/experiments/icon.png"
 
