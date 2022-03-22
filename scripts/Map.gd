@@ -7,6 +7,7 @@ export var map_index = 0
 
 
 func _ready():
+	load_controller_from_js()
 	Main.current_level = map_index
 	$PlaybackSystem.prepare_player_and_ships(map_index)
 	get_tree().call_group("gravity_attractor", "add_body", $Player/Starship)
@@ -21,8 +22,16 @@ func _ready():
 	$HUD/CriticalHealth/AnimationPlayer.play("critical_health")
 	$HUD/CriticalEnergy.visible = false
 	$HUD/CriticalEnergy/AnimationPlayer.play("critical_energy")
-	
 
+
+
+func load_controller_from_js():
+	if OS.has_feature("HTML5"):
+		var insert:String = $Player/JSBridge.js_call("getInsert")
+		print("REFRESHED INSERT:", insert)
+		activate_insert(insert)
+#		$Player/Starship.controller = Starship.Controller.keys().find(insert.to_upper())
+		
 
 func _process(delta):
 	if $MapCamera2D.current:

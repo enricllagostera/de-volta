@@ -31,7 +31,7 @@ func js_call(function_name, args_array = []):
 	if not OS.has_feature("HTML5"):
 		return
 	var fn = funcref(js_obj, function_name)
-	fn.call_funcv(args_array)
+	return fn.call_funcv(args_array)
 
 
 # General callback for sending commands from JS to Godot.
