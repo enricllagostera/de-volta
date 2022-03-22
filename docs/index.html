@@ -139,8 +139,8 @@
         let powerVal = ((launchSlider.center.y - launchCrank.center.y) + 50);
         spaceHopper.sendCommand("set_power", powerVal);
 
-        if (launchCrank.deltaRotation < -0.12) spaceHopper.sendCommand("set_aiming", "left");
-        if (launchCrank.deltaRotation > 0.12) spaceHopper.sendCommand("set_aiming", "right");
+        if (launchCrank.deltaRotation < -0.12) spaceHopper.sendCommand("set_aiming", "right");
+        if (launchCrank.deltaRotation > 0.12) spaceHopper.sendCommand("set_aiming", "left");
       }
 
       function runRepair() {
