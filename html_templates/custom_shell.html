@@ -16,7 +16,7 @@
       src="https://unpkg.com/beholder-detection@1.3.1/dist/beholder-detection.js"
       crossorigin
     ></script>
-    <script>
+   <script>
         const Beholder = window['beholder-detection'].default;
       let beholderConfig = {
         camera_params: {
@@ -71,6 +71,8 @@
       let keyInitial = false;
       let keyInitialTimer = 200;
       let keyInitialSet = false;
+      let launchTimeout = 2000;
+      let spamPanelTimer = 2000;
 
       spaceHopper.initCallbacks = function (cb) {
         spaceHopper.sendCommand = cb;
@@ -93,19 +95,20 @@
         // repair2.rotationSmoothing = 0.1;
 
         launchCrank = Beholder.getMarker(6);
-        launchCrank.timeout = 200;
+        launchCrank.timeout = 170;
         launchSlider = Beholder.getMarker(8);
-        launchSlider.timeout = 200;
+        launchSlider.timeout = 170;
         launchKey = Beholder.getMarker(7);
-        launchKey.timeout = 100
+        launchKey.timeout = 200
       };
 
       function runNavigation() {
-        let navMaxX = navAnchorR.center.x - navAnchorL.center.x;
+        let navMaxX = navAnchorR.center.x - navAnchorL.center.x - 74;
         let navMaxY = navAnchorR.center.y - navAnchorL.center.y;
+        // console.log((navFocus.center.x - navAnchorL.center.x));
 
         spaceHopper.sendCommand("set_scope",
-          (navFocus.center.x - navAnchorL.center.x) / navMaxX * 120,
+          (navFocus.center.x - navAnchorL.center.x - 74) / navMaxX * 140,
           (1-(navFocus.center.y - navAnchorL.center.y) / navMaxY) * 100,
         );
       }
@@ -126,16 +129,18 @@
           keyInitialTimer -= dt;
         }
 
-        if (keyInitialSet && keyInitial !== launchKey.present) {
+        launchTimeout -= dt;
+        if (launchTimeout <= 0 && keyInitialSet && keyInitial !== launchKey.present && launchCrank.present && launchSlider) {
           keyInitial = launchKey.present;
+          launchTimeout = 3000;
           spaceHopper.sendCommand("set_engage");
         }
 
         let powerVal = ((launchSlider.center.y - launchCrank.center.y) + 50);
         spaceHopper.sendCommand("set_power", powerVal);
 
-        if (launchCrank.deltaRotation < -0.12) spaceHopper.sendCommand("set_aiming", "left");
-        if (launchCrank.deltaRotation > 0.12) spaceHopper.sendCommand("set_aiming", "right");
+        if (launchCrank.deltaRotation < -0.12) spaceHopper.sendCommand("set_aiming", "right");
+        if (launchCrank.deltaRotation > 0.12) spaceHopper.sendCommand("set_aiming", "left");
       }
 
       function runRepair() {
@@ -174,6 +179,7 @@
             currentInsert = 'launching';
             keyInitialTimer = 200;
             keyInitialSet = false;
+            launchTimeout = 4000;
           }
         }
       }
@@ -194,6 +200,11 @@
         Beholder.update();
         // console.log(currentInsert);
 
+        spamPanelTimer -= dt;
+        if (spamPanelTimer <= 0) {
+          spaceHopper.sendCommand("activate_insert", currentInsert);
+          spamPanelTimer = 2000;
+        }
         detectInserts();
         switch(currentInsert) {
           case 'empty': break;

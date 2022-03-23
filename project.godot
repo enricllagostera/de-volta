@@ -51,6 +51,10 @@ aseprite_executable_path="C:\\Users\\enric\\AppData\\Roaming\\itch\\apps\\asepri
 
 Main="*res://Main.tscn"
 
+[debug]
+
+gdscript/warnings/return_value_discarded=false
+
 [display]
 
 window/size/width=800
