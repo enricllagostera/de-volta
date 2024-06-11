@@ -24,7 +24,6 @@ export var energy_for_navigation_per_s = 0.5
 export var critical_energy_mod = 0.5
 export var critical_health_mod = 0.5
 
-
 onready var controller = Controller.LAUNCHING
 var launch_count = 0
 var launch_angle = 0
@@ -44,7 +43,6 @@ var can_be_killed = true
 var is_critical_energy = false
 var is_critical_health = false
 
-
 signal energy_changed(new_energy, old_energy)
 signal launched(launch_count)
 signal health_changed(new_health, old_health)
@@ -61,12 +59,9 @@ func _ready():
 	can_be_killed = true
 	_change_energy(Main.current_energy)
 	_change_health(Main.current_health)
-	
 
 
 func _process(delta):
-#	if $Visual.visible == false:
-#		$LaunchAim.visible = false
 	if is_dying:
 		$LaunchAim.visible = false
 		return
@@ -103,7 +98,6 @@ func repairing():
 	$LaunchAim.visible = false
 	if not is_grounded:
 		return
-	
 
 
 func _physics_process(delta):
@@ -114,9 +108,9 @@ func _physics_process(delta):
 	if is_dying or not can_be_killed:
 		return
 	if is_critical_health:
-		_change_health(health - critical_health_mod*delta)
+		_change_health(health - critical_health_mod * delta)
 	if is_critical_energy:
-		_change_energy(energy - critical_energy_mod*delta)
+		_change_energy(energy - critical_energy_mod * delta)
 	if is_navigating:
 		_change_energy(energy - delta * energy_for_navigation_per_s)
 	if not is_grounded:
@@ -133,7 +127,7 @@ func _physics_process(delta):
 		if is_shielded:
 			apply_damage = damage * (1.0 - SHIELD_PROTECTION_RATE)
 		else:
-			apply_damage = damage 
+			apply_damage = damage
 		# Always land perpendicular to the collision surface
 		$Visual.rotation = get_angle_to(position + collision.normal) + deg2rad(90)
 		is_grounded = true
@@ -148,7 +142,7 @@ func _physics_process(delta):
 
 func start_dying():
 	if is_dying:
-		return;
+		return
 	is_dying = true
 	$DeathExplosion.emitting = true
 	$Visual.visible = false
@@ -215,8 +209,8 @@ func has_enough_energy_to_launch():
 
 func can_boost():
 	return (not is_grounded) and (energy >= energy_per_boost)
-	
-	
+
+
 func boost():
 	if energy >= energy_per_boost:
 		velocity = velocity * 1.5
@@ -231,7 +225,7 @@ func can_shield(delta):
 
 
 func display_launch_aim():
-	if(launch_power > 0):
+	if launch_power > 0:
 		$LaunchAim.visible = true
 		var points = $LaunchAim/Power.points
 		points.set(0, Vector2.ZERO)
